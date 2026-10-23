@@ -331,7 +331,7 @@ export default function Home() {
           SECTION 3: PRIMARY SERVICES (ONLINES VERTICAL BLUE CAPABILITY CARDS)
           =================================================================== */}
       <section className="py-20 border-b border-[rgba(18,18,19,0.08)] bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
               <span className="font-mono text-xs uppercase text-[#0859D4] font-semibold tracking-wider block mb-2">

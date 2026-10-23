@@ -752,171 +752,183 @@ export default function AboutPage() {
           SECTION 07: VERIFIED REAL DELHI HQ STUDIO COORDINATES
           ========================================================================= */}
       <section className="max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 py-20 border-b border-[rgba(18,18,19,0.08)] bg-white">
-        <div className="mb-12 pb-6 border-b border-[rgba(18,18,19,0.08)] flex items-center justify-between">
+        {/* Section Header */}
+        <div className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block mb-2">
-              PRIMARY OPERATIONS LAB
+            <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block mb-2 font-mono">
+              [ 07 // OPERATIONS HQ ]
             </span>
             <h2
-              className="font-display text-3xl sm:text-5xl font-extrabold text-[#1D1D1F] tracking-tight pb-2"
-              style={{ lineHeight: 1.15 }}
+              className="font-display text-3xl sm:text-5xl font-extrabold text-[#1D1D1F] tracking-tight"
+              style={{ lineHeight: 1.1 }}
             >
-              STUDIO &amp; LIVE COORDINATES
+              STUDIO &amp; LIVE<br />
+              <span className="text-[#0859D4]">COORDINATES</span>
             </h2>
           </div>
-          <div className="text-xs text-[#6B7280] flex items-center gap-2">
+          <div className="flex items-center gap-2 text-xs text-[#6B7280] font-mono">
             <Globe2 className="w-4 h-4 text-[#0859D4]" />
             <span className="font-bold text-[#1D1D1F] uppercase tracking-wider">DELHI STUDIO (HQ)</span>
+            <span className="w-2 h-2 rounded-full bg-[#1BC47D] animate-pulse ml-1" />
+            <span className="text-[#1BC47D] font-bold">ACTIVE</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Delhi HQ Details Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Left Card: Studio Details */}
           <div
             onMouseEnter={playHover}
-            className="lg:col-span-6 p-8 sm:p-10 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] space-y-6 hover:border-[#0859D4] hover:shadow-xl transition-all shadow-sm flex flex-col justify-between"
+            className="lg:col-span-5 flex flex-col justify-between p-8 sm:p-10 rounded-2xl border border-[rgba(18,18,19,0.08)] bg-[#050B14] text-white shadow-xl"
           >
-            <div>
-              <div className="flex items-center justify-between text-xs text-[#6B7280] mb-4">
-                <span className="text-[#1D1D1F] font-bold px-3 py-1 rounded-full bg-white border border-[rgba(18,18,19,0.08)] shadow-sm">
-                  IST (UTC+5:30)
+            <div className="space-y-5">
+              {/* IST Clock Badge */}
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-white/40 font-mono">PRIMARY LAB</span>
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[#18A0FB] font-mono">
+                  IST · UTC+5:30
                 </span>
-                <span className="font-semibold">28.4947° N, 77.0894° E</span>
               </div>
 
               <div>
-                <h3
-                  className="font-display text-3xl sm:text-4xl font-extrabold text-[#1D1D1F] tracking-tight mb-2"
-                >
-                  NEW DELHI STUDIO (HQ)
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+                  NEW DELHI STUDIO
                 </h3>
-                <p className="text-xs text-[#6B7280] font-medium uppercase tracking-wider">
+                <p className="text-xs text-white/40 font-mono mt-1 uppercase tracking-wider">
                   {COMPANY_LEGAL_NAME}
                 </p>
               </div>
 
-              <div className="text-xs sm:text-sm text-[#424242] space-y-3 border-t border-[rgba(18,18,19,0.08)] pt-4 mt-4">
-                <div className="flex items-center gap-2 text-[#1D1D1F] font-bold">
-                  <MapPin className="w-4 h-4 text-[#0859D4] flex-shrink-0" />
-                  <span>DLF Cyber Hub Design Lab</span>
+              <div className="space-y-3 text-sm text-white/70 border-t border-white/10 pt-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-[#0859D4] flex-shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-white font-semibold block text-xs">DLF Cyber Hub Design Lab</span>
+                    <span className="text-xs text-white/50">DLF Phase 2, Sector 24, Gurugram — NCR 122002, India</span>
+                  </div>
                 </div>
-                <p className="pl-6 text-[#424242]">
-                  DLF Phase 2, Sector 24, Gurugram, New Delhi NCR, 122002, India
-                </p>
-
-                <div className="flex items-center gap-2 text-[#1D1D1F] font-semibold pt-1">
+                <div className="flex items-center gap-3">
                   <Clock className="w-4 h-4 text-[#0859D4] flex-shrink-0" />
-                  <span>Working Hours: Mon – Sat, 10:00 AM – 7:00 PM IST</span>
+                  <span className="text-xs text-white/70">Mon – Sat · 10:00 AM – 7:00 PM IST</span>
                 </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-4 h-4 text-[#1BC47D] flex-shrink-0 flex items-center justify-center text-base leading-none">⚡</span>
+                  <span className="text-xs text-[#1BC47D] font-semibold">Replies within 24 business hours</span>
+                </div>
+              </div>
 
-                <div className="flex items-center gap-2 text-[#0859D4] font-semibold pl-6">
-                  <span>⚡ Replies within 24 business hours guaranteed</span>
-                </div>
+              {/* Coords */}
+              <div className="font-mono text-[11px] text-white/30 border-t border-white/10 pt-4">
+                28.4947° N, 77.0894° E
               </div>
             </div>
 
-            {/* Action Buttons: Copy email + Get directions */}
-            <div className="pt-6 border-t border-[rgba(18,18,19,0.08)] flex flex-wrap items-center gap-3">
+            {/* CTA Row */}
+            <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-white/10 mt-6">
               <button
                 type="button"
                 onClick={copyEmail}
-                className="py-2.5 px-4 rounded-full bg-white border border-[rgba(18,18,19,0.12)] text-[#1D1D1F] hover:border-[#0859D4] text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition-all"
+                className="py-2 px-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer"
               >
                 {copiedEmail ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#0859D4]" />
-                    <span className="text-[#0859D4]">Email Copied!</span>
+                    <Check className="w-3.5 h-3.5 text-[#1BC47D]" />
+                    <span className="text-[#1BC47D]">Copied!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 text-[#6B7280]" />
-                    <span>Copy email</span>
+                    <Copy className="w-3.5 h-3.5 text-white/60" />
+                    <span>Copy Email</span>
                   </>
                 )}
               </button>
-
               <a
                 href="https://maps.google.com/?q=DLF+Cyber+Hub+Gurugram"
                 target="_blank"
                 rel="noreferrer"
                 onClick={playClick}
-                className="py-2.5 px-4 rounded-full bg-white border border-[rgba(18,18,19,0.12)] text-[#1D1D1F] hover:border-[#0859D4] text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition-all"
+                className="py-2 px-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer"
               >
                 <Navigation className="w-3.5 h-3.5 text-[#0859D4]" />
-                <span>Get directions</span>
+                <span>Directions</span>
               </a>
             </div>
           </div>
 
-          {/* Right Card: Styled Map Visual Card */}
+          {/* Right Card: Radar Map Visual */}
           <div
             onMouseEnter={playHover}
-            className="lg:col-span-6 p-8 sm:p-10 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white space-y-6 shadow-sm flex flex-col justify-between relative overflow-hidden"
+            className="lg:col-span-7 relative rounded-2xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] overflow-hidden min-h-[360px] shadow-sm flex flex-col"
           >
-            {/* Visual Simulated Map Grid with Radar Wave */}
-            <div className="absolute inset-0 bg-[#F5F5F7] patron-puntos opacity-80" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(8,89,212,0.08),transparent_70%)]" />
+            {/* Dot grid background */}
+            <div className="absolute inset-0 patron-puntos opacity-60" />
+            {/* Blue radial glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_55%,rgba(8,89,212,0.12),transparent_70%)]" />
 
-            <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
-              <div className="flex items-center justify-between text-xs text-[#6B7280]">
-                <span className="text-[#0859D4] font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <div className="relative z-10 flex flex-col justify-between h-full p-8 sm:p-10">
+              {/* Top Bar */}
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-[#0859D4] font-bold uppercase tracking-wider flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#1BC47D] animate-ping" />
-                  <span>ACTIVE LAB RADAR</span>
+                  ACTIVE LAB RADAR
                 </span>
-                <span className="font-semibold text-[#1D1D1F]">NCR SECTOR 24</span>
+                <span className="font-semibold text-[#1D1D1F] uppercase tracking-wider text-[11px]">NCR SECTOR 24</span>
               </div>
 
-              {/* Styled Map Graphic with Pin */}
-              <div className="relative h-48 sm:h-56 w-full rounded-2xl border border-[rgba(18,18,19,0.08)] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center shadow-inner">
-                <div className="relative mb-3">
-                  <div className="w-14 h-14 rounded-full bg-[#0859D4]/15 flex items-center justify-center animate-pulse">
-                    <div className="w-9 h-9 rounded-full bg-[#0859D4] text-white flex items-center justify-center shadow-lg">
-                      <MapPin className="w-5 h-5 text-white" />
-                    </div>
+              {/* Radar Ping Visualizer */}
+              <div className="flex-1 flex items-center justify-center py-8">
+                <div className="relative flex items-center justify-center w-40 h-40">
+                  {/* Ripple rings */}
+                  <div className="absolute w-40 h-40 rounded-full border border-[#0859D4]/20 animate-ping" style={{ animationDuration: '2.5s' }} />
+                  <div className="absolute w-28 h-28 rounded-full border border-[#0859D4]/25 animate-ping" style={{ animationDuration: '2s', animationDelay: '0.4s' }} />
+                  <div className="absolute w-16 h-16 rounded-full border border-[#0859D4]/30 animate-ping" style={{ animationDuration: '1.8s', animationDelay: '0.8s' }} />
+                  {/* Center pin */}
+                  <div className="relative z-10 w-12 h-12 rounded-full bg-[#0859D4] shadow-lg flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-white" />
                   </div>
                 </div>
-
-                <span className="font-display text-base font-extrabold text-[#1D1D1F] block">
-                  PixelMutiny Studio Hub
-                </span>
-                <span className="text-xs text-[#6B7280] font-medium mt-0.5">
-                  28.4947° N, 77.0894° E • New Delhi NCR
-                </span>
-                <span className="text-[11px] text-[#0859D4] font-bold mt-2 px-3 py-0.5 rounded-full bg-[#0859D4]/10 border border-[#0859D4]/20">
-                  Open for client visits by appointment
-                </span>
               </div>
 
-              {/* Bottom Sprint Action Button */}
-              <div className="pt-4 border-t border-[rgba(18,18,19,0.08)] flex items-center justify-between gap-4">
-                <div className="text-xs text-[#6B7280]">
-                  <span className="block font-bold text-[#1D1D1F] uppercase tracking-wider">
-                    DIRECT FOUNDER INTAKE:
+              {/* Bottom info row */}
+              <div className="border-t border-[rgba(18,18,19,0.08)] pt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <span className="font-display text-lg font-extrabold text-[#1D1D1F] block">
+                    PixelMutiny Studio Hub
                   </span>
-                  <span>Led by Sumit — </span>
+                  <span className="text-xs text-[#6B7280] font-mono">
+                    28.4947° N, 77.0894° E · New Delhi NCR
+                  </span>
+                  <span className="block text-[11px] text-[#0859D4] font-bold mt-1.5 px-2.5 py-0.5 rounded-full bg-[#0859D4]/10 border border-[#0859D4]/20 w-fit">
+                    Open by appointment
+                  </span>
+                </div>
+
+                <div className="flex flex-col gap-1.5 text-xs font-mono text-[#6B7280]">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-[#1D1D1F]">FOUNDER INTAKE:</span>
+                  </div>
                   <a
                     href="https://www.linkedin.com/in/gfxsumit/"
                     target="_blank"
                     rel="noreferrer"
                     className="text-[#0859D4] hover:underline font-semibold inline-flex items-center gap-0.5"
                   >
-                    <span>LinkedIn</span>
+                    <span>Sumit on LinkedIn</span>
                     <span className="text-[10px]">↗</span>
                   </a>
+                  <button
+                    type="button"
+                    onClick={() => { playClick(); }}
+                    className="btn-onlines-blue py-2 px-4 text-[11px] font-bold mt-1 self-start"
+                  >
+                    COMMENCE SPRINT →
+                  </button>
                 </div>
-
-                <Link
-                  href="/contact"
-                  onClick={playClick}
-                  className="btn-onlines-blue py-3 px-6 text-xs font-bold flex-shrink-0"
-                >
-                  <ButtonRoll text="COMMENCE SPRINT" icon="→" />
-                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* =========================================================================
           SECTION 08: CLOSING CTA BAND BEFORE FOOTER

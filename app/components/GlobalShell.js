@@ -55,7 +55,7 @@ function ShellInner({ children }) {
 
       {/* ONLINES STYLE MINIMALIST STUDIO FOOTER */}
       <footer className="w-full bg-[#FBFBFB] border-t border-dashed border-[rgba(18,18,19,0.12)] text-[#424242] py-8 sm:py-10 transition-colors">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-[13px] leading-relaxed">
             {/* Left Colophon */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">

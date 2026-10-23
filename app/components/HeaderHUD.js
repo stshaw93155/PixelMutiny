@@ -87,7 +87,7 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
       }`}
     >
       {/* Onlines Minimal Header Bar */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 h-16 flex items-center justify-between">
         {/* Left: Onlines Brand Logo & Mark */}
         <div className="flex items-center gap-4 sm:gap-6">
           <Link

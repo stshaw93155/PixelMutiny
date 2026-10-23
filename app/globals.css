@@ -55,6 +55,17 @@ button {
   appearance: none;
 }
 
+/* ============================================================
+   RESPONSIVE SECTION CONTAINER — Full-Width Page Breathing Room
+   Gives proper horizontal breathing room on all breakpoints.
+   Use with max-width containers to prevent cramped narrow strips.
+   ============================================================ */
+.section-container {
+  width: 100%;
+  padding-left: clamp(20px, 5vw, 80px);
+  padding-right: clamp(20px, 5vw, 80px);
+}
+
 /* Suppress Next.js dev indicators and overlays */
 nextjs-portal,
 [data-nextjs-toast],
