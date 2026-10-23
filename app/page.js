@@ -110,7 +110,7 @@ export default function Home() {
           '--dot-y': dotPos.y,
         }}
       >
-        <div className="home-hero__inner max-w-[1440px] mx-auto px-4 relative flex items-center justify-center">
+        <div className="home-hero__inner w-full relative flex items-center justify-center">
           {/* Subtle Architectural Dot Grid */}
           <div className="grilla-celdas opacity-60 pointer-events-none" aria-hidden="true" />
 
