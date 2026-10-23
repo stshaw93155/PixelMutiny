@@ -30,14 +30,14 @@ export default function Home() {
   const [isAiMode, setIsAiMode] = useState(true);
   const [dotPos, setDotPos] = useState({ x: '50%', y: '50%' });
 
-  // Floating live collaborator cursors state
+  // Floating live collaborator cursors state (scattered naturally across left and right sides)
   const [collaborators, setCollaborators] = useState([
-    { id: 'dev', name: 'Developer', color: '#18A0FB', x: 120, y: 160, vx: 0.8, vy: 0.6 },
-    { id: 'client', name: 'Client', color: '#EF5533', x: 680, y: 220, vx: -0.7, vy: 0.9 },
-    { id: 'director', name: 'Creative Director', color: '#1BC47D', x: 340, y: 380, vx: 0.6, vy: -0.7 },
-    { id: 'ui', name: 'UI Designer', color: '#6465ED', x: 820, y: 110, vx: -0.5, vy: -0.6 },
-    { id: 'ux', name: 'UX Designer', color: '#FF5C93', x: 210, y: 440, vx: 0.7, vy: 0.5 },
-    { id: 'pm', name: 'Project Manager', color: '#00C4FF', x: 540, y: 90, vx: -0.6, vy: 0.4 },
+    { id: 'dev', name: 'Developer', color: '#18A0FB', x: 18, y: 24, vx: 0.05, vy: 0.04 },
+    { id: 'client', name: 'Client', color: '#EF5533', x: 38, y: 36, vx: -0.04, vy: 0.05 },
+    { id: 'director', name: 'Creative Director', color: '#1BC47D', x: 12, y: 62, vx: 0.04, vy: -0.05 },
+    { id: 'ui', name: 'UI Designer', color: '#6465ED', x: 82, y: 26, vx: -0.05, vy: -0.04 },
+    { id: 'ux', name: 'UX Designer', color: '#FF5C93', x: 74, y: 68, vx: 0.05, vy: 0.03 },
+    { id: 'pm', name: 'Project Manager', color: '#00C4FF', x: 88, y: 48, vx: -0.04, vy: 0.04 },
   ]);
 
   const heroRef = useRef(null);
@@ -46,7 +46,7 @@ export default function Home() {
   const reducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
 
-  // Subtle natural wandering for Figma collaborator cursors on Hero canvas
+  // Subtle natural wandering for Figma collaborator cursors on full-width Hero canvas
   useEffect(() => {
     if (reducedMotion || isMobile) return;
 
@@ -59,8 +59,9 @@ export default function Home() {
           let nvx = c.vx;
           let nvy = c.vy;
 
-          if (nx < 40 || nx > 960) nvx = -nvx;
-          if (ny < 40 || ny > 520) nvy = -nvy;
+          // Keep within comfortable viewport bounds (4% to 94% horizontal, 12% to 84% vertical)
+          if (nx < 4 || nx > 94) nvx = -nvx;
+          if (ny < 12 || ny > 84) nvy = -nvy;
 
           return { ...c, x: nx, y: ny, vx: nvx, vy: nvy };
         })
@@ -204,7 +205,8 @@ export default function Home() {
                   key={c.id}
                   className="home-hero__cursor transition-transform duration-75 ease-out"
                   style={{
-                    transform: `translate3d(${c.x}px, ${c.y}px, 0)`,
+                    left: `${c.x}%`,
+                    top: `${c.y}%`,
                   }}
                 >
                   <svg width="15" height="17" viewBox="0 0 22 24" fill="none">
