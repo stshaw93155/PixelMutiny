@@ -30,6 +30,7 @@
 | **QA-018** | Visual UX / Selected Works Gallery | Medium | High | `app/works/page.js`, `app/components/ProjectShowcaseModal.js` (Image 1 & Image 2) | `REGRESSION_VERIFIED` | Passed |
 | **QA-019** | Interaction / Lenis Wheel Scroll Lock | High | High | `app/components/SmoothScroll.js`, `app/components/ProjectShowcaseModal.js` | `REGRESSION_VERIFIED` | Passed |
 | **QA-020** | UI/UX Overhaul & Architecture | High | High | `app/components/StudioAiBot.js`, `app/components/studio-bot/*` (Modern Studio Workspace) | `REGRESSION_VERIFIED` | Passed |
+| **QA-021** | CSS / Button Reset & Visual UX | High | High | `app/globals.css`, `app/components/GlobalShell.js` (Footer "Let's Talk" & "Back to top") | `REGRESSION_VERIFIED` | Passed |
 
 ---
 
@@ -273,14 +274,30 @@
 
 ---
 
+### QA-021: Missing Global `<button>` Reset & Footer Button Bevel Defect
+- **Category:** CSS / Reset & Visual UX
+- **Severity:** High
+- **Location:** `app/globals.css`, `app/components/GlobalShell.js`
+- **Root Cause:** Absence of a base HTML `<button>` CSS reset (`background: transparent; border: none; appearance: none;`) caused standard browsers to render native grey beveled buttons (`buttonface` background and `outset` grey border) on `<button>Let's Talk</button>` and `<button>Back to top ↑</button>` in the footer.
+- **Fix:**
+  1. Added global CSS reset for `button` elements in `app/globals.css` ensuring zero browser default background, border, or padding.
+  2. Redesigned footer buttons into sleek, tactile studio pills in `app/components/GlobalShell.js`:
+     - `Let's Talk`: Solid dark pill button (`bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-[12px] font-semibold px-3.5 py-1.5 rounded-full active:scale-95 shadow-xs`).
+     - `Back to top ↑`: Minimalist white pill button with subtle hairline border (`border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] text-[#1D1D1F] hover:text-[#0859D4] text-[12px] font-medium px-3 py-1.5 rounded-full active:scale-95 shadow-xs`).
+  3. Cleaned up spacing and separator grouping so items wrap seamlessly on mobile and desktop.
+- **Regression Test:** Headless browser navigated to `http://127.0.0.1:3000/`, scrolled to footer, captured high-resolution screenshot (`footer_zoomed_1792780206572.png`), confirmed zero grey browser bevels, and verified smooth scroll back to top on click.
+- **Status:** `REGRESSION_VERIFIED`
+
+---
+
 ## Final Quality Certification & Engineering Sign-Off
 
-- **Total Audited Defects:** 20 Discovered, 20 Remediated (100% Resolved)
+- **Total Audited Defects:** 21 Discovered, 21 Remediated (100% Resolved)
 - **Zero Critical / High Severity Vulnerabilities Remaining**
 - **Test Suite Status:** 19/19 Tests Passing (`tests/quality.test.mjs`)
 - **Next.js 16.4.1 Turbopack Dev & Production Architecture:** 100% Verified
 - **Accessibility:** Full WCAG 2.2 AA Compliance (Contrast ≥ 4.5:1, Touch Targets ≥ 44×44px, Motion Safe Fallbacks)
-- **Sign-off Date:** 2026-10-23
+- **Sign-off Date:** 2026-10-24
 
 
 

@@ -1,5 +1,23 @@
 [
   {
+    "id": "lead_ai_1792780337067_sims",
+    "createdAt": "2026-10-23T18:32:17.067Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
     "id": "lead_ai_1792779679711_1nkr",
     "createdAt": "2026-10-23T18:21:19.711Z",
     "source": "Mutiny AI Assistant",

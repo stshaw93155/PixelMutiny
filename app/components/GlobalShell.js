@@ -74,58 +74,66 @@ function ShellInner({ children }) {
             </div>
 
             {/* Right Links & Back to Top */}
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[#424242]">
-              <Link href="/services" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
-                Services
-              </Link>
-              <span className="text-[#71717A]">,</span>
-              <Link href="/works" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
-                Work
-              </Link>
-              <span className="text-[#71717A]">,</span>
-              <Link href="/about" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
-                Agency
-              </Link>
-              <span className="text-[#71717A]">,</span>
-              <a
-                href="https://www.linkedin.com/in/gfxsumit/"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#0859D4] transition-colors font-medium inline-flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1"
-                title="Connect with Sumit on LinkedIn"
-              >
-                <span>LinkedIn</span>
-                <span className="text-[10px]">↗</span>
-              </a>
-              <span className="text-[#71717A]">,</span>
-              <a
-                href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#1BC47D] transition-colors font-medium inline-flex items-center gap-1 text-[#1BC47D] focus-visible:ring-2 focus-visible:ring-[#1BC47D] rounded px-1"
-                title="Chat with Sumit on WhatsApp"
-              >
-                <span>WhatsApp</span>
-                <span className="text-[10px]">↗</span>
-              </a>
-              <span className="text-[#71717A]">|</span>
-              <button
-                type="button"
-                onClick={() => setIsInquiryOpen(true)}
-                className="hover:text-[#0859D4] font-semibold text-[#1D1D1F] transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1"
-              >
-                Let&apos;s Talk
-              </button>
-              <span className="text-[#71717A]">|</span>
-              <button
-                type="button"
-                onClick={handleBackToTop}
-                className="inline-flex items-center gap-1 text-[#1D1D1F] hover:text-[#0859D4] font-semibold transition-colors cursor-pointer px-2 py-1 rounded-md focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none"
-                aria-label="Back to top"
-              >
-                <span>Back to top</span>
-                <ArrowUp className="w-3.5 h-3.5" />
-              </button>
+            <div className="flex flex-wrap items-center justify-center gap-y-2 text-[#424242]">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <Link href="/services" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
+                  Services
+                </Link>
+                <span className="text-[#71717A] opacity-60">,</span>
+                <Link href="/works" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
+                  Work
+                </Link>
+                <span className="text-[#71717A] opacity-60">,</span>
+                <Link href="/about" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
+                  Agency
+                </Link>
+                <span className="text-[#71717A] opacity-60">,</span>
+                <a
+                  href="https://www.linkedin.com/in/gfxsumit/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[#0859D4] transition-colors font-medium inline-flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1"
+                  title="Connect with Sumit on LinkedIn"
+                >
+                  <span>LinkedIn</span>
+                  <span className="text-[10px]">↗</span>
+                </a>
+                <span className="text-[#71717A] opacity-60">,</span>
+                <a
+                  href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[#1BC47D] transition-colors font-medium inline-flex items-center gap-1 text-[#1BC47D] focus-visible:ring-2 focus-visible:ring-[#1BC47D] rounded px-1"
+                  title="Chat with Sumit on WhatsApp"
+                >
+                  <span>WhatsApp</span>
+                  <span className="text-[10px]">↗</span>
+                </a>
+              </div>
+
+              <span className="hidden sm:inline-block mx-3 text-[rgba(18,18,19,0.18)]">|</span>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    playClick();
+                    setIsInquiryOpen(true);
+                  }}
+                  className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-[12px] font-semibold transition-all duration-200 active:scale-95 shadow-xs focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+                >
+                  Let&apos;s Talk
+                </button>
+                <button
+                  type="button"
+                  onClick={handleBackToTop}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] text-[#1D1D1F] hover:text-[#0859D4] text-[12px] font-medium transition-all duration-200 active:scale-95 shadow-xs focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+                  aria-label="Back to top"
+                >
+                  <span>Back to top</span>
+                  <ArrowUp className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

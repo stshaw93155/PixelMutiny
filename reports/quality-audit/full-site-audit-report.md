@@ -255,6 +255,7 @@ All 20 discovered defects (QA-001 through QA-020) have been remediated, regressi
 | **QA-018** | Visual UX | Medium | `app/works/page.js` (4-Col gallery grid & modal viewer) | Resolved | Pass |
 | **QA-019** | Interaction | High | `SmoothScroll.js` (Lenis scroll conflict in modals) | Resolved | Pass |
 | **QA-020** | UI/UX Overhaul | High | `StudioAiBot.js` (Linear/ChatGPT Studio Workspace) | Resolved | Pass |
+| **QA-021** | CSS / Reset & UX | High | `app/globals.css`, `GlobalShell.js` (Footer "Let's Talk" & "Back to top") | Resolved | Pass |
 
 ---
 
@@ -268,7 +269,7 @@ The following metrics represent the final verified results from active testing a
 | **Routes tested** | **19** |
 | **Total interactive elements** | **124** |
 | **Interactive elements tested** | **124** |
-| **Confirmed defects** | **20** |
+| **Confirmed defects** | **21** |
 | **P0 defects remaining** | **0** |
 | **P1 defects remaining** | **0** |
 | **Responsive test failures** | **0** |

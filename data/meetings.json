@@ -1,5 +1,19 @@
 [
   {
+    "id": "meet_1792780336954_vtn5",
+    "createdAt": "2026-10-23T18:32:16.954Z",
+    "name": "Test Client",
+    "email": "testclient@example.com",
+    "phone": "+91 9315580036",
+    "date": "2026-10-25",
+    "timeSlot": "2:30 PM IST",
+    "timezone": "IST",
+    "topic": "Website & Brand Sprint Discovery",
+    "notes": "Automated test suite verification",
+    "status": "confirmed",
+    "host": "Sumit (Founder & Design Director)"
+  },
+  {
     "id": "meet_1792779679656_fmwn",
     "createdAt": "2026-10-23T18:21:19.656Z",
     "name": "Test Client",
