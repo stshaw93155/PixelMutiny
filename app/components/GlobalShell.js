@@ -53,91 +53,102 @@ function ShellInner({ children }) {
         </main>
       </PageTransition>
 
-      {/* ONLINES STYLE MINIMALIST STUDIO FOOTER */}
-      <footer className="w-full bg-[#FBFBFB] border-t border-dashed border-[rgba(18,18,19,0.12)] text-[#424242] py-8 sm:py-10 transition-colors">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-[13px] leading-relaxed">
-            {/* Left Colophon */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">
-              <Link href="/" className="inline-flex items-center gap-1.5 font-semibold text-[#1D1D1F] mr-1 hover:text-[#0859D4] transition-colors focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded">
+      {/* STUDIO FOOTER — Spacious 3-Row Layout */}
+      <footer className="w-full bg-[#FBFBFB] border-t border-[rgba(18,18,19,0.08)] text-[#424242]">
+
+        {/* ROW 1: Brand + Nav Links */}
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 pt-14 pb-10">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
+
+            {/* Brand */}
+            <div className="flex flex-col gap-3 min-w-[180px]">
+              <Link href="/" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Image
                   src="/img/logo-main.png"
                   alt="PixelMutiny"
-                  width={110}
-                  height={28}
-                  className="h-5 w-auto object-contain inline-block"
+                  width={130}
+                  height={32}
+                  className="h-6 w-auto object-contain"
                 />
               </Link>
-              <span>2024–2026 All rights reserved. PixelMutiny DigiMedia LLP.</span>
-              <span className="hidden sm:inline text-[#71717A]">|</span>
-              <span className="text-[#5A5A5E]">New Delhi, India.</span>
+              <p className="text-xs text-[#6B7280] leading-relaxed max-w-[220px]">
+                High-performance web systems for ambitious brands. New Delhi, India.
+              </p>
             </div>
 
-            {/* Right Links & Back to Top */}
-            <div className="flex flex-wrap items-center justify-center gap-y-2 text-[#424242]">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <Link href="/services" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
-                  Services
-                </Link>
-                <span className="text-[#71717A] opacity-60">,</span>
-                <Link href="/works" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
-                  Work
-                </Link>
-                <span className="text-[#71717A] opacity-60">,</span>
-                <Link href="/about" className="hover:text-[#0859D4] transition-colors font-medium focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1">
-                  Agency
-                </Link>
-                <span className="text-[#71717A] opacity-60">,</span>
+            {/* Nav columns */}
+            <div className="flex flex-wrap gap-x-14 gap-y-6 text-sm">
+              {/* Studio */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono">Studio</span>
+                <Link href="/about" className="hover:text-[#0859D4] transition-colors font-medium">Agency</Link>
+                <Link href="/works" className="hover:text-[#0859D4] transition-colors font-medium">Work</Link>
+                <Link href="/services" className="hover:text-[#0859D4] transition-colors font-medium">Services</Link>
+              </div>
+
+              {/* Connect */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono">Connect</span>
                 <a
                   href="https://www.linkedin.com/in/gfxsumit/"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors font-medium inline-flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-[#0859D4] rounded px-1"
-                  title="Connect with Sumit on LinkedIn"
+                  className="hover:text-[#0859D4] transition-colors font-medium inline-flex items-center gap-1"
                 >
-                  <span>LinkedIn</span>
-                  <span className="text-[10px]">↗</span>
+                  LinkedIn <span className="text-[10px]">↗</span>
                 </a>
-                <span className="text-[#71717A] opacity-60">,</span>
                 <a
                   href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#1BC47D] transition-colors font-medium inline-flex items-center gap-1 text-[#1BC47D] focus-visible:ring-2 focus-visible:ring-[#1BC47D] rounded px-1"
-                  title="Chat with Sumit on WhatsApp"
+                  className="text-[#1BC47D] hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-1"
                 >
-                  <span>WhatsApp</span>
-                  <span className="text-[10px]">↗</span>
+                  WhatsApp <span className="text-[10px]">↗</span>
+                </a>
+                <a
+                  href="mailto:contact@pixelmutiny.com"
+                  className="hover:text-[#0859D4] transition-colors font-medium"
+                >
+                  Email us
                 </a>
               </div>
 
-              <span className="hidden sm:inline-block mx-3 text-[rgba(18,18,19,0.18)]">|</span>
-
-              <div className="flex items-center gap-2">
+              {/* CTA */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono">Start a project</span>
                 <button
                   type="button"
-                  onClick={() => {
-                    playClick();
-                    setIsInquiryOpen(true);
-                  }}
-                  className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-[12px] font-semibold transition-all duration-200 active:scale-95 shadow-xs focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+                  onClick={() => { playClick(); setIsInquiryOpen(true); }}
+                  className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-xs font-semibold transition-all duration-200 active:scale-95 cursor-pointer w-fit"
                 >
-                  Let&apos;s Talk
+                  Let&apos;s Talk →
                 </button>
                 <button
                   type="button"
                   onClick={handleBackToTop}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] text-[#1D1D1F] hover:text-[#0859D4] text-[12px] font-medium transition-all duration-200 active:scale-95 shadow-xs focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] hover:text-[#0859D4] text-xs font-medium transition-all duration-200 active:scale-95 cursor-pointer w-fit"
                   aria-label="Back to top"
                 >
-                  <span>Back to top</span>
-                  <ArrowUp className="w-3.5 h-3.5" />
+                  Back to top <ArrowUp className="w-3 h-3" />
                 </button>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Divider */}
+        <div className="border-t border-dashed border-[rgba(18,18,19,0.1)]" />
+
+        {/* ROW 2: Copyright bar */}
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 py-5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#9CA3AF]">
+            <span>© 2024–2026 PixelMutiny DigiMedia LLP. All rights reserved.</span>
+            <span className="font-mono text-[11px]">Built in New Delhi · Shipped Worldwide</span>
+          </div>
+        </div>
+
       </footer>
+
 
       {/* Autonomous Studio AI Assistant & Cute Bot (Always on top of all page elements) */}
       <StudioAiBot
