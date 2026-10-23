@@ -530,46 +530,19 @@ export default function StudioAiBot({ onOpenInquiry }) {
   return (
     <>
       {/* =========================================================================
-          FLOATING LAUNCHER CHARACTER BUTTON (Bottom Right when closed)
+          FLOATING LAUNCHER — Bottom Left, compact, no tooltip
           ========================================================================= */}
       <div
-        className="fixed bottom-6 right-6 z-[60] flex flex-col items-end pointer-events-auto"
+        className="fixed bottom-6 left-6 z-[60] flex flex-col items-start pointer-events-auto"
         style={{ zIndex: 60 }}
       >
-        {/* Subtle Speech Bubble Tooltip */}
-        {!isOpen && showTooltip && (
-          <div className="bot-speech-pop mb-3 relative max-w-[280px] bg-white text-[#17191F] px-4 py-3 rounded-2xl shadow-lg border border-[#E5E7EB] flex items-start gap-2.5">
-            <div className="w-2 h-2 rounded-full bg-[#16A34A] animate-ping shrink-0 mt-1.5" />
-            <div className="text-[12px] leading-snug">
-              <span className="font-bold text-[#17191F] block mb-0.5">
-                {userProfile.name ? `Hey ${userProfile.name}! 👋` : 'Hi there! 👋'}
-              </span>
-              <span className="text-[#4B5563]">Need an instant quote or sprint meeting with Sumit? Chat with me!</span>
-            </div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowTooltip(false);
-              }}
-              className="w-5 h-5 rounded-md hover:bg-[#F3F4F6] text-[#9CA3AF] hover:text-[#17191F] flex items-center justify-center transition-colors cursor-pointer shrink-0"
-              aria-label="Dismiss speech tooltip"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-            {/* Beak */}
-            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-white border-b border-r border-[#E5E7EB] transform rotate-45" />
-          </div>
-        )}
-
-        {/* Interactive Character Button */}
+        {/* Interactive Character Button — compact */}
         {!isOpen && (
           <button
             type="button"
             onClick={() => {
               playClick?.();
               setIsOpen(true);
-              setShowTooltip(false);
             }}
             className="group relative flex items-center justify-center cursor-pointer select-none outline-none focus:outline-none"
             aria-label="Open Mutiny AI Studio Assistant"
@@ -578,13 +551,13 @@ export default function StudioAiBot({ onOpenInquiry }) {
             {/* Ambient Pulse Ring */}
             <div className="absolute inset-0 rounded-full bot-launcher-ring pointer-events-none" />
 
-            {/* Robot Head Body */}
-            <div className="bot-character-float relative w-14 h-14 rounded-2xl bg-[#17191F] p-[2px] shadow-xl border border-[rgba(255,255,255,0.1)] transition-transform duration-200 group-hover:scale-105 active:scale-95 flex items-center justify-center">
-              <div className="w-full h-full rounded-[14px] bg-[#0E1015] flex items-center justify-center overflow-hidden relative">
+            {/* Robot Head Body — smaller */}
+            <div className="bot-character-float relative w-10 h-10 rounded-xl bg-[#17191F] p-[2px] shadow-lg border border-[rgba(255,255,255,0.1)] transition-transform duration-200 group-hover:scale-105 active:scale-95 flex items-center justify-center">
+              <div className="w-full h-full rounded-[10px] bg-[#0E1015] flex items-center justify-center overflow-hidden relative">
                 {/* SVG Cute Bot Face */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-full h-full p-2"
+                  className="w-full h-full p-1.5"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -604,9 +577,9 @@ export default function StudioAiBot({ onOpenInquiry }) {
                 </svg>
 
                 {/* Online Status Dot */}
-                <span className="absolute bottom-1 right-1 flex h-2.5 w-2.5">
+                <span className="absolute bottom-0.5 right-0.5 flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#16A34A] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#16A34A] border-2 border-[#0E1015]"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#16A34A] border-[1.5px] border-[#0E1015]"></span>
                 </span>
               </div>
             </div>
@@ -615,6 +588,7 @@ export default function StudioAiBot({ onOpenInquiry }) {
           </button>
         )}
       </div>
+
 
       {/* =========================================================================
           REDESIGNED MODERN AI STUDIO WORKSPACE (Linear / ChatGPT aesthetic)
