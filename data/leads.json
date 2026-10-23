@@ -1,0 +1,614 @@
+[
+  {
+    "id": "lead_ai_1792776489247_566w",
+    "createdAt": "2026-10-23T17:28:09.247Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792771159434_lpum",
+    "createdAt": "2026-10-23T15:59:19.434Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Jordan",
+    "email": "jordan@example.com",
+    "phone": "",
+    "companyUrl": "",
+    "brief": "Selected scope package: Kinetic Reels & Short-form Video, Meta Ads & Growth Marketing.",
+    "services": [
+      "Kinetic Reels & Short-form Video",
+      "Meta Ads & Growth Marketing"
+    ],
+    "budget": "₹21,000",
+    "timeline": "48–72 hours",
+    "currency": "INR",
+    "estimatedTotal": "₹21,000"
+  },
+  {
+    "id": "lead_ai_1792770934903_7e76",
+    "createdAt": "2026-10-23T15:55:34.903Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792770782759_12gv",
+    "createdAt": "2026-10-23T15:53:02.759Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792770324647_daki",
+    "createdAt": "2026-10-23T15:45:24.647Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792770238972_k9jt",
+    "createdAt": "2026-10-23T15:43:58.972Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792769727105_6xhk",
+    "createdAt": "2026-10-23T15:35:27.105Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792766819273_i1h2",
+    "createdAt": "2026-10-23T14:46:59.273Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792766480115_x30m",
+    "createdAt": "2026-10-23T14:41:20.115Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792765858667_s4eh",
+    "createdAt": "2026-10-23T14:30:58.667Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792691904630_5duk",
+    "createdAt": "2026-10-22T17:58:24.630Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792690651860_jx4q",
+    "createdAt": "2026-10-22T17:37:31.860Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792690577300_mykl",
+    "createdAt": "2026-10-22T17:36:17.300Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792690428761_04qo",
+    "createdAt": "2026-10-22T17:33:48.761Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792689681887_xfug",
+    "createdAt": "2026-10-22T17:21:21.887Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792689058882_4a4n",
+    "createdAt": "2026-10-22T17:10:58.882Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792688926558_ruta",
+    "createdAt": "2026-10-22T17:08:46.558Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792688458359_ppsd",
+    "createdAt": "2026-10-22T17:00:58.359Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792688026714_vwho",
+    "createdAt": "2026-10-22T16:53:46.714Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792687972435_ffpf",
+    "createdAt": "2026-10-22T16:52:52.435Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792687736085_irc5",
+    "createdAt": "2026-10-22T16:48:56.085Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792687471774_4aaf",
+    "createdAt": "2026-10-22T16:44:31.774Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792687217274_vg33",
+    "createdAt": "2026-10-22T16:40:17.274Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792686292431_u047",
+    "createdAt": "2026-10-22T16:24:52.431Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792685897405_mx8z",
+    "createdAt": "2026-10-22T16:18:17.405Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792685576006_envk",
+    "createdAt": "2026-10-22T16:12:56.006Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792682023084_cknc",
+    "createdAt": "2026-10-22T15:13:43.084Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792680887700_xht5",
+    "createdAt": "2026-10-22T14:54:47.700Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792680574643_wn1j",
+    "createdAt": "2026-10-22T14:49:34.643Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792680073936_q1aj",
+    "createdAt": "2026-10-22T14:41:13.936Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Sumit Shaw",
+    "email": "stshaw112@gmail.com",
+    "phone": "",
+    "companyUrl": "",
+    "brief": "Selected scope package: High-Converting Landing Page, Kinetic Reels & Short-form Video.",
+    "services": [
+      "High-Converting Landing Page",
+      "Kinetic Reels & Short-form Video"
+    ],
+    "budget": "₹26,000",
+    "timeline": "5–7 days",
+    "currency": "INR",
+    "estimatedTotal": "₹26,000"
+  },
+  {
+    "id": "lead_ai_1792679862351_nfzj",
+    "createdAt": "2026-10-22T14:37:42.351Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792607813222_uojj",
+    "createdAt": "2026-10-21T18:36:53.222Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_ai_1792607454365_lpoe",
+    "createdAt": "2026-10-21T18:30:54.365Z",
+    "source": "Mutiny AI Assistant",
+    "name": "Test Founder",
+    "email": "founder@teststartup.io",
+    "phone": "+91 9999999999",
+    "companyUrl": "",
+    "brief": "Need a fast 48h turnaround sprint.",
+    "services": [
+      "Website Design & Dev",
+      "Brand Identity"
+    ],
+    "budget": "₹50,000 to ₹1,00,000",
+    "timeline": "2 to 3 weeks",
+    "currency": "INR",
+    "estimatedTotal": "₹47,000"
+  },
+  {
+    "id": "lead_1792500930757_q4ad0",
+    "createdAt": "2026-10-20T12:55:30.757Z",
+    "ip": "::1",
+    "name": "Aarya Sharma",
+    "email": "aarya@pixelmutiny.com",
+    "phone": "",
+    "companyUrl": "PixelMutiny Tech",
+    "brief": "We need a high-converting landing page and brand identity system.We need a high-converting landing page and brand identity system.",
+    "services": [
+      "Brand Identity",
+      "Landing Page"
+    ],
+    "budget": "₹25,000 to ₹60,000",
+    "timeline": "2 to 4 weeks",
+    "currency": "INR",
+    "estimatedTotal": "Starting at ₹32,000"
+  }
+]
