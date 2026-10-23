@@ -1,5 +1,47 @@
 [
   {
+    "id": "meet_1792779679656_fmwn",
+    "createdAt": "2026-10-23T18:21:19.656Z",
+    "name": "Test Client",
+    "email": "testclient@example.com",
+    "phone": "+91 9315580036",
+    "date": "2026-10-25",
+    "timeSlot": "2:30 PM IST",
+    "timezone": "IST",
+    "topic": "Website & Brand Sprint Discovery",
+    "notes": "Automated test suite verification",
+    "status": "confirmed",
+    "host": "Sumit (Founder & Design Director)"
+  },
+  {
+    "id": "meet_1792778875572_nuhu",
+    "createdAt": "2026-10-23T18:07:55.572Z",
+    "name": "Test Client",
+    "email": "testclient@example.com",
+    "phone": "+91 9315580036",
+    "date": "2026-10-25",
+    "timeSlot": "2:30 PM IST",
+    "timezone": "IST",
+    "topic": "Website & Brand Sprint Discovery",
+    "notes": "Automated test suite verification",
+    "status": "confirmed",
+    "host": "Sumit (Founder & Design Director)"
+  },
+  {
+    "id": "meet_1792778847576_ju95",
+    "createdAt": "2026-10-23T18:07:27.576Z",
+    "name": "QA Auditor",
+    "email": "qa@pixelmutiny.test",
+    "phone": "",
+    "date": "2026-10-30",
+    "timeSlot": "3:00 PM EST",
+    "timezone": "IST",
+    "topic": "Executive Strategy Audit",
+    "notes": "",
+    "status": "confirmed",
+    "host": "Sumit (Founder & Design Director)"
+  },
+  {
     "id": "meet_1792776489218_3i06",
     "createdAt": "2026-10-23T17:28:09.218Z",
     "name": "Test Client",
