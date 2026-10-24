@@ -53,110 +53,109 @@ function ShellInner({ children }) {
         </main>
       </PageTransition>
 
-      {/* STUDIO FOOTER — Spacious 3-Row Layout */}
-      <footer className="w-full bg-[#FBFBFB] border-t border-[rgba(18,18,19,0.08)] text-[#424242]">
+      {/* STUDIO FOOTER — Compact Single Row Layout */}
+      <footer className="w-full bg-[#FBFBFB] border-t border-[rgba(0,0,0,0.08)] text-[#1a1a1f]">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6 pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-8">
+          
+          {/* Main Grid: Mobile (stacked/2-col), Tablet (2-col), Desktop (1 single compact row) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr] items-start gap-y-7 md:gap-y-8 gap-x-6 sm:gap-x-8 lg:gap-x-12">
 
-        {/* ROW 1: Brand + Nav Grid */}
-        <div className="max-w-[1400px] mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] items-start gap-12 lg:gap-12">
-
-            {/* Brand block (Lines up flush with link column baselines) */}
-            <div className="flex flex-col gap-4">
-              <Link href="/" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
+            {/* COLUMN 1: BRAND */}
+            <div className="flex flex-col items-start md:col-span-2 lg:col-span-1">
+              <Link href="/" className="inline-block hover:opacity-80 transition-opacity p-0 m-0">
                 <Image
                   src="/img/logo-main.png"
                   alt="PixelMutiny"
-                  width={140}
-                  height={34}
-                  className="h-6 w-auto object-contain"
+                  width={115}
+                  height={28}
+                  className="h-[28px] w-auto object-contain block p-0 m-0"
+                  priority={false}
                 />
               </Link>
-              <p className="text-xs text-[#6B7280] leading-relaxed max-w-[280px]">
+              <p className="text-[13px] leading-[1.5] text-[#6b6b73] mt-3 max-w-[280px]">
                 High-performance web systems for ambitious brands. New Delhi, India.
               </p>
             </div>
 
-            {/* Column 1: Studio */}
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono mb-4 block">
-                Studio
-              </span>
-              <div className="flex flex-col gap-2.5 text-sm">
-                <Link href="/about" className="hover:text-[#0859D4] transition-colors font-medium">Agency</Link>
-                <Link href="/works" className="hover:text-[#0859D4] transition-colors font-medium">Work</Link>
-                <Link href="/services" className="hover:text-[#0859D4] transition-colors font-medium">Services</Link>
+            {/* Link Groups Wrapper for clean side-by-side display on mobile if needed */}
+            <div className="contents md:contents">
+              {/* COLUMN 2: STUDIO */}
+              <div className="flex flex-col items-start">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
+                  Studio
+                </span>
+                <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
+                  <Link href="/about" className="hover:text-[#0859D4] transition-colors duration-150">Agency</Link>
+                  <Link href="/works" className="hover:text-[#0859D4] transition-colors duration-150">Work</Link>
+                  <Link href="/services" className="hover:text-[#0859D4] transition-colors duration-150">Services</Link>
+                </div>
+              </div>
+
+              {/* COLUMN 3: CONNECT */}
+              <div className="flex flex-col items-start">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
+                  Connect
+                </span>
+                <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
+                  <a
+                    href="https://www.linkedin.com/in/gfxsumit/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-[#0859D4] transition-colors duration-150 inline-flex items-center gap-1"
+                  >
+                    LinkedIn <span className="text-[10px]">↗</span>
+                  </a>
+                  <a
+                    href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[#1BC47D] hover:opacity-85 transition-opacity duration-150 inline-flex items-center gap-1"
+                  >
+                    WhatsApp <span className="text-[10px]">↗</span>
+                  </a>
+                  <a
+                    href="mailto:contact@pixelmutiny.com"
+                    className="hover:text-[#0859D4] transition-colors duration-150"
+                  >
+                    Email us
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* Column 2: Connect */}
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono mb-4 block">
-                Connect
-              </span>
-              <div className="flex flex-col gap-2.5 text-sm">
-                <a
-                  href="https://www.linkedin.com/in/gfxsumit/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors font-medium inline-flex items-center gap-1"
-                >
-                  LinkedIn <span className="text-[10px]">↗</span>
-                </a>
-                <a
-                  href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[#1BC47D] hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-1"
-                >
-                  WhatsApp <span className="text-[10px]">↗</span>
-                </a>
-                <a
-                  href="mailto:contact@pixelmutiny.com"
-                  className="hover:text-[#0859D4] transition-colors font-medium"
-                >
-                  Email us
-                </a>
-              </div>
-            </div>
-
-            {/* Column 3: Start a project */}
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono mb-4 block">
+            {/* COLUMN 4: START A PROJECT */}
+            <div className="flex flex-col items-start md:col-span-2 lg:col-span-1 w-full">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
                 Start a project
               </span>
-              <div className="flex flex-col gap-3 w-full sm:w-[160px]">
+              <div className="flex flex-col md:flex-row lg:flex-col gap-2 w-full">
                 <button
                   type="button"
                   onClick={() => { playClick(); setIsInquiryOpen(true); }}
-                  className="inline-flex items-center justify-center w-full h-10 px-5 rounded-full bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-xs font-semibold transition-all duration-200 active:scale-95 cursor-pointer shadow-xs"
+                  className="inline-flex items-center justify-center h-[40px] w-full md:w-auto lg:w-full max-w-[200px] px-4 rounded-full bg-[#1a1a1f] hover:bg-[#0859D4] text-white text-[13px] font-semibold transition-all duration-150 active:scale-95 cursor-pointer"
                 >
                   Let&apos;s Talk →
                 </button>
                 <button
                   type="button"
                   onClick={handleBackToTop}
-                  className="inline-flex items-center justify-center gap-1.5 w-full h-10 px-4 rounded-full border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] hover:text-[#0859D4] text-xs font-medium transition-all duration-200 active:scale-95 cursor-pointer shadow-2xs"
+                  className="inline-flex items-center justify-center gap-1.5 h-[40px] w-full md:w-auto lg:w-full max-w-[200px] px-4 rounded-full border border-[rgba(0,0,0,0.12)] bg-transparent hover:bg-[rgba(0,0,0,0.04)] text-[#1a1a1f] text-[13px] font-medium transition-all duration-150 active:scale-95 cursor-pointer"
                   aria-label="Back to top"
                 >
-                  Back to top <ArrowUp className="w-3 h-3" />
+                  Back to top <ArrowUp className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
 
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="border-t border-dashed border-[rgba(18,18,19,0.1)]" />
-
-        {/* ROW 2: Copyright bar */}
-        <div className="max-w-[1400px] mx-auto px-6 py-5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#9CA3AF]">
-            <span>© 2024–2026 PixelMutiny DigiMedia LLP. All rights reserved.</span>
-            <span className="font-mono text-[11px]">Built in New Delhi · Shipped Worldwide</span>
+          {/* Bottom Strip */}
+          <div className="mt-8 pt-4 border-t border-[rgba(0,0,0,0.06)] flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-[#9a9aa5]">
+            <span>© 2026 PixelMutiny DigiMedia</span>
+            <span className="font-mono text-[11px] hidden sm:inline">Built in New Delhi · Shipped Worldwide</span>
           </div>
-        </div>
 
+        </div>
       </footer>
 
 
