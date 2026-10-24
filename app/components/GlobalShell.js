@@ -12,7 +12,7 @@ import Preloader from './Preloader';
 import PageTransition from './PageTransition';
 import { ScrollProgressBar } from '@/lib/motion';
 import { SoundProvider, useSound } from './SoundManager';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import StudioAiBot from './StudioAiBot';
 
 function ShellInner({ children }) {
@@ -53,103 +53,149 @@ function ShellInner({ children }) {
         </main>
       </PageTransition>
 
-      {/* STUDIO FOOTER — Compact Single Row Layout */}
-      <footer className="w-full bg-[#FBFBFB] border-t border-[rgba(0,0,0,0.08)] text-[#1a1a1f]">
-        <div className="max-w-[1200px] mx-auto px-5 sm:px-6 pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-8">
+      {/* VISIONOS INSPIRED EDITORIAL FOOTER */}
+      <footer className="w-full bg-[#FAFAFC] border-t border-[rgba(0,0,0,0.08)] text-[#1a1a1f]">
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-10">
           
-          {/* Main Grid: Mobile (stacked/2-col), Tablet (2-col), Desktop (1 single compact row) */}
-          <div className="compact-footer-grid gap-y-7 md:gap-y-8 gap-x-6 sm:gap-x-8 lg:gap-x-12">
-
-            {/* COLUMN 1: BRAND */}
-            <div className="flex flex-col items-start md:col-span-2 lg:col-span-1">
-              <Link href="/" className="inline-block hover:opacity-80 transition-opacity p-0 m-0">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+            
+            {/* Left Brand & Headline Block (Columns 1-5) */}
+            <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-8">
+              <Link href="/" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity mb-8">
                 <Image
                   src="/img/logo-main.png"
                   alt="PixelMutiny"
-                  width={115}
-                  height={28}
-                  className="h-[28px] w-auto object-contain block p-0 m-0"
+                  width={140}
+                  height={32}
+                  className="h-[28px] w-auto object-contain block"
                   priority={false}
                 />
               </Link>
-              <p className="text-[13px] leading-[1.5] text-[#6b6b73] mt-3 max-w-[280px]">
-                High-performance web systems for ambitious brands. New Delhi, India.
-              </p>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-[#111827] tracking-tight leading-[1.2] mb-8 max-w-[380px]">
+                The Architect Of Modern Digital Growth.
+              </h2>
+
+              {/* VisionOS-style Split Pill CTA Button */}
+              <button
+                type="button"
+                onClick={() => { playClick(); setIsInquiryOpen(true); }}
+                className="group inline-flex items-center rounded-sm bg-[#0859D4] hover:bg-[#0747A6] text-white transition-all shadow-md active:scale-98 overflow-hidden cursor-pointer"
+                style={{ backgroundColor: '#0859D4', color: '#FFFFFF' }}
+              >
+                <span className="px-5 py-3 text-[13px] font-bold tracking-wide uppercase text-white">
+                  Get in Touch
+                </span>
+                <span className="px-3.5 py-3 border-l border-white/20 bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-white">
+                  <ArrowUpRight className="w-4 h-4 text-white" />
+                </span>
+              </button>
             </div>
 
-            {/* COLUMN 2: STUDIO */}
-            <div className="flex flex-col items-start">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
-                Studio
-              </span>
-              <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
-                <Link href="/about" className="hover:text-[#0859D4] transition-colors duration-150">Agency</Link>
-                <Link href="/works" className="hover:text-[#0859D4] transition-colors duration-150">Work</Link>
-                <Link href="/services" className="hover:text-[#0859D4] transition-colors duration-150">Services</Link>
+            {/* Right 4 Link Columns with Subtle Vertical Dividers (Columns 6-12) */}
+            <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[rgba(0,0,0,0.08)] text-left">
+              
+              {/* Column 1: Disciplines */}
+              <div className="flex flex-col items-start pr-4 sm:pr-6 pb-6 sm:pb-0">
+                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+                  Disciplines
+                </span>
+                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
+                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Web Systems</Link>
+                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Landing Pages</Link>
+                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">UI/UX Systems</Link>
+                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Web Apps</Link>
+                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Brand Identity</Link>
+                </div>
               </div>
-            </div>
 
-            {/* COLUMN 3: CONNECT */}
-            <div className="flex flex-col items-start">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
-                Connect
-              </span>
-              <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
-                <a
-                  href="https://www.linkedin.com/in/gfxsumit/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors duration-150 inline-flex items-center gap-1"
-                >
-                  LinkedIn <span className="text-[10px]">↗</span>
-                </a>
-                <a
-                  href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[#1BC47D] hover:opacity-85 transition-opacity duration-150 inline-flex items-center gap-1"
-                >
-                  WhatsApp <span className="text-[10px]">↗</span>
-                </a>
-                <a
-                  href="mailto:contact@pixelmutiny.com"
-                  className="hover:text-[#0859D4] transition-colors duration-150"
-                >
-                  Email us
-                </a>
+              {/* Column 2: Works */}
+              <div className="flex flex-col items-start px-0 sm:px-6 py-6 sm:py-0">
+                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+                  Portfolio
+                </span>
+                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
+                  <Link href="/works" className="hover:text-[#0859D4] transition-colors">Case Studies</Link>
+                  <Link href="/works/avenor" className="hover:text-[#0859D4] transition-colors">Avenor Design</Link>
+                  <Link href="/works/veyra-legal" className="hover:text-[#0859D4] transition-colors">Veyra Legal</Link>
+                  <Link href="/works/flow-task" className="hover:text-[#0859D4] transition-colors">FlowTask App</Link>
+                  <Link href="/works" className="hover:text-[#0859D4] transition-colors">Motion Reel</Link>
+                </div>
               </div>
-            </div>
 
-            {/* COLUMN 4: START A PROJECT */}
-            <div className="flex flex-col items-start md:col-span-2 lg:col-span-1 w-full">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
-                Start a project
-              </span>
-              <div className="flex flex-col md:flex-row lg:flex-col gap-2 w-full">
-                <button
-                  type="button"
-                  onClick={() => { playClick(); setIsInquiryOpen(true); }}
-                  className="inline-flex items-center justify-center h-[40px] w-full md:w-auto lg:w-full max-w-[200px] px-4 rounded-full bg-[#1a1a1f] hover:bg-[#0859D4] text-white text-[13px] font-semibold transition-all duration-150 active:scale-95 cursor-pointer"
-                >
-                  Let&apos;s Talk →
-                </button>
-                <button
-                  type="button"
-                  onClick={handleBackToTop}
-                  className="inline-flex items-center justify-center gap-1.5 h-[40px] w-full md:w-auto lg:w-full max-w-[200px] px-4 rounded-full border border-[rgba(0,0,0,0.12)] bg-transparent hover:bg-[rgba(0,0,0,0.04)] text-[#1a1a1f] text-[13px] font-medium transition-all duration-150 active:scale-95 cursor-pointer"
-                  aria-label="Back to top"
-                >
-                  Back to top <ArrowUp className="w-3.5 h-3.5" />
-                </button>
+              {/* Column 3: Company */}
+              <div className="flex flex-col items-start px-0 sm:px-6 py-6 sm:py-0">
+                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+                  Company
+                </span>
+                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
+                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">About Us</Link>
+                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">Manifesto</Link>
+                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">Studio Awards</Link>
+                  <Link href="/contact" className="hover:text-[#0859D4] transition-colors">Contact Us</Link>
+                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">Press & News</Link>
+                </div>
               </div>
+
+              {/* Column 4: Connect */}
+              <div className="flex flex-col items-start pl-0 sm:pl-6 pt-6 sm:pt-0">
+                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+                  Connect
+                </span>
+                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
+                  <a
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>𝕏</span> <span>X.com</span>
+                  </a>
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>📸</span> <span>Instagram</span>
+                  </a>
+                  <a
+                    href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[#10B981] hover:opacity-85 transition-opacity inline-flex items-center gap-1.5 font-medium"
+                  >
+                    <span>💬</span> <span>WhatsApp</span>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/gfxsumit/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>💼</span> <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+
             </div>
 
           </div>
 
-          {/* Bottom Strip */}
-          <div className="mt-8 pt-4 border-t border-[rgba(0,0,0,0.06)] flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-[#9a9aa5]">
-            <span>© 2026 PixelMutiny DigiMedia</span>
-            <span className="font-mono text-[11px] hidden sm:inline">Built in New Delhi · Shipped Worldwide</span>
+          {/* Bottom Legal & Copyright Strip */}
+          <div className="mt-14 pt-6 border-t border-[rgba(0,0,0,0.06)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9CA3AF]">
+            <div className="flex items-center gap-6">
+              <Link href="/contact" className="hover:text-[#4B5563] transition-colors">Privacy Policy</Link>
+              <Link href="/contact" className="hover:text-[#4B5563] transition-colors">Terms of Use</Link>
+              <button
+                type="button"
+                onClick={handleBackToTop}
+                className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1 cursor-pointer"
+              >
+                Back to top ↑
+              </button>
+            </div>
+            <span>© 2026 PixelMutiny DigiMedia LLP. All rights reserved.</span>
           </div>
 
         </div>
