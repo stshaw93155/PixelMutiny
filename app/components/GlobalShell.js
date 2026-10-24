@@ -56,46 +56,51 @@ function ShellInner({ children }) {
       {/* STUDIO FOOTER — Spacious 3-Row Layout */}
       <footer className="w-full bg-[#FBFBFB] border-t border-[rgba(18,18,19,0.08)] text-[#424242]">
 
-        {/* ROW 1: Brand + Nav Links */}
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 pt-14 pb-10">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
+        {/* ROW 1: Brand + Nav Grid */}
+        <div className="max-w-[1400px] mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] items-start gap-12 lg:gap-12">
 
-            {/* Brand */}
-            <div className="flex flex-col gap-3 min-w-[180px]">
+            {/* Brand block (Lines up flush with link column baselines) */}
+            <div className="flex flex-col gap-4">
               <Link href="/" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Image
                   src="/img/logo-main.png"
                   alt="PixelMutiny"
-                  width={130}
-                  height={32}
+                  width={140}
+                  height={34}
                   className="h-6 w-auto object-contain"
                 />
               </Link>
-              <p className="text-xs text-[#6B7280] leading-relaxed max-w-[220px]">
+              <p className="text-xs text-[#6B7280] leading-relaxed max-w-[280px]">
                 High-performance web systems for ambitious brands. New Delhi, India.
               </p>
             </div>
 
-            {/* Nav columns with clean dividers and breathing room */}
-            <div className="flex flex-wrap items-start text-sm divide-y sm:divide-y-0 sm:divide-x divide-[rgba(18,18,19,0.08)]">
-              {/* Studio */}
-              <div className="flex flex-col gap-3.5 pr-8 lg:pr-12 pb-6 sm:pb-0 min-w-[130px]">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono">Studio</span>
+            {/* Column 1: Studio */}
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono mb-4 block">
+                Studio
+              </span>
+              <div className="flex flex-col gap-2.5 text-sm">
                 <Link href="/about" className="hover:text-[#0859D4] transition-colors font-medium">Agency</Link>
                 <Link href="/works" className="hover:text-[#0859D4] transition-colors font-medium">Work</Link>
                 <Link href="/services" className="hover:text-[#0859D4] transition-colors font-medium">Services</Link>
               </div>
+            </div>
 
-              {/* Connect */}
-              <div className="flex flex-col gap-3.5 px-0 sm:px-8 lg:px-12 py-6 sm:py-0 min-w-[140px]">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono">Connect</span>
+            {/* Column 2: Connect */}
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono mb-4 block">
+                Connect
+              </span>
+              <div className="flex flex-col gap-2.5 text-sm">
                 <a
                   href="https://www.linkedin.com/in/gfxsumit/"
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-[#0859D4] transition-colors font-medium inline-flex items-center gap-1"
                 >
-                  Agency LinkedIn <span className="text-[10px]">↗</span>
+                  LinkedIn <span className="text-[10px]">↗</span>
                 </a>
                 <a
                   href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
@@ -112,27 +117,32 @@ function ShellInner({ children }) {
                   Email us
                 </a>
               </div>
+            </div>
 
-              {/* Start a project */}
-              <div className="flex flex-col gap-3.5 pl-0 sm:pl-8 lg:pl-12 pt-6 sm:pt-0 min-w-[150px]">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono">Start a project</span>
+            {/* Column 3: Start a project */}
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] font-mono mb-4 block">
+                Start a project
+              </span>
+              <div className="flex flex-col gap-3 w-full sm:w-[160px]">
                 <button
                   type="button"
                   onClick={() => { playClick(); setIsInquiryOpen(true); }}
-                  className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-xs font-semibold transition-all duration-200 active:scale-95 cursor-pointer w-fit shadow-xs"
+                  className="inline-flex items-center justify-center w-full h-10 px-5 rounded-full bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-xs font-semibold transition-all duration-200 active:scale-95 cursor-pointer shadow-xs"
                 >
                   Let&apos;s Talk →
                 </button>
                 <button
                   type="button"
                   onClick={handleBackToTop}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] hover:text-[#0859D4] text-xs font-medium transition-all duration-200 active:scale-95 cursor-pointer w-fit shadow-2xs"
+                  className="inline-flex items-center justify-center gap-1.5 w-full h-10 px-4 rounded-full border border-[rgba(18,18,19,0.14)] bg-white hover:bg-[#F5F5F7] hover:text-[#0859D4] text-xs font-medium transition-all duration-200 active:scale-95 cursor-pointer shadow-2xs"
                   aria-label="Back to top"
                 >
                   Back to top <ArrowUp className="w-3 h-3" />
                 </button>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -140,7 +150,7 @@ function ShellInner({ children }) {
         <div className="border-t border-dashed border-[rgba(18,18,19,0.1)]" />
 
         {/* ROW 2: Copyright bar */}
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20 py-5">
+        <div className="max-w-[1400px] mx-auto px-6 py-5">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#9CA3AF]">
             <span>© 2024–2026 PixelMutiny DigiMedia LLP. All rights reserved.</span>
             <span className="font-mono text-[11px]">Built in New Delhi · Shipped Worldwide</span>
