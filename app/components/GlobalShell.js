@@ -58,7 +58,7 @@ function ShellInner({ children }) {
         <div className="max-w-[1200px] mx-auto px-5 sm:px-6 pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-8">
           
           {/* Main Grid: Mobile (stacked/2-col), Tablet (2-col), Desktop (1 single compact row) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr] items-start gap-y-7 md:gap-y-8 gap-x-6 sm:gap-x-8 lg:gap-x-12">
+          <div className="compact-footer-grid gap-y-7 md:gap-y-8 gap-x-6 sm:gap-x-8 lg:gap-x-12">
 
             {/* COLUMN 1: BRAND */}
             <div className="flex flex-col items-start md:col-span-2 lg:col-span-1">
@@ -77,49 +77,46 @@ function ShellInner({ children }) {
               </p>
             </div>
 
-            {/* Link Groups Wrapper for clean side-by-side display on mobile if needed */}
-            <div className="contents md:contents">
-              {/* COLUMN 2: STUDIO */}
-              <div className="flex flex-col items-start">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
-                  Studio
-                </span>
-                <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
-                  <Link href="/about" className="hover:text-[#0859D4] transition-colors duration-150">Agency</Link>
-                  <Link href="/works" className="hover:text-[#0859D4] transition-colors duration-150">Work</Link>
-                  <Link href="/services" className="hover:text-[#0859D4] transition-colors duration-150">Services</Link>
-                </div>
+            {/* COLUMN 2: STUDIO */}
+            <div className="flex flex-col items-start">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
+                Studio
+              </span>
+              <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
+                <Link href="/about" className="hover:text-[#0859D4] transition-colors duration-150">Agency</Link>
+                <Link href="/works" className="hover:text-[#0859D4] transition-colors duration-150">Work</Link>
+                <Link href="/services" className="hover:text-[#0859D4] transition-colors duration-150">Services</Link>
               </div>
+            </div>
 
-              {/* COLUMN 3: CONNECT */}
-              <div className="flex flex-col items-start">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
-                  Connect
-                </span>
-                <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
-                  <a
-                    href="https://www.linkedin.com/in/gfxsumit/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-[#0859D4] transition-colors duration-150 inline-flex items-center gap-1"
-                  >
-                    LinkedIn <span className="text-[10px]">↗</span>
-                  </a>
-                  <a
-                    href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[#1BC47D] hover:opacity-85 transition-opacity duration-150 inline-flex items-center gap-1"
-                  >
-                    WhatsApp <span className="text-[10px]">↗</span>
-                  </a>
-                  <a
-                    href="mailto:contact@pixelmutiny.com"
-                    className="hover:text-[#0859D4] transition-colors duration-150"
-                  >
-                    Email us
-                  </a>
-                </div>
+            {/* COLUMN 3: CONNECT */}
+            <div className="flex flex-col items-start">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9a9aa5] mb-3.5 block leading-none">
+                Connect
+              </span>
+              <div className="flex flex-col gap-2 text-[14px] leading-[1.4] text-[#1a1a1f]">
+                <a
+                  href="https://www.linkedin.com/in/gfxsumit/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[#0859D4] transition-colors duration-150 inline-flex items-center gap-1"
+                >
+                  LinkedIn <span className="text-[10px]">↗</span>
+                </a>
+                <a
+                  href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#1BC47D] hover:opacity-85 transition-opacity duration-150 inline-flex items-center gap-1"
+                >
+                  WhatsApp <span className="text-[10px]">↗</span>
+                </a>
+                <a
+                  href="mailto:contact@pixelmutiny.com"
+                  className="hover:text-[#0859D4] transition-colors duration-150"
+                >
+                  Email us
+                </a>
               </div>
             </div>
 

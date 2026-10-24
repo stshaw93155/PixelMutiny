@@ -1338,3 +1338,29 @@
   color: var(--wp--preset--color--custom-azul) !important;
   transform: translateY(-1px);
 }
+
+/* --------------------------------------------------------------------------
+   COMPACT STUDIO FOOTER GRID SPEC
+   -------------------------------------------------------------------------- */
+.compact-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .compact-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    column-gap: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .compact-footer-grid {
+    grid-template-columns: 1.6fr 1fr 1fr 1.1fr !important;
+    column-gap: 48px !important;
+    row-gap: 0 !important;
+  }
+}
+
