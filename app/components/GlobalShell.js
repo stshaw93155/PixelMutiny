@@ -53,15 +53,16 @@ function ShellInner({ children }) {
         </main>
       </PageTransition>
 
-      {/* VISIONOS INSPIRED EDITORIAL FOOTER */}
+      {/* FOOTER */}
       <footer className="w-full bg-[#FAFAFC] border-t border-[rgba(0,0,0,0.08)] text-[#1a1a1f]">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-10">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
-            
-            {/* Left Brand & Headline Block (Columns 1-5) */}
-            <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-8">
-              <Link href="/" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity mb-8">
+        <div className="w-full px-6 sm:px-10 lg:px-16 pt-12 pb-8">
+
+          {/* Main row: logo+button | spacer | 4 nav columns */}
+          <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-0">
+
+            {/* LEFT: Logo + CTA button */}
+            <div className="flex flex-col items-start gap-6 flex-shrink-0">
+              <Link href="/" className="inline-flex items-center hover:opacity-80 transition-opacity">
                 <Image
                   src="/img/logo-main.png"
                   alt="PixelMutiny"
@@ -72,119 +73,96 @@ function ShellInner({ children }) {
                 />
               </Link>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-[#111827] tracking-tight leading-[1.2] mb-8 max-w-[380px]">
-                The Architect Of Modern Digital Growth.
-              </h2>
-
-              {/* VisionOS-style Split Pill CTA Button */}
+              {/* Split Pill CTA Button */}
               <button
                 type="button"
                 onClick={() => { playClick(); setIsInquiryOpen(true); }}
-                className="group inline-flex items-center rounded-sm bg-[#0859D4] hover:bg-[#0747A6] text-white transition-all shadow-md active:scale-98 overflow-hidden cursor-pointer"
-                style={{ backgroundColor: '#0859D4', color: '#FFFFFF' }}
+                className="group inline-flex items-center rounded-sm overflow-hidden cursor-pointer transition-all active:scale-95"
+                style={{ backgroundColor: '#0859D4' }}
               >
-                <span className="px-5 py-3 text-[13px] font-bold tracking-wide uppercase text-white">
+                <span className="px-5 py-3 text-[13px] font-bold tracking-wide uppercase" style={{ color: '#FFFFFF' }}>
                   Get in Touch
                 </span>
-                <span className="px-3.5 py-3 border-l border-white/20 bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-white">
-                  <ArrowUpRight className="w-4 h-4 text-white" />
+                <span
+                  className="px-3.5 py-3 flex items-center justify-center"
+                  style={{ borderLeft: '1px solid rgba(255,255,255,0.2)', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFFFFF' }}
+                >
+                  <ArrowUpRight className="w-4 h-4" style={{ color: '#FFFFFF' }} />
                 </span>
               </button>
             </div>
 
-            {/* Right 4 Link Columns with Subtle Vertical Dividers (Columns 6-12) */}
-            <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[rgba(0,0,0,0.08)] text-left">
-              
-              {/* Column 1: Disciplines */}
-              <div className="flex flex-col items-start pr-4 sm:pr-6 pb-6 sm:pb-0">
-                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+            {/* CENTER: Flex spacer */}
+            <div className="hidden lg:block flex-1" />
+
+            {/* RIGHT: 4 Nav columns, no dividers */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 flex-shrink-0" style={{ columnGap: '56px', rowGap: '40px' }}>
+
+              {/* Disciplines */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
                   Disciplines
                 </span>
-                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
-                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Web Systems</Link>
-                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Landing Pages</Link>
-                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">UI/UX Systems</Link>
-                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Web Apps</Link>
-                  <Link href="/services" className="hover:text-[#0859D4] transition-colors">Brand Identity</Link>
-                </div>
+                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Web Systems</Link>
+                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Landing Pages</Link>
+                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">UI/UX Systems</Link>
+                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Web Apps</Link>
+                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Brand Identity</Link>
               </div>
 
-              {/* Column 2: Works */}
-              <div className="flex flex-col items-start px-0 sm:px-6 py-6 sm:py-0">
-                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+              {/* Portfolio */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
                   Portfolio
                 </span>
-                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
-                  <Link href="/works" className="hover:text-[#0859D4] transition-colors">Case Studies</Link>
-                  <Link href="/works/avenor" className="hover:text-[#0859D4] transition-colors">Avenor Design</Link>
-                  <Link href="/works/veyra-legal" className="hover:text-[#0859D4] transition-colors">Veyra Legal</Link>
-                  <Link href="/works/flow-task" className="hover:text-[#0859D4] transition-colors">FlowTask App</Link>
-                  <Link href="/works" className="hover:text-[#0859D4] transition-colors">Motion Reel</Link>
-                </div>
+                <Link href="/works" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Case Studies</Link>
+                <Link href="/works/avenor" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Avenor Design</Link>
+                <Link href="/works/veyra-legal" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Veyra Legal</Link>
+                <Link href="/works/flow-task" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">FlowTask App</Link>
+                <Link href="/works" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Motion Reel</Link>
               </div>
 
-              {/* Column 3: Company */}
-              <div className="flex flex-col items-start px-0 sm:px-6 py-6 sm:py-0">
-                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+              {/* Company */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
                   Company
                 </span>
-                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
-                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">About Us</Link>
-                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">Manifesto</Link>
-                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">Studio Awards</Link>
-                  <Link href="/contact" className="hover:text-[#0859D4] transition-colors">Contact Us</Link>
-                  <Link href="/about" className="hover:text-[#0859D4] transition-colors">Press & News</Link>
-                </div>
+                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">About Us</Link>
+                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Manifesto</Link>
+                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Studio Awards</Link>
+                <Link href="/contact" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Contact Us</Link>
+                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Press & News</Link>
               </div>
 
-              {/* Column 4: Connect */}
-              <div className="flex flex-col items-start pl-0 sm:pl-6 pt-6 sm:pt-0">
-                <span className="text-[12px] font-bold text-[#111827] mb-4 block">
+              {/* Connect */}
+              <div className="flex flex-col gap-3">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
                   Connect
                 </span>
-                <div className="flex flex-col gap-2.5 text-[13px] text-[#4B5563]">
-                  <a
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1.5"
-                  >
-                    <span>𝕏</span> <span>X.com</span>
-                  </a>
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1.5"
-                  >
-                    <span>📸</span> <span>Instagram</span>
-                  </a>
-                  <a
-                    href="https://wa.me/919315580036?text=Hi%20Sumit%2C%20I%20would%20like%20to%20discuss%20a%20new%20project%20with%20PixelMutiny"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[#10B981] hover:opacity-85 transition-opacity inline-flex items-center gap-1.5 font-medium"
-                  >
-                    <span>💬</span> <span>WhatsApp</span>
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/gfxsumit/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1.5"
-                  >
-                    <span>💼</span> <span>LinkedIn</span>
-                  </a>
-                </div>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer"
+                  className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">
+                  X (Twitter)
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noreferrer"
+                  className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">
+                  Instagram
+                </a>
+                <a href="https://wa.me/919315580036" target="_blank" rel="noreferrer"
+                  className="text-[13px] text-[#10B981] hover:opacity-80 transition-opacity font-medium">
+                  WhatsApp
+                </a>
+                <a href="https://www.linkedin.com/in/gfxsumit/" target="_blank" rel="noreferrer"
+                  className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">
+                  LinkedIn
+                </a>
               </div>
 
             </div>
-
           </div>
 
-          {/* Bottom Legal & Copyright Strip */}
-          <div className="mt-14 pt-6 border-t border-[rgba(0,0,0,0.06)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9CA3AF]">
-            <div className="flex items-center gap-6">
+          {/* Bottom strip */}
+          <div className="mt-10 pt-5 border-t border-[rgba(0,0,0,0.06)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#9CA3AF]">
+            <div className="flex items-center gap-5">
               <Link href="/contact" className="hover:text-[#4B5563] transition-colors">Privacy Policy</Link>
               <Link href="/contact" className="hover:text-[#4B5563] transition-colors">Terms of Use</Link>
               <button
