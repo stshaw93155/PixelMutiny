@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSound } from './SoundManager';
-import { useCurrency } from './useCurrency';
 import { useReducedMotion } from '@/lib/motion';
 import { Volume2, VolumeX, Menu } from 'lucide-react';
 
@@ -16,7 +15,6 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const { soundEnabled, toggleSound, playClick } = useSound();
-  const { currency, setCurrency } = useCurrency();
   const reducedMotion = useReducedMotion();
 
   const isWorkActive = pathname === '/works' || pathname === '/work' || pathname?.startsWith('/works/');
@@ -138,37 +136,8 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
           ))}
         </nav>
 
-        {/* Right Actions: Currency, Audio, Onlines Pill CTA */}
+        {/* Right Actions: Audio, Onlines Pill CTA */}
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Currency Toggle */}
-          <div className="hidden sm:inline-flex items-center rounded-full p-0.5 bg-[#F5F5F7] border border-[rgba(18,18,19,0.12)] text-[11px]">
-            <button
-              onClick={() => {
-                setCurrency('INR');
-                playClick();
-              }}
-              className={`px-3 py-1.5 rounded-full font-bold transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none active:scale-95 ${
-                currency === 'INR'
-                  ? 'bg-[#1D1D1F] text-white shadow-sm'
-                  : 'text-[#1D1D1F] hover:bg-white/80'
-              }`}
-            >
-              ₹ INR
-            </button>
-            <button
-              onClick={() => {
-                setCurrency('USD');
-                playClick();
-              }}
-              className={`px-3 py-1.5 rounded-full font-bold transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none active:scale-95 ${
-                currency === 'USD'
-                  ? 'bg-[#1D1D1F] text-white shadow-sm'
-                  : 'text-[#1D1D1F] hover:bg-white/80'
-              }`}
-            >
-              $ USD
-            </button>
-          </div>
 
           {/* Sound Toggle */}
           <button

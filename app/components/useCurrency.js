@@ -2,25 +2,42 @@
 
 import { useCallback, useSyncExternalStore } from 'react';
 
-export function getInitialCurrency() {
+export function detectCountryCurrency() {
   if (typeof window === 'undefined') return 'INR';
   try {
     const saved = localStorage.getItem('pixelmutiny_currency');
     if (saved === 'INR' || saved === 'USD') return saved;
 
-    // Detect if user is in India via timeZone or language
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    const isIndia =
-      timeZone.toLowerCase().includes('calcutta') ||
-      timeZone.toLowerCase().includes('kolkata') ||
-      timeZone.toLowerCase().includes('india') ||
-      navigator.language === 'en-IN' ||
-      (navigator.languages && navigator.languages.some((l) => l.includes('IN')));
+    // Detect if visitor is in India via timeZone, locale, or browser languages
+    const timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+    const isIndianTz =
+      timeZone.includes('calcutta') ||
+      timeZone.includes('kolkata') ||
+      timeZone.includes('india') ||
+      timeZone === 'asia/calcutta' ||
+      timeZone === 'asia/kolkata';
 
-    return isIndia ? 'INR' : 'USD';
+    const lang = (navigator.language || '').toLowerCase();
+    const languages = (navigator.languages || []).map((l) => l.toLowerCase());
+    const isIndianLocale =
+      lang === 'en-in' ||
+      lang === 'hi' ||
+      lang.startsWith('hi-') ||
+      lang.endsWith('-in') ||
+      languages.some((l) => l === 'en-in' || l.endsWith('-in') || l.startsWith('hi-'));
+
+    const detected = (isIndianTz || isIndianLocale) ? 'INR' : 'USD';
+    try {
+      localStorage.setItem('pixelmutiny_currency', detected);
+    } catch {}
+    return detected;
   } catch {
     return 'INR';
   }
+}
+
+export function getInitialCurrency() {
+  return detectCountryCurrency();
 }
 
 function subscribeCurrency(callback) {

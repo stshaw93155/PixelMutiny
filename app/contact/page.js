@@ -35,7 +35,7 @@ import {
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
-  const { currency, setCurrency } = useCurrency();
+  const { currency } = useCurrency();
   const { playClick, playSuccess } = useSound();
   const reducedMotion = useReducedMotion();
 
@@ -495,38 +495,14 @@ function ContactFormContent() {
             ========================================================================= */}
         <div className="lg:col-span-7 p-6 sm:p-10 md:p-14 bg-[#F5F5F7] flex flex-col justify-between">
           <div>
-            {/* Form Top Header & High-Contrast Currency Switcher */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs pb-6 border-b border-[rgba(18,18,19,0.08)] gap-3">
+            {/* Form Top Header */}
+            <div className="flex items-center justify-between text-xs pb-6 border-b border-[rgba(18,18,19,0.08)]">
               <span className="text-[#1D1D1F] font-bold tracking-wider uppercase">
                 PROJECT INTAKE FORM
               </span>
-              <div className="flex items-center gap-3">
-                <span className="text-[#6B7280] uppercase tracking-wider font-semibold">CURRENCY:</span>
-                <div className="inline-flex rounded-full bg-white p-0.5 border border-[rgba(18,18,19,0.12)] shadow-sm">
-                  <button
-                    type="button"
-                    onClick={() => setCurrency('INR')}
-                    className={`px-3.5 py-1.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
-                      currency === 'INR'
-                        ? 'bg-[#0859D4] text-white shadow-sm'
-                        : 'text-[#1D1D1F] hover:bg-[#F5F5F7]'
-                    }`}
-                  >
-                    INR (₹)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCurrency('USD')}
-                    className={`px-3.5 py-1.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
-                      currency === 'USD'
-                        ? 'bg-[#0859D4] text-white shadow-sm'
-                        : 'text-[#1D1D1F] hover:bg-[#F5F5F7]'
-                    }`}
-                  >
-                    USD ($)
-                  </button>
-                </div>
-              </div>
+              <span className="text-xs font-mono font-medium text-[#6B7280]">
+                Auto-Detected: {currency === 'INR' ? '₹ INR (India)' : '$ USD (International)'}
+              </span>
             </div>
 
             {!submitSuccess ? (

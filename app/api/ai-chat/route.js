@@ -376,10 +376,10 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
   // 7. Currency Switch
   if (text.includes('currency') || text.includes('dollar') || text.includes('rupee') || text.includes('usd') || text.includes('inr')) {
     return {
-      reply: `Our site and scope estimator natively support both **INR (₹)** and **USD ($)**. You can toggle your active currency at any time using the HUD currency switch at the top, or click below:`,
+      reply: `Our site automatically detects your country to show prices in **${isUSD ? 'USD ($)' : 'INR (₹)'}** seamlessly (${isUSD ? 'international visitors are quoted in USD' : 'Indian visitors are quoted in INR'}).`,
       chips: [
-        { label: isUSD ? '🇮🇳 Switch to INR (₹)' : '🇺🇸 Switch to USD ($)', action: 'toggle_currency' },
-        { label: '⚡ View Scope in ' + (isUSD ? 'USD' : 'INR'), action: 'open_scope_tab' },
+        { label: '⚡ View Instant Scope (' + (isUSD ? '$ USD' : '₹ INR') + ')', action: 'open_scope_tab' },
+        { label: '💬 Talk to Sumit on WhatsApp', action: 'whatsapp' },
       ],
       updatedProfile,
     };

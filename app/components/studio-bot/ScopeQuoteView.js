@@ -35,16 +35,9 @@ export default function ScopeQuoteView({
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              onPlayClick?.();
-              setCurrency(isUSD ? 'INR' : 'USD');
-            }}
-            className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold px-3 py-1.5 rounded-lg bg-[#F3F4F6] hover:bg-[#E5E7EB] text-[#17191F] border border-[#E5E7EB] transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
-          >
-            <span>{isUSD ? '$ USD (Switch to ₹)' : '₹ INR (Switch to $)'}</span>
-          </button>
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-mono font-medium px-2.5 py-1 rounded-md bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]">
+            <span>{isUSD ? '$ USD (Detected)' : '₹ INR (Detected)'}</span>
+          </div>
         </div>
 
         {/* Disciplines Selection List */}

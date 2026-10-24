@@ -276,7 +276,7 @@ const COMPARISON_DATA = {
 };
 
 export default function ServicesPage() {
-  const { currency, setCurrency } = useCurrency();
+  const { currency } = useCurrency();
   const [activeTab, setActiveTab] = useState('website');
   const [openFaq, setOpenFaq] = useState(0);
   const [mobileAccordionTier, setMobileAccordionTier] = useState(1);
@@ -369,41 +369,6 @@ export default function ServicesPage() {
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-[#424242] font-medium">
                 8 Core Disciplines Under One Roof
               </span>
-            </div>
-
-            {/* Currency Switcher */}
-            <div className="inline-flex items-center p-1 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-xs self-start sm:self-auto shadow-sm">
-              <span className="text-[#5A5A5E] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider">
-                CURRENCY:
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  playClick();
-                  setCurrency('INR');
-                }}
-                className={`px-3.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
-                  currency === 'INR'
-                    ? 'bg-[#0859D4] text-white shadow-sm'
-                    : 'text-[#424242] hover:text-[#1D1D1F]'
-                }`}
-              >
-                INR (₹)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  playClick();
-                  setCurrency('USD');
-                }}
-                className={`px-3.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
-                  currency === 'USD'
-                    ? 'bg-[#0859D4] text-white shadow-sm'
-                    : 'text-[#424242] hover:text-[#1D1D1F]'
-                }`}
-              >
-                USD ($)
-              </button>
             </div>
           </div>
 
@@ -732,40 +697,6 @@ export default function ServicesPage() {
               </p>
             </div>
 
-            {/* Currency Toggle */}
-            <div className="flex items-center gap-3 text-xs">
-              <span className="text-[#5A5A5E] font-semibold hidden sm:inline uppercase tracking-wider">Active Currency:</span>
-              <div className="inline-flex items-center p-1 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] shadow-sm">
-                <button
-                  type="button"
-                  onClick={() => {
-                    playClick();
-                    setCurrency('INR');
-                  }}
-                  className={`px-4 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
-                    currency === 'INR'
-                      ? 'bg-[#0859D4] text-white shadow-sm'
-                      : 'text-[#424242] hover:text-[#1D1D1F]'
-                  }`}
-                >
-                  INR (₹)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    playClick();
-                    setCurrency('USD');
-                  }}
-                  className={`px-4 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
-                    currency === 'USD'
-                      ? 'bg-[#0859D4] text-white shadow-sm'
-                      : 'text-[#424242] hover:text-[#1D1D1F]'
-                  }`}
-                >
-                  USD ($)
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* 8 Service Tabs with URL Hash Sync */}
