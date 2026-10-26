@@ -782,32 +782,69 @@ export default function Home() {
               </div>
 
               {/* Social Channels Matching Onlines */}
-              <div className="flex items-center gap-6 pt-6 border-t border-[#E4E6EB] font-mono text-xs text-[#5B6275]">
+              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-[#E4E6EB] font-mono text-xs text-[#5B6275]">
                 <a
                   href="https://twitter.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#1F3FFF] transition-colors"
+                  className="hover:text-[#1F3FFF] transition-colors inline-flex items-center gap-2"
                 >
-                  X (Twitter) ↗
+                  <Image
+                    src="/img/social/x.png"
+                    alt="X"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 rounded-[3px] object-contain flex-shrink-0"
+                  />
+                  <span>X (Twitter) ↗</span>
                 </a>
                 <a
                   href="https://www.linkedin.com/in/gfxsumit/"
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: '#0284C7' }}
-                  className="text-[#0284C7] hover:text-[#38BDF8] transition-colors font-medium"
+                  className="hover:text-[#38BDF8] transition-colors font-medium inline-flex items-center gap-2"
                 >
-                  LinkedIn ↗
+                  <Image
+                    src="/img/social/linkedin.png"
+                    alt="LinkedIn"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 rounded-[3px] object-contain flex-shrink-0"
+                  />
+                  <span>LinkedIn ↗</span>
                 </a>
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: '#E4405F' }}
-                  className="text-[#E4405F] hover:opacity-80 transition-opacity font-medium"
+                  className="hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-2"
                 >
-                  Instagram ↗
+                  <Image
+                    src="/img/social/instagram.png"
+                    alt="Instagram"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 rounded-[3px] object-contain flex-shrink-0"
+                  />
+                  <span>Instagram ↗</span>
+                </a>
+                <a
+                  href="https://wa.me/919315580036"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: '#12B76A' }}
+                  className="hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-2"
+                >
+                  <Image
+                    src="/img/social/whatsapp.png"
+                    alt="WhatsApp"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 rounded-full object-contain flex-shrink-0"
+                  />
+                  <span>WhatsApp ↗</span>
                 </a>
                 <a
                   href="https://behance.net"
