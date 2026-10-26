@@ -139,68 +139,24 @@ function ShellInner({ children }) {
                 <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Connect
                 </span>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[13px] text-[#8E95A5] hover:text-white transition-colors inline-flex items-center gap-2"
-                >
-                  <Image
-                    src="/img/social/x.png"
-                    alt="X"
-                    width={18}
-                    height={18}
-                    className="w-[18px] h-[18px] rounded-[4px] object-contain flex-shrink-0"
-                  />
-                  <span>X (Twitter)</span>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer"
+                  className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">
+                  X (Twitter)
                 </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noreferrer"
+                <a href="https://instagram.com" target="_blank" rel="noreferrer"
                   style={{ color: '#E4405F' }}
-                  className="text-[13px] hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-2"
-                >
-                  <Image
-                    src="/img/social/instagram.png"
-                    alt="Instagram"
-                    width={18}
-                    height={18}
-                    className="w-[18px] h-[18px] rounded-[4px] object-contain flex-shrink-0"
-                  />
-                  <span>Instagram</span>
+                  className="text-[13px] text-[#E4405F] hover:opacity-80 transition-opacity font-medium">
+                  Instagram
                 </a>
-                <a
-                  href="https://wa.me/919315580036"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ color: '#12B76A' }}
-                  className="text-[13px] hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-2"
-                >
-                  <Image
-                    src="/img/social/whatsapp.png"
-                    alt="WhatsApp"
-                    width={18}
-                    height={18}
-                    className="w-[18px] h-[18px] rounded-full object-contain flex-shrink-0"
-                  />
-                  <span>WhatsApp</span>
+                <a href="https://wa.me/919315580036" target="_blank" rel="noreferrer"
+                  style={{ color: '#FFFFFF' }}
+                  className="text-[13px] text-white hover:opacity-80 transition-opacity font-medium">
+                  WhatsApp
                 </a>
-                <a
-                  href="https://www.linkedin.com/in/gfxsumit/"
-                  target="_blank"
-                  rel="noreferrer"
+                <a href="https://www.linkedin.com/in/gfxsumit/" target="_blank" rel="noreferrer"
                   style={{ color: '#38BDF8' }}
-                  className="text-[13px] hover:opacity-80 transition-opacity font-medium inline-flex items-center gap-2"
-                >
-                  <Image
-                    src="/img/social/linkedin.png"
-                    alt="LinkedIn"
-                    width={18}
-                    height={18}
-                    className="w-[18px] h-[18px] rounded-[4px] object-contain flex-shrink-0"
-                  />
-                  <span>LinkedIn</span>
+                  className="text-[13px] text-[#38BDF8] hover:opacity-80 transition-opacity font-medium">
+                  LinkedIn
                 </a>
               </div>
 
