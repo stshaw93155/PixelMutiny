@@ -2757,6 +2757,8 @@ button:hover .bv-btn-icon,
 .text-\[\#111\], .text-\[\#111111\] { color: #111111 !important; }
 .text-\[\#18A0FB\], .text-\[\#18a0fb\] { color: #18A0FB !important; }
 .text-\[\#1BC47D\], .text-\[\#1bc47d\], .text-\[\#12B76A\], .text-\[\#12b76a\] { color: var(--success) !important; }
+.text-\[\#E4405F\], .text-\[\#e4405f\], .text-\[\#E1306C\], .text-\[\#e1306c\] { color: #E4405F !important; }
+.text-\[\#38BDF8\], .text-\[\#38bdf8\], .text-\[\#00A0DC\], .text-\[\#00a0dc\] { color: #38BDF8 !important; }
 .text-\[\#5B6275\], .text-\[\#5b6275\], .text-\[\#424242\], .text-\[\#5A5A5E\], .text-\[\#5a5a5e\] { color: var(--muted) !important; }
 .text-\[\#4A4A54\], .text-\[\#4a4a54\] { color: #4A4A54 !important; }
 .text-\[\#6B7280\], .text-\[\#6b7280\] { color: #6B7280 !important; }

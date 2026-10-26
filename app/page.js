@@ -795,6 +795,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/gfxsumit/"
                   target="_blank"
                   rel="noreferrer"
+                  style={{ color: '#0284C7' }}
                   className="text-[#0284C7] hover:text-[#38BDF8] transition-colors font-medium"
                 >
                   LinkedIn ↗
@@ -803,6 +804,7 @@ export default function Home() {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noreferrer"
+                  style={{ color: '#E4405F' }}
                   className="text-[#E4405F] hover:opacity-80 transition-opacity font-medium"
                 >
                   Instagram ↗

@@ -144,14 +144,17 @@ function ShellInner({ children }) {
                   X (Twitter)
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noreferrer"
+                  style={{ color: '#E4405F' }}
                   className="text-[13px] text-[#E4405F] hover:opacity-80 transition-opacity font-medium">
                   Instagram
                 </a>
                 <a href="https://wa.me/919315580036" target="_blank" rel="noreferrer"
+                  style={{ color: '#12B76A' }}
                   className="text-[13px] text-[#12B76A] hover:opacity-80 transition-opacity font-medium">
                   WhatsApp
                 </a>
                 <a href="https://www.linkedin.com/in/gfxsumit/" target="_blank" rel="noreferrer"
+                  style={{ color: '#38BDF8' }}
                   className="text-[13px] text-[#38BDF8] hover:opacity-80 transition-opacity font-medium">
                   LinkedIn
                 </a>
