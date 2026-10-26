@@ -1,40 +1,55 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 @import './gilroy.css';
 
 :root {
-  --bg: #FFFFFF; /* Pure white studio canvas (matches onlines.com.ar) */
+  /* Brand Tokens */
+  --primary: #1F3FFF; /* Electric Blue: Service cards, primary buttons, links */
+  --ink: #0A0F1F; /* Deep Ink: Headings, dark sections, footer, "From Zero to One" panel */
+  --bg: #FFFFFF; /* Main canvas */
+  --surface: #F5F6F8; /* Alternate sections, grid hero, cards */
+  --border: #E4E6EB; /* Dividers, pricing table lines */
+  --muted: #5B6275; /* Body copy, captions (WCAG AA compliant) */
+  --accent: #FFE14D; /* Highlight Yellow: marker highlight on key phrases, badges, popular tag */
+  --success: #12B76A; /* Accepting Q4 projects dot, Lighthouse 100 badges */
+
+  /* Font Pairing */
+  --font-head: 'Satoshi', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Aliases mapped to brand tokens */
   --bg-card: #FFFFFF;
-  --bg-subtle: #F5F5F7; /* Apple / Onlines light gray */
-  --bg-muted: #F0F0F2;
-  --bg-hover: #EBEBEF;
-  --bg-footer: #FBFBFB;
-  --bg-dark: #0A0A0C; /* For high contrast deep studio surfaces */
+  --bg-subtle: #F5F6F8;
+  --bg-muted: #ECEEF2;
+  --bg-hover: #E4E6EB;
+  --bg-footer: #0A0F1F;
+  --bg-dark: #0A0F1F;
   
-  --text-primary: #1D1D1F; /* Deep rich charcoal/black for titles (Onlines custom-titulos) */
-  --text-secondary: #424242; /* Refined dark charcoal for body copy (Onlines custom-texto-corrido) */
-  --text-muted: #5A5A5E; /* WCAG AA compliant muted secondary text (>5.4:1 contrast) */
+  --text-primary: #0A0F1F;
+  --text-secondary: #0A0F1F;
+  --text-muted: #5B6275;
   --text-inverse: #FFFFFF;
   
-  --accent: #0859D4; /* Onlines Signature Electric Royal Blue */
-  --accent-hover: #1A59F9;
-  --accent-glow: rgba(8, 89, 212, 0.22);
-  --accent-dark: #053D94;
-  --accent-vermilion: #EF5533;
+  --accent-blue: #1F3FFF;
+  --accent-blue-hover: #1632D6;
+  --accent-blue-glow: rgba(31, 63, 255, 0.22);
+  --accent-dark: #1228B0;
+  --accent-yellow: #FFE14D;
   
   /* Figma Collaborator / Cursor Tags */
   --figma-dev: #18A0FB;
   --figma-client: #EF5533;
-  --figma-director: #1BC47D;
+  --figma-director: #12B76A;
   --figma-ui: #6465ED;
   --figma-pm: #FFC700;
   
-  --hairline: rgba(18, 18, 19, 0.1);
-  --hairline-dashed: rgba(18, 18, 19, 0.15);
-  --hairline-bright: rgba(0, 0, 0, 0.06);
+  --hairline: #E4E6EB;
+  --hairline-dashed: rgba(10, 15, 31, 0.15);
+  --hairline-bright: rgba(10, 15, 31, 0.06);
   --hairline-dark: rgba(255, 255, 255, 0.12);
   
-  --font-display: 'Gilroy', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: 'Gilroy', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'Gilroy', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-head);
 }
 
 /* Base HTML Button & Form Control Reset */
@@ -255,19 +270,60 @@ a {
   background: #0A0A0C;
 }
 
-/* Typography styles — ONLINES AESTHETIC (Pure Gilroy Sans-Serif) */
-h1, h2, h3, h4, .font-display {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  text-transform: none; /* Onlines clean sentence-case / lowercase style */
-  line-height: 1.05;
-  color: var(--text-primary);
+/* Typography styles — Satoshi (headings) + Inter (body) + JetBrains Mono (labels) */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Eliminate monospace secondary font - enforce pure Gilroy sans-serif across all elements */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-head);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+/* Mono accent for [ 01 // MANIFESTO ] labels, numbers, and tickers */
 code, kbd, samp, pre, .font-mono {
-  font-family: var(--font-body) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Accent (Highlight Yellow #FFE14D) — Highlighter on one key phrase per section */
+.brand-highlight {
+  background-color: var(--accent);
+  color: var(--ink);
+  padding: 0.08em 0.35em;
+  border-radius: 3px;
+  display: inline;
+  font-weight: 600;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Yellow Popular Badge */
+.brand-badge-popular {
+  background-color: var(--accent);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Onlines Signature Dotted Baseline Underline */
@@ -2647,7 +2703,7 @@ button:hover .bv-btn-icon,
 
 
 ::selection {
-  background-color: #0859D4 !important;
+  background-color: var(--primary) !important;
   color: #FFFFFF !important;
 }
 
@@ -2660,121 +2716,125 @@ button:hover .bv-btn-icon,
    ========================================================================== */
 
 /* Background Colors */
-.bg-\[\#050B14\], .bg-\[\#050b14\] { background-color: #050B14 !important; }
-.bg-\[\#0859D4\], .bg-\[\#0859d4\] { background-color: #0859D4 !important; }
+.bg-\[\#1F3FFF\], .bg-\[\#1f3fff\], .bg-\[\#0859D4\], .bg-\[\#0859d4\] { background-color: var(--primary) !important; }
+.bg-\[\#0A0F1F\], .bg-\[\#0a0f1f\], .bg-\[\#050B14\], .bg-\[\#050b14\] { background-color: var(--ink) !important; }
 .bg-\[\#0A0A0C\], .bg-\[\#0a0a0c\] { background-color: #0A0A0C !important; }
 .bg-\[\#0A0A0E\], .bg-\[\#0a0a0e\] { background-color: #0A0A0E !important; }
 .bg-\[\#0c0c12\], .bg-\[\#0C0C12\] { background-color: #0C0C12 !important; }
 .bg-\[\#111\], .bg-\[\#111111\] { background-color: #111111 !important; }
-.bg-\[\#1A59F9\], .bg-\[\#1a59f9\] { background-color: #1A59F9 !important; }
-.bg-\[\#1BC47D\], .bg-\[\#1bc47d\] { background-color: #1BC47D !important; }
-.bg-\[\#1D1D1F\], .bg-\[\#1d1d1f\] { background-color: #1D1D1F !important; }
+.bg-\[\#1A59F9\], .bg-\[\#1a59f9\] { background-color: #1632D6 !important; }
+.bg-\[\#1BC47D\], .bg-\[\#1bc47d\], .bg-\[\#12B76A\], .bg-\[\#12b76a\] { background-color: var(--success) !important; }
+.bg-\[\#1D1D1F\], .bg-\[\#1d1d1f\] { background-color: var(--ink) !important; }
 .bg-\[\#991B1B\], .bg-\[\#991b1b\] { background-color: #991B1B !important; }
 .bg-\[\#EAE8E2\], .bg-\[\#eae8e2\] { background-color: #EAE8E2 !important; }
 .bg-\[\#EBEBEF\], .bg-\[\#ebebef\] { background-color: #EBEBEF !important; }
 .bg-\[\#EDECE8\], .bg-\[\#edece8\] { background-color: #EDECE8 !important; }
 .bg-\[\#EF4444\], .bg-\[\#ef4444\] { background-color: #EF4444 !important; }
 .bg-\[\#EF5533\], .bg-\[\#ef5533\] { background-color: #EF5533 !important; }
-.bg-\[\#F5F5F7\], .bg-\[\#f5f5f7\] { background-color: #F5F5F7 !important; }
+.bg-\[\#F5F6F8\], .bg-\[\#f5f6f8\], .bg-\[\#F5F5F7\], .bg-\[\#f5f5f7\] { background-color: var(--surface) !important; }
 .bg-\[\#FBFBFB\], .bg-\[\#fbfbfb\] { background-color: #FBFBFB !important; }
 .bg-\[\#FEE2E2\], .bg-\[\#fee2e2\] { background-color: #FEE2E2 !important; }
 .bg-\[\#FFFFFF\], .bg-\[\#ffffff\] { background-color: #FFFFFF !important; }
-.bg-\[var\(--accent\)\] { background-color: var(--accent) !important; }
+.bg-\[\#FFE14D\], .bg-\[\#ffe14d\], .bg-\[var\(--accent\)\] { background-color: var(--accent) !important; }
 
 /* Opacity Background Variants */
-.bg-\[\#0859D4\]\/5, .bg-\[\#0859d4\]\/5 { background-color: rgba(8, 89, 212, 0.05) !important; }
-.bg-\[\#0859D4\]\/8, .bg-\[\#0859d4\]\/8 { background-color: rgba(8, 89, 212, 0.08) !important; }
-.bg-\[\#0859D4\]\/10, .bg-\[\#0859d4\]\/10 { background-color: rgba(8, 89, 212, 0.1) !important; }
-.bg-\[\#0859D4\]\/15, .bg-\[\#0859d4\]\/15 { background-color: rgba(8, 89, 212, 0.15) !important; }
-.bg-\[\#0859D4\]\/20, .bg-\[\#0859d4\]\/20 { background-color: rgba(8, 89, 212, 0.2) !important; }
-.bg-\[\#0859D4\]\/40, .bg-\[\#0859d4\]\/40 { background-color: rgba(8, 89, 212, 0.4) !important; }
+.bg-\[\#1F3FFF\]\/5, .bg-\[\#1f3fff\]\/5, .bg-\[\#0859D4\]\/5, .bg-\[\#0859d4\]\/5 { background-color: rgba(31, 63, 255, 0.05) !important; }
+.bg-\[\#1F3FFF\]\/8, .bg-\[\#1f3fff\]\/8, .bg-\[\#0859D4\]\/8, .bg-\[\#0859d4\]\/8 { background-color: rgba(31, 63, 255, 0.08) !important; }
+.bg-\[\#1F3FFF\]\/10, .bg-\[\#1f3fff\]\/10, .bg-\[\#0859D4\]\/10, .bg-\[\#0859d4\]\/10 { background-color: rgba(31, 63, 255, 0.1) !important; }
+.bg-\[\#1F3FFF\]\/15, .bg-\[\#1f3fff\]\/15, .bg-\[\#0859D4\]\/15, .bg-\[\#0859d4\]\/15 { background-color: rgba(31, 63, 255, 0.15) !important; }
+.bg-\[\#1F3FFF\]\/20, .bg-\[\#1f3fff\]\/20, .bg-\[\#0859D4\]\/20, .bg-\[\#0859d4\]\/20 { background-color: rgba(31, 63, 255, 0.2) !important; }
+.bg-\[\#1F3FFF\]\/40, .bg-\[\#1f3fff\]\/40, .bg-\[\#0859D4\]\/40, .bg-\[\#0859d4\]\/40 { background-color: rgba(31, 63, 255, 0.4) !important; }
 .bg-\[\#0A0A0C\]\/90, .bg-\[\#0a0a0c\]\/90 { background-color: rgba(10, 10, 12, 0.9) !important; }
 .bg-\[\#991B1B\]\/10, .bg-\[\#991b1b\]\/10 { background-color: rgba(153, 27, 27, 0.1) !important; }
 .bg-\[\#EF4444\]\/10, .bg-\[\#ef4444\]\/10 { background-color: rgba(239, 68, 68, 0.1) !important; }
-.bg-\[\#F5F5F7\]\/40, .bg-\[\#f5f5f7\]\/40 { background-color: rgba(245, 245, 247, 0.4) !important; }
-.bg-\[\#F5F5F7\]\/80, .bg-\[\#f5f5f7\]\/80 { background-color: rgba(245, 245, 247, 0.8) !important; }
+.bg-\[\#F5F6F8\]\/40, .bg-\[\#f5f6f8\]\/40, .bg-\[\#F5F5F7\]\/40, .bg-\[\#f5f5f7\]\/40 { background-color: rgba(245, 246, 248, 0.4) !important; }
+.bg-\[\#F5F6F8\]\/80, .bg-\[\#f5f6f8\]\/80, .bg-\[\#F5F5F7\]\/80, .bg-\[\#f5f5f7\]\/80 { background-color: rgba(245, 246, 248, 0.8) !important; }
 
 /* Text Colors */
-.text-\[\#0859D4\], .text-\[\#0859d4\] { color: #0859D4 !important; }
+.text-\[\#1F3FFF\], .text-\[\#1f3fff\], .text-\[\#0859D4\], .text-\[\#0859d4\] { color: var(--primary) !important; }
+.text-\[\#0A0F1F\], .text-\[\#0a0f1f\], .text-\[\#1D1D1F\], .text-\[\#1d1d1f\] { color: var(--ink) !important; }
 .text-\[\#0A0A0C\], .text-\[\#0a0a0c\] { color: #0A0A0C !important; }
 .text-\[\#111\], .text-\[\#111111\] { color: #111111 !important; }
 .text-\[\#18A0FB\], .text-\[\#18a0fb\] { color: #18A0FB !important; }
-.text-\[\#1BC47D\], .text-\[\#1bc47d\] { color: #1BC47D !important; }
-.text-\[\#1D1D1F\], .text-\[\#1d1d1f\] { color: #1D1D1F !important; }
-.text-\[\#424242\] { color: #424242 !important; }
+.text-\[\#1BC47D\], .text-\[\#1bc47d\], .text-\[\#12B76A\], .text-\[\#12b76a\] { color: var(--success) !important; }
+.text-\[\#5B6275\], .text-\[\#5b6275\], .text-\[\#424242\], .text-\[\#5A5A5E\], .text-\[\#5a5a5e\] { color: var(--muted) !important; }
 .text-\[\#4A4A54\], .text-\[\#4a4a54\] { color: #4A4A54 !important; }
 .text-\[\#6B7280\], .text-\[\#6b7280\] { color: #6B7280 !important; }
 .text-\[\#787884\], .text-\[\#787884\] { color: #787884 !important; }
 .text-\[\#7F1D1D\], .text-\[\#7f1d1d\] { color: #7F1D1D !important; }
-.text-\[\#8E8E93\], .text-\[\#8e8e93\] { color: #5A5A5E !important; }
-.text-\[\#98989C\], .text-\[\#98989c\] { color: #5A5A5E !important; }
+.text-\[\#8E8E93\], .text-\[\#8e8e93\] { color: var(--muted) !important; }
+.text-\[\#98989C\], .text-\[\#98989c\] { color: var(--muted) !important; }
 .text-\[\#9CA3AF\], .text-\[\#9ca3af\] { color: #9CA3AF !important; }
 .text-\[\#A0A0AB\], .text-\[\#a0a0ab\] { color: #A0A0AB !important; }
 .text-\[\#CF2E2E\], .text-\[\#cf2e2e\] { color: #CF2E2E !important; }
 .text-\[\#EF4444\], .text-\[\#ef4444\] { color: #EF4444 !important; }
 .text-\[\#EF5533\], .text-\[\#ef5533\] { color: #EF5533 !important; }
-.text-\[rgba\(18\,18\,19\,0\.2\)\] { color: rgba(18, 18, 19, 0.2) !important; }
-.text-\[var\(--accent\)\] { color: var(--accent) !important; }
+.text-\[\#FFE14D\], .text-\[\#ffe14d\], .text-\[var\(--accent\)\] { color: var(--accent) !important; }
+.text-\[rgba\(18\,18\,19\,0\.2\)\] { color: rgba(10, 15, 31, 0.2) !important; }
 
 /* Border Colors */
-.border-\[\#0859D4\], .border-\[\#0859d4\] { border-color: #0859D4 !important; }
+.border-\[\#1F3FFF\], .border-\[\#1f3fff\], .border-\[\#0859D4\], .border-\[\#0859d4\] { border-color: var(--primary) !important; }
+.border-\[\#0A0F1F\], .border-\[\#0a0f1f\], .border-\[\#1D1D1F\], .border-\[\#1d1d1f\] { border-color: var(--ink) !important; }
+.border-\[\#E4E6EB\], .border-\[\#e4e6eb\], .border-\[rgba\(18\,18\,19\,0\.08\)\] { border-color: var(--border) !important; }
 .border-\[\#0A0A0C\], .border-\[\#0a0a0c\] { border-color: #0A0A0C !important; }
 .border-\[\#111\], .border-\[\#111111\] { border-color: #111111 !important; }
-.border-\[\#1BC47D\], .border-\[\#1bc47d\] { border-color: #1BC47D !important; }
-.border-\[\#1D1D1F\], .border-\[\#1d1d1f\] { border-color: #1D1D1F !important; }
+.border-\[\#1BC47D\], .border-\[\#1bc47d\], .border-\[\#12B76A\], .border-\[\#12b76a\] { border-color: var(--success) !important; }
 .border-\[\#C8C7C2\], .border-\[\#c8c7c2\] { border-color: #C8C7C2 !important; }
 .border-\[\#EF4444\], .border-\[\#ef4444\] { border-color: #EF4444 !important; }
 .border-\[\#EF5533\], .border-\[\#ef5533\] { border-color: #EF5533 !important; }
 .border-\[\#FCA5A5\], .border-\[\#fca5a5\] { border-color: #FCA5A5 !important; }
-.border-\[\#0859D4\]\/20, .border-\[\#0859d4\]\/20 { border-color: rgba(8, 89, 212, 0.2) !important; }
-.border-\[\#0859D4\]\/25, .border-\[\#0859d4\]\/25 { border-color: rgba(8, 89, 212, 0.25) !important; }
-.border-\[\#0859D4\]\/40, .border-\[\#0859d4\]\/40 { border-color: rgba(8, 89, 212, 0.4) !important; }
+.border-\[\#1F3FFF\]\/20, .border-\[\#1f3fff\]\/20, .border-\[\#0859D4\]\/20, .border-\[\#0859d4\]\/20 { border-color: rgba(31, 63, 255, 0.2) !important; }
+.border-\[\#1F3FFF\]\/25, .border-\[\#1f3fff\]\/25, .border-\[\#0859D4\]\/25, .border-\[\#0859d4\]\/25 { border-color: rgba(31, 63, 255, 0.25) !important; }
+.border-\[\#1F3FFF\]\/40, .border-\[\#1f3fff\]\/40, .border-\[\#0859D4\]\/40, .border-\[\#0859d4\]\/40 { border-color: rgba(31, 63, 255, 0.4) !important; }
 .border-\[\#EF4444\]\/30, .border-\[\#ef4444\]\/30 { border-color: rgba(239, 68, 68, 0.3) !important; }
-.border-\[rgba\(18\,18\,19\,0\.08\)\] { border-color: rgba(18, 18, 19, 0.08) !important; }
-.border-\[rgba\(18\,18\,19\,0\.1\)\] { border-color: rgba(18, 18, 19, 0.1) !important; }
-.border-\[rgba\(18\,18\,19\,0\.12\)\] { border-color: rgba(18, 18, 19, 0.12) !important; }
-.border-\[rgba\(18\,18\,19\,0\.15\)\] { border-color: rgba(18, 18, 19, 0.15) !important; }
-.border-\[rgba\(18\,18\,19\,0\.16\)\] { border-color: rgba(18, 18, 19, 0.16) !important; }
+.border-\[rgba\(18\,18\,19\,0\.1\)\] { border-color: rgba(10, 15, 31, 0.1) !important; }
+.border-\[rgba\(18\,18\,19\,0\.12\)\] { border-color: rgba(10, 15, 31, 0.12) !important; }
+.border-\[rgba\(18\,18\,19\,0\.15\)\] { border-color: rgba(10, 15, 31, 0.15) !important; }
+.border-\[rgba\(18\,18\,19\,0\.16\)\] { border-color: rgba(10, 15, 31, 0.16) !important; }
 .border-\[rgba\(255\,255\,255\,0\.08\)\] { border-color: rgba(255, 255, 255, 0.08) !important; }
+.border-\[rgba\(255\,255\,255\,0\.1\)\] { border-color: rgba(255, 255, 255, 0.1) !important; }
+.border-\[rgba\(255\,255\,255\,0\.2\)\] { border-color: rgba(255, 255, 255, 0.2) !important; }
 .border-\[var\(--accent\)\] { border-color: var(--accent) !important; }
 .border-\[var\(--hairline\)\] { border-color: var(--hairline) !important; }
 
 /* Divide Colors */
-.divide-\[rgba\(18\,18\,19\,0\.06\)\] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(18, 18, 19, 0.06) !important; }
-.divide-\[rgba\(18\,18\,19\,0\.08\)\] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(18, 18, 19, 0.08) !important; }
+.divide-\[rgba\(18\,18\,19\,0\.06\)\] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(10, 15, 31, 0.06) !important; }
+.divide-\[rgba\(18\,18\,19\,0\.08\)\] > :not([hidden]) ~ :not([hidden]),
+.divide-\[\#E4E6EB\] > :not([hidden]) ~ :not([hidden]) { border-color: var(--border) !important; }
 .divide-\[var\(--hairline\)\] > :not([hidden]) ~ :not([hidden]) { border-color: var(--hairline) !important; }
 
 /* Hover States */
-.hover\:bg-\[\#0859D4\]:hover, .hover\:bg-\[\#0859d4\]:hover { background-color: #0859D4 !important; }
+.hover\:bg-\[\#1F3FFF\]:hover, .hover\:bg-\[\#1f3fff\]:hover, .hover\:bg-\[\#0859D4\]:hover, .hover\:bg-\[\#0859d4\]:hover { background-color: var(--primary) !important; }
+.hover\:bg-\[\#0A0F1F\]:hover, .hover\:bg-\[\#0a0f1f\]:hover, .hover\:bg-\[\#1D1D1F\]:hover, .hover\:bg-\[\#1d1d1f\]:hover { background-color: var(--ink) !important; }
 .hover\:bg-\[\#0A0A0C\]:hover, .hover\:bg-\[\#0a0a0c\]:hover { background-color: #0A0A0C !important; }
 .hover\:bg-\[\#111\]:hover, .hover\:bg-\[\#111111\]:hover { background-color: #111111 !important; }
-.hover\:bg-\[\#1A59F9\]:hover, .hover\:bg-\[\#1a59f9\]:hover { background-color: #1A59F9 !important; }
-.hover\:bg-\[\#1D1D1F\]:hover, .hover\:bg-\[\#1d1d1f\]:hover { background-color: #1D1D1F !important; }
-.hover\:bg-\[\#EBEBEF\]:hover, .hover\:bg-\[\#ebebef\]:hover { background-color: #EBEBEF !important; }
-.hover\:bg-\[\#F5F5F7\]:hover, .hover\:bg-\[\#f5f5f7\]:hover { background-color: #F5F5F7 !important; }
+.hover\:bg-\[\#1A59F9\]:hover, .hover\:bg-\[\#1a59f9\]:hover { background-color: #1632D6 !important; }
+.hover\:bg-\[\#EBEBEF\]:hover, .hover\:bg-\[\#ebebef\], .hover\:bg-\[\#E4E6EB\]:hover { background-color: var(--border) !important; }
+.hover\:bg-\[\#F5F6F8\]:hover, .hover\:bg-\[\#f5f6f8\]:hover, .hover\:bg-\[\#F5F5F7\]:hover, .hover\:bg-\[\#f5f5f7\]:hover { background-color: var(--surface) !important; }
 .hover\:bg-\[var\(--accent\)\]:hover { background-color: var(--accent) !important; }
-.hover\:border-\[\#0859D4\]:hover, .hover\:border-\[\#0859d4\]:hover { border-color: #0859D4 !important; }
-.hover\:border-\[\#1BC47D\]:hover, .hover\:border-\[\#1bc47d\]:hover { border-color: #1BC47D !important; }
-.hover\:border-\[\#1D1D1F\]:hover, .hover\:border-\[\#1d1d1f\]:hover { border-color: #1D1D1F !important; }
-.hover\:text-\[\#0859D4\]:hover, .hover\:text-\[\#0859d4\]:hover { color: #0859D4 !important; }
+.hover\:border-\[\#1F3FFF\]:hover, .hover\:border-\[\#1f3fff\]:hover, .hover\:border-\[\#0859D4\]:hover, .hover\:border-\[\#0859d4\]:hover { border-color: var(--primary) !important; }
+.hover\:border-\[\#1BC47D\]:hover, .hover\:border-\[\#1bc47d\]:hover { border-color: var(--success) !important; }
+.hover\:border-\[\#1D1D1F\]:hover, .hover\:border-\[\#1d1d1f\]:hover { border-color: var(--ink) !important; }
+.hover\:text-\[\#1F3FFF\]:hover, .hover\:text-\[\#1f3fff\]:hover, .hover\:text-\[\#0859D4\]:hover, .hover\:text-\[\#0859d4\]:hover { color: var(--primary) !important; }
 .hover\:text-\[\#0A0A0C\]:hover, .hover\:text-\[\#0a0a0c\]:hover { color: #0A0A0C !important; }
-.hover\:text-\[\#1D1D1F\]:hover, .hover\:text-\[\#1d1d1f\]:hover { color: #1D1D1F !important; }
+.hover\:text-\[\#0A0F1F\]:hover, .hover\:text-\[\#1D1D1F\]:hover, .hover\:text-\[\#1d1d1f\]:hover { color: var(--ink) !important; }
 .hover\:text-white:hover { color: #FFFFFF !important; }
 .hover\:text-\[var\(--accent\)\]:hover { color: var(--accent) !important; }
 
 /* Group Hover States */
-.group:hover .group-hover\:bg-\[\#0859D4\] { background-color: #0859D4 !important; }
+.group:hover .group-hover\:bg-\[\#1F3FFF\], .group:hover .group-hover\:bg-\[\#0859D4\] { background-color: var(--primary) !important; }
 .group:hover .group-hover\:text-white { color: #FFFFFF !important; }
-.group:hover .group-hover\:text-\[\#0859D4\] { color: #0859D4 !important; }
-.group:hover .group-hover\:text-\[\#1D1D1F\] { color: #1D1D1F !important; }
+.group:hover .group-hover\:text-\[\#1F3FFF\], .group:hover .group-hover\:text-\[\#0859D4\] { color: var(--primary) !important; }
+.group:hover .group-hover\:text-\[\#0A0F1F\], .group:hover .group-hover\:text-\[\#1D1D1F\] { color: var(--ink) !important; }
 .group:hover .group-hover\:scale-\[1\.02\] { transform: scale(1.02) !important; }
 
 /* Focus and Ring States */
-.focus\:border-\[\#0859D4\]:focus { border-color: #0859D4 !important; }
-.focus\:ring-\[\#0859D4\]:focus { outline: none !important; box-shadow: 0 0 0 2px #0859D4 !important; }
-.focus-visible\:ring-\[\#0859D4\]:focus-visible { outline: none !important; box-shadow: 0 0 0 2px #0859D4 !important; }
+.focus\:border-\[\#1F3FFF\]:focus, .focus\:border-\[\#0859D4\]:focus { border-color: var(--primary) !important; }
+.focus\:ring-\[\#1F3FFF\]:focus, .focus\:ring-\[\#0859D4\]:focus { outline: none !important; box-shadow: 0 0 0 2px var(--primary) !important; }
+.focus-visible\:ring-\[\#1F3FFF\]:focus-visible, .focus-visible\:ring-\[\#0859D4\]:focus-visible { outline: none !important; box-shadow: 0 0 0 2px var(--primary) !important; }
 .focus-visible\:ring-\[var\(--accent\)\]:focus-visible { outline: none !important; box-shadow: 0 0 0 2px var(--accent) !important; }
-.ring-\[\#0859D4\] { box-shadow: 0 0 0 2px #0859D4 !important; }
+.ring-\[\#1F3FFF\], .ring-\[\#0859D4\] { box-shadow: 0 0 0 2px var(--primary) !important; }
+.ring-\[\#1F3FFF\]\/15, .ring-\[\#0859D4\]\/15 { box-shadow: 0 0 0 2px rgba(31, 63, 255, 0.15) !important; }
 .ring-\[\#EF5533\] { box-shadow: 0 0 0 2px #EF5533 !important; }
 
 /* Placeholders */

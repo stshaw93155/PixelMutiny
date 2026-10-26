@@ -256,7 +256,13 @@ export default function StudioAiBot({ onOpenInquiry }) {
       setIsOpen(false);
       onOpenInquiry?.();
     } else if (chip.action === 'toggle_currency') {
-      setCurrency(isUSD ? 'INR' : 'USD');
+      if (currency === 'INR') {
+        setCurrency('USD');
+      } else if (currency === 'USD') {
+        setCurrency('PK_USD');
+      } else {
+        setCurrency('INR');
+      }
     } else {
       handleSendMessage(chip.label);
     }

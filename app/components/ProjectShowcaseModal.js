@@ -154,24 +154,24 @@ export default function ProjectShowcaseModal({
         WebkitOverflowScrolling: 'touch',
         overscrollBehavior: 'contain',
       }}
-      className="bg-white text-[#1D1D1F] selection:bg-[#0859D4] selection:text-white"
+      className="bg-white text-[#0A0F1F] selection:bg-[#1F3FFF] selection:text-white"
     >
       {/* TOP HUD BAR (Matches Image 2 top bar) */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[rgba(18,18,19,0.08)] px-4 sm:px-8 py-3.5 flex items-center justify-between transition-all">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[#E4E6EB] px-4 sm:px-8 py-3.5 flex items-center justify-between transition-all">
         {/* Left: Author / Project Brand Info */}
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-8 h-8 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center font-bold text-xs uppercase flex-shrink-0 shadow-sm">
+          <div className="w-8 h-8 rounded-full bg-[#0A0F1F] text-white flex items-center justify-center font-bold text-xs uppercase flex-shrink-0 shadow-sm">
             {project.client?.charAt(0) || 'P'}
           </div>
           <div className="flex items-center gap-2 min-w-0">
-            <span className="font-bold text-sm text-[#1D1D1F] truncate">
+            <span className="font-bold text-sm text-[#0A0F1F] truncate">
               {project.client}
             </span>
-            <span className="text-[rgba(18,18,19,0.25)] hidden sm:inline">•</span>
-            <span className="text-xs text-[#5A5A5E] hidden sm:inline truncate">
+            <span className="text-[#5B6275]/40 hidden sm:inline">•</span>
+            <span className="text-xs text-[#5B6275] hidden sm:inline truncate">
               PixelMutiny DigiMedia
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-[#0859D4]">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] text-[#1F3FFF]">
               {project.category}
             </span>
           </div>
@@ -182,7 +182,7 @@ export default function ProjectShowcaseModal({
           <button
             onClick={handleShare}
             onMouseEnter={playHover}
-            className="relative p-2 sm:px-3 sm:py-1.5 rounded-full border border-[rgba(18,18,19,0.12)] bg-white text-[#1D1D1F] hover:bg-[#F5F5F7] transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+            className="relative p-2 sm:px-3 sm:py-1.5 rounded-full border border-[#E4E6EB] bg-white text-[#0A0F1F] hover:bg-[#F5F6F8] transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
             title="Copy Case Study Link"
             aria-label="Share case study"
           >
@@ -193,7 +193,7 @@ export default function ProjectShowcaseModal({
               </>
             ) : (
               <>
-                <Share2 className="w-3.5 h-3.5 text-[#5A5A5E]" />
+                <Share2 className="w-3.5 h-3.5 text-[#5B6275]" />
                 <span className="hidden sm:inline">Share</span>
               </>
             )}
@@ -203,10 +203,10 @@ export default function ProjectShowcaseModal({
             href={`/works/${project.slug}`}
             onClick={handleNavToFullCase}
             onMouseEnter={playHover}
-            className="p-2 sm:px-3 sm:py-1.5 rounded-full border border-[rgba(18,18,19,0.12)] bg-white text-[#1D1D1F] hover:bg-[#F5F5F7] transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+            className="p-2 sm:px-3 sm:py-1.5 rounded-full border border-[#E4E6EB] bg-white text-[#0A0F1F] hover:bg-[#F5F6F8] transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
             title="Open Standalone Case Study Page"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-[#5A5A5E]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#5B6275]" />
             <span className="hidden sm:inline">Full Case</span>
           </Link>
 
@@ -216,7 +216,7 @@ export default function ProjectShowcaseModal({
               onClose();
             }}
             onMouseEnter={playHover}
-            className="w-9 h-9 rounded-full bg-[#1D1D1F] text-white hover:bg-[#0859D4] transition-colors flex items-center justify-center cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0859D4]"
+            className="w-9 h-9 rounded-full bg-[#0A0F1F] text-white hover:bg-[#1F3FFF] transition-colors flex items-center justify-center cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F3FFF]"
             aria-label="Close project showcase"
           >
             <X className="w-4 h-4" />
@@ -229,27 +229,27 @@ export default function ProjectShowcaseModal({
         {/* SECTION 1: HEADER & HEADLINE (Matches Image 2 typography) */}
         <div ref={overviewRef} className="text-center max-w-4xl mx-auto mb-10 sm:mb-14">
           {/* Meta Eyebrow */}
-          <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#5A5A5E] tracking-wider uppercase mb-5">
+          <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#5B6275] tracking-wider uppercase mb-5">
             <span>PRAGUE // PIXELMUTINY</span>
-            <span className="text-[rgba(18,18,19,0.25)]">•</span>
+            <span className="text-[#5B6275]/40">•</span>
             <span>{project.year}</span>
-            <span className="text-[rgba(18,18,19,0.25)]">•</span>
-            <span className="text-[#0859D4] font-extrabold">{project.num}</span>
+            <span className="text-[#5B6275]/40">•</span>
+            <span className="text-[#1F3FFF] font-extrabold">{project.num}</span>
           </div>
 
           {/* Massive Display Title */}
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-black text-[#1D1D1F] uppercase tracking-tight mb-6 leading-none">
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-black text-[#0A0F1F] uppercase tracking-tight mb-6 leading-none">
             {project.client}
           </h1>
 
           {/* Author / Studio Pill Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[rgba(18,18,19,0.12)] bg-[#F5F5F7] text-xs font-semibold text-[#1D1D1F] shadow-sm mb-8">
-            <div className="w-5 h-5 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center text-[10px] font-bold">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#E4E6EB] bg-[#F5F6F8] text-xs font-semibold text-[#0A0F1F] shadow-sm mb-8">
+            <div className="w-5 h-5 rounded-full bg-[#0A0F1F] text-white flex items-center justify-center text-[10px] font-bold">
               M
             </div>
             <span>PixelMutiny DigiMedia</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0859D4]" />
-            <span className="text-[#5A5A5E] font-medium">{project.role || 'Design & Engineering'}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1F3FFF]" />
+            <span className="text-[#5B6275] font-medium">{project.role || 'Design & Engineering'}</span>
           </div>
         </div>
 
@@ -332,12 +332,12 @@ export default function ProjectShowcaseModal({
 
           <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto">
             {/* Highlight Primary Disciplines with glowing green dot */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(18,18,19,0.12)] bg-white text-[#1D1D1F] text-xs font-bold shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E4E6EB] bg-white text-[#0A0F1F] text-xs font-bold shadow-sm">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
               <span>Product & Interaction</span>
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(18,18,19,0.12)] bg-white text-[#1D1D1F] text-xs font-bold shadow-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#0859D4] shadow-[0_0_8px_rgba(8,89,212,0.8)]" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E4E6EB] bg-white text-[#0A0F1F] text-xs font-bold shadow-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#1F3FFF] shadow-[0_0_8px_rgba(31,63,255,0.8)]" />
               <span>Web & High-Performance</span>
             </div>
 
@@ -345,7 +345,7 @@ export default function ProjectShowcaseModal({
             {techList.map((t, idx) => (
               <div
                 key={idx}
-                className="px-4 py-2 rounded-full border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] text-[#424242] text-xs font-semibold hover:border-[#1D1D1F] hover:text-[#1D1D1F] transition-colors"
+                className="px-4 py-2 rounded-full border border-[#E4E6EB] bg-[#F5F6F8] text-[#5B6275] text-xs font-semibold hover:border-[#0A0F1F] hover:text-[#0A0F1F] transition-colors"
               >
                 {t}
               </div>
@@ -355,15 +355,15 @@ export default function ProjectShowcaseModal({
 
         {/* SECTION 4: CLIENT TESTIMONIAL BLOCK */}
         {project.testimonial && (
-          <div ref={testimonialRef} className="my-16 sm:my-20 max-w-3xl mx-auto rounded-3xl bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] p-8 sm:p-12 text-center relative overflow-hidden shadow-sm">
-            <Quote className="w-8 h-8 text-[#0859D4] mx-auto mb-4 opacity-75" />
-            <blockquote className="text-lg sm:text-xl text-[#1D1D1F] font-normal italic leading-relaxed mb-6">
+          <div ref={testimonialRef} className="my-16 sm:my-20 max-w-3xl mx-auto rounded-3xl bg-[#F5F6F8] border border-[#E4E6EB] p-8 sm:p-12 text-center relative overflow-hidden shadow-sm">
+            <Quote className="w-8 h-8 text-[#1F3FFF] mx-auto mb-4 opacity-75" />
+            <blockquote className="text-lg sm:text-xl text-[#0A0F1F] font-normal italic leading-relaxed mb-6">
               &ldquo;{project.testimonial.quote}&rdquo;
             </blockquote>
-            <div className="text-xs font-bold text-[#1D1D1F]">
+            <div className="text-xs font-bold text-[#0A0F1F]">
               {project.testimonial.author}
             </div>
-            <div className="text-xs text-[#5A5A5E]">
+            <div className="text-xs text-[#5B6275]">
               {project.testimonial.role}, {project.testimonial.company}
             </div>
           </div>
@@ -375,7 +375,7 @@ export default function ProjectShowcaseModal({
             href={`/works/${project.slug}`}
             onClick={handleNavToFullCase}
             onMouseEnter={playHover}
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#1D1D1F] text-white hover:bg-[#0859D4] transition-all font-bold text-sm shadow-xl hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#0A0F1F] text-white hover:bg-[#1F3FFF] transition-all font-bold text-sm shadow-xl hover:scale-105 active:scale-95 duration-200 cursor-pointer"
           >
             <span>View Full Case Specification</span>
             <ArrowUpRight className="w-4 h-4" />
@@ -411,10 +411,10 @@ export default function ProjectShowcaseModal({
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 pointer-events-auto">
         <nav
           aria-label="Showcase quick navigation"
-          className="flex items-center gap-1.5 p-1.5 rounded-full bg-[#1D1D1F]/92 backdrop-blur-2xl border border-white/20 text-white shadow-2xl"
+          className="flex items-center gap-1.5 p-1.5 rounded-full bg-[#0A0F1F]/92 backdrop-blur-2xl border border-white/20 text-white shadow-2xl"
         >
           {/* Monogram Badge */}
-          <div className="w-8 h-8 rounded-full bg-white text-[#1D1D1F] flex items-center justify-center font-black text-xs">
+          <div className="w-8 h-8 rounded-full bg-white text-[#0A0F1F] flex items-center justify-center font-black text-xs">
             W.
           </div>
 
@@ -423,7 +423,7 @@ export default function ProjectShowcaseModal({
             onClick={() => scrollToSection(overviewRef, 'overview')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'overview'
-                ? 'bg-white text-[#1D1D1F] shadow-sm'
+                ? 'bg-white text-[#0A0F1F] shadow-sm'
                 : 'text-white/80 hover:text-white'
             }`}
           >
@@ -434,7 +434,7 @@ export default function ProjectShowcaseModal({
             onClick={() => scrollToSection(highlightsRef, 'highlights')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'highlights'
-                ? 'bg-white text-[#1D1D1F] shadow-sm'
+                ? 'bg-white text-[#0A0F1F] shadow-sm'
                 : 'text-white/80 hover:text-white'
             }`}
           >
@@ -445,7 +445,7 @@ export default function ProjectShowcaseModal({
             onClick={() => scrollToSection(techRef, 'tech')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tech'
-                ? 'bg-white text-[#1D1D1F] shadow-sm'
+                ? 'bg-white text-[#0A0F1F] shadow-sm'
                 : 'text-white/80 hover:text-white'
             }`}
           >
@@ -455,7 +455,7 @@ export default function ProjectShowcaseModal({
           <Link
             href={`/works/${project.slug}`}
             onClick={handleNavToFullCase}
-            className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#FFC700] text-[#1D1D1F] hover:bg-yellow-400 transition-colors flex items-center gap-1 cursor-pointer"
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#FFE14D] text-[#0A0F1F] hover:bg-yellow-400 transition-colors flex items-center gap-1 cursor-pointer"
           >
             <span>Full Case</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -468,7 +468,7 @@ export default function ProjectShowcaseModal({
             playClick();
             onClose();
           }}
-          className="w-11 h-11 rounded-full bg-[#1D1D1F]/92 backdrop-blur-2xl border border-white/20 text-white hover:bg-red-600 transition-colors flex items-center justify-center cursor-pointer shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="w-11 h-11 rounded-full bg-[#0A0F1F]/92 backdrop-blur-2xl border border-white/20 text-white hover:bg-red-600 transition-colors flex items-center justify-center cursor-pointer shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           aria-label="Close showcase modal"
         >
           <X className="w-4 h-4" />

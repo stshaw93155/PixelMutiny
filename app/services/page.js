@@ -9,12 +9,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotion } from '@/lib/motion';
 import Marquee from '../components/Marquee';
 import {
+  FOUR_PILLARS_SERVICES,
   SERVICES_DATA,
+  MONTHLY_RETAINERS,
+  GROWTH_PARTNER_BUNDLES,
   STARTUP_LAUNCH_KIT,
   ADD_ONS_DATA,
   TERMS_CONDITIONS,
   FAQ_DATA,
   formatPrice,
+  getTierPrice,
+  getAddonPrice,
+  getLaunchKitPrice,
+  getServiceById,
   WHY_CHOOSE_US,
   COMPANY_LEGAL_NAME,
   ONE_LINER,
@@ -30,31 +37,37 @@ import {
   Layers,
   ArrowUpRight,
   Play,
+  CheckCircle2,
+  AlertCircle,
+  HelpCircle,
+  TrendingUp,
+  Flame,
+  Award,
 } from 'lucide-react';
 
 const COMPARISON_DATA = {
-  website: {
-    headers: ['Starter', 'Custom Business (Most Popular)', 'Flagship & E-commerce'],
+  'digital-experiences': {
+    headers: ['Launch', 'Growth (Most Popular)', 'Scale'],
     rows: [
       {
-        feature: 'Page Scope',
-        tiers: ['Up to 5 custom responsive pages', 'Up to 10 custom pages + blog', '15+ pages or full online store'],
+        feature: 'Scope & Pages',
+        tiers: ['Up to 5 custom responsive pages', 'Up to 10 custom pages + dynamic blog', 'E-commerce or complex web apps (15+ pages)'],
       },
       {
         feature: 'Content Management (CMS)',
-        tiers: ['Self-serve headless CMS', 'Headless CMS + dynamic resources', 'Multi-collection / E-commerce CMS'],
+        tiers: ['Self-serve headless CMS', 'Headless CMS + dynamic resources & collections', 'Enterprise multi-collection CMS & store management'],
       },
       {
         feature: 'Design System & UI/UX',
-        tiers: ['Clean modular layouts', 'Custom Figma design system & tokens', 'Advanced design system with interactive views'],
+        tiers: ['Modular component tokens', 'Bespoke Figma design system & responsive views', 'Advanced enterprise design system + interactive prototypes'],
       },
       {
-        feature: 'Animations & Polish',
-        tiers: ['Subtle CSS transitions', 'Fluid GSAP micro-interactions', 'Custom 3D / WebGL product showcase'],
+        feature: 'Animations & Interactions',
+        tiers: ['Smooth CSS transitions', 'Fluid kinetic micro-animations & scroll interactions', 'Custom interactive WebGL / 3D product showcase'],
       },
       {
         feature: 'SEO & Performance',
-        tiers: ['Core technical SEO & sitemap', 'Technical SEO + Schema markup', 'Programmatic SEO & speed optimization'],
+        tiers: ['Technical SEO, sitemap & lead forms', 'Technical SEO + Schema markup + speed tuning', 'Programmatic SEO + deep event telemetry + 95+ Vitals'],
       },
       {
         feature: 'Delivery Timeline',
@@ -62,213 +75,93 @@ const COMPARISON_DATA = {
       },
       {
         feature: 'Support & Handover',
-        tiers: ['Video walkthrough guide', 'Live team training + docs', '30-day post-launch hypercare'],
+        tiers: ['Video walkthrough guide', '14-day hypercare + video documentation', '30-day hypercare + live team training & documentation'],
       },
     ],
   },
-  landing: {
-    headers: ['Essential', 'Standard (Most Popular)', 'Premium'],
+  'brand-identity': {
+    headers: ['Essential', 'Signature (Most Popular)', 'Complete Identity'],
     rows: [
       {
-        feature: 'Page Scope',
-        tiers: ['1 responsive landing page', '1 conversion-engineered launch page', '1 flagship landing page + A/B variant'],
+        feature: 'Logo Scope',
+        tiers: ['Primary logo + mark (3 initial directions)', 'Full logo suite (primary, secondary & submarks)', 'Expanded identity system + animated motion mark'],
       },
       {
-        feature: 'Copywriting & Narrative',
-        tiers: ['Client-provided copy polish', 'Full narrative copy structure included', 'Full high-converting copy + heuristic audit'],
+        feature: 'Brand Guidelines',
+        tiers: ['1-page quick PDF reference sheet', 'Multi-page comprehensive PDF + Figma brand book', 'Executive brand manual + positioning narrative deck'],
       },
       {
-        feature: 'Animations & Interactions',
-        tiers: ['Standard smooth scroll', 'Fluid kinetic micro-animations', 'Interactive element (calculator or visual demo)'],
+        feature: 'Creative Assets',
+        tiers: ['Color palette & typography hierarchy', '10 editable social media & marketing templates', 'Full stationery, print collateral & 25+ campaign assets'],
       },
       {
-        feature: 'Analytics & Pixel Setup',
-        tiers: ['Basic form intake', 'GA4 & Meta Pixel event setup', 'Full CRM routing + custom event tracking'],
+        feature: 'Deliverable Formats',
+        tiers: ['Vector SVG, PNG & EPS (100% owned)', 'Figma design tokens, SVG, PNG & PDF vectors', 'Complete master vector archive + print-ready CMYK files'],
+      },
+      {
+        feature: 'Delivery Timeline',
+        tiers: ['5 to 7 days', '10 to 14 days', '3 to 4 weeks'],
       },
       {
         feature: 'Revision Rounds',
-        tiers: ['2 rounds included', '2 rounds included', '2 rounds + 2 post-launch tweak rounds'],
-      },
-      {
-        feature: 'Delivery Timeline',
-        tiers: ['5 to 7 days', '10 to 14 days', '3 weeks'],
-      },
-      {
-        feature: 'Platform',
-        tiers: ['Next.js or Webflow', 'Next.js or Webflow', 'Next.js custom production stack'],
+        tiers: ['2 structured revision rounds', '2 structured revision rounds', '3 revision rounds + 1-on-1 brand strategy sync'],
       },
     ],
   },
-  'ui-ux': {
-    headers: ['Audit & Wireframes', 'Complete App UI (Most Popular)', 'Enterprise System'],
+  'content-production': {
+    headers: ['Starter', 'Creator (Most Popular)', 'Studio'],
     rows: [
       {
-        feature: 'Screen Scope',
-        tiers: ['Up to 8 low-fi wireframe views', 'Up to 15 high-fidelity screens', '30+ application views & edge cases'],
+        feature: 'Video Edits Volume',
+        tiers: ['Up to 4 short-form video edits (<=60s)', 'Up to 8 high-retention video edits', 'Up to 12 video edits + campaign creative assets'],
       },
       {
-        feature: 'UX Research & Audit',
-        tiers: ['Heuristic review & friction teardown', 'User flow & competitor benchmarking', 'Deep UX research & user usability testing'],
-      },
-      {
-        feature: 'Prototyping',
-        tiers: ['Static wireframe deck', 'Clickable Figma prototype', 'Full interactive multi-state prototype'],
-      },
-      {
-        feature: 'Design System Specs',
-        tiers: ['UX flow recommendations', 'Component library & auto-layout tokens', 'Multi-platform design token repository'],
-      },
-      {
-        feature: 'Developer Handoff',
-        tiers: ['Figma file export', 'Developer handoff call + asset specs', 'Continuous engineering sprint support'],
-      },
-      {
-        feature: 'Delivery Timeline',
-        tiers: ['1 to 2 weeks', '3 to 4 weeks', '5 to 6 weeks'],
-      },
-    ],
-  },
-  dashboard: {
-    headers: ['Core UI Kit', 'Frontend Build (Most Popular)', 'Scalable SaaS Suite'],
-    rows: [
-      {
-        feature: 'Scope',
-        tiers: ['Figma design of 4 core views', 'Full Next.js / Tailwind code', 'Multi-role production admin suite'],
-      },
-      {
-        feature: 'Data Visualization',
-        tiers: ['Metric cards & chart mockups', 'Interactive Chart.js / Recharts', 'Real-time charting & report pipelines'],
-      },
-      {
-        feature: 'Data Tables & Lists',
-        tiers: ['Figma table components', 'Sortable, searchable, paginated tables', 'Exportable tables with custom filters'],
-      },
-      {
-        feature: 'Dark & Light Mode',
-        tiers: ['Figma theme specifications', 'Included in Next.js code', 'Included in Next.js code'],
-      },
-      {
-        feature: 'Backend Wiring',
-        tiers: ['Figma design only', 'Clean mock JSON API wiring', 'Production API sync & state management'],
-      },
-      {
-        feature: 'Delivery Timeline',
-        tiers: ['2 to 3 weeks', '4 to 5 weeks', '6 to 8 weeks'],
-      },
-    ],
-  },
-  graphics: {
-    headers: ['Starter Pack', 'Collateral Kit (Most Popular)', 'Monthly Retainer'],
-    rows: [
-      {
-        feature: 'Deliverable Volume',
-        tiers: ['6 social posts or 1 banner', '15 social posts + pitch deck + flyer', '30 assets per month ongoing'],
-      },
-      {
-        feature: 'Pitch Deck / Presentations',
-        tiers: ['Not included', 'Up to 15 custom investor slides', 'Multiple presentations & sales decks'],
-      },
-      {
-        feature: 'Print Collateral',
-        tiers: ['Digital or print ready', 'Brochures, flyers & roll-up banners', 'Complete print & digital brand collateral'],
-      },
-      {
-        feature: 'Source Files',
-        tiers: ['Figma / Illustrator / PNG', 'Figma / Canva editable templates', 'Full master source files & raw vectors'],
-      },
-      {
-        feature: 'Turnaround',
-        tiers: ['3 to 5 days', '1 to 2 weeks', 'Priority 48-hour turnarounds'],
-      },
-    ],
-  },
-  video: {
-    headers: ['Reel Sprint', 'Creator Pack (Most Popular)', 'Monthly Video Engine'],
-    rows: [
-      {
-        feature: 'Video Quantity',
-        tiers: ['5 short-form reels / shorts', '15 high-retention reels', '30 reels per month ongoing'],
-      },
-      {
-        feature: 'Captions & Typography',
-        tiers: ['Kinetic animated subtitles', 'Custom branded typography & emojis', 'Signature branded animated text styling'],
+        feature: 'Captions & Motion',
+        tiers: ['Dynamic kinetic subtitles & captions', 'Animated hooks, zooms, callouts & emojis', 'High-end 2D/3D motion graphics + logo stinger'],
       },
       {
         feature: 'Sound Design & SFX',
-        tiers: ['Background music + basic SFX', 'Pacing sound design & trending audio', 'Full audio curation, SFX & dynamic mixing'],
+        tiers: ['Sound leveling & background music', 'Pacing sound design & trending SFX', 'Multi-track audio engineering & dynamic sound effects'],
       },
       {
-        feature: 'Viral Hook Strategy',
-        tiers: ['Fast pacing cuts', 'Hook recommendations & visual callouts', 'Monthly strategy sync on viral formats'],
+        feature: 'Deliverable Formats',
+        tiers: ['Vertical 9:16 (Reels/Shorts/TikTok)', 'Vertical 9:16 (Reels/Shorts/TikTok)', 'Multi-format (9:16 Vertical + 16:9 Landscape) + 4 banners'],
       },
       {
-        feature: 'Turnaround',
-        tiers: ['3 to 5 days', '10 to 14 days', 'Priority 48-hour turnarounds'],
-      },
-    ],
-  },
-  brand: {
-    headers: ['Essentials', 'Standard (Most Popular)', 'Premium'],
-    rows: [
-      {
-        feature: 'Logo Concepts',
-        tiers: ['3 initial concepts (1 refined)', '5 concepts + full logo system', 'Full exploration + motion marks'],
-      },
-      {
-        feature: 'Guidelines Manual',
-        tiers: ['1-page mini guide (PDF)', 'Comprehensive PDF + Figma guidelines', 'Executive brand book + positioning deck'],
-      },
-      {
-        feature: 'Social Media Templates',
-        tiers: ['Not included', '10 editable Canva/Figma templates', '30 custom multi-format templates'],
-      },
-      {
-        feature: 'Marketing & Ad Creatives',
-        tiers: ['Not included', 'Social starter pack', 'Ad creative starter set + collateral'],
-      },
-      {
-        feature: 'Revision Rounds',
-        tiers: ['2 structured rounds', '2 structured rounds', '3 rounds + strategy session'],
+        feature: 'Raw Footage',
+        tiers: ['Supplied by client', 'Supplied by client (B-roll curated)', 'Supplied by client (B-roll & asset library provided)'],
       },
       {
         feature: 'Delivery Timeline',
-        tiers: ['5 to 7 days', '2 to 3 weeks', '4 weeks'],
-      },
-      {
-        feature: 'Source Files & Rights',
-        tiers: ['Vector SVG, PNG, EPS (100% owned)', 'Vector, Figma, Print-ready (100% owned)', 'Full Master Archive (100% owned)'],
+        tiers: ['5 to 7 days', '10 to 14 days', '2 to 3 weeks'],
       },
     ],
   },
-  'meta-ads': {
-    headers: ['Creative Pack', 'Management (Most Popular)', 'Growth'],
+  'performance-marketing': {
+    headers: ['Ad Launch', 'Lead Generation (Most Popular)', 'Growth Performance'],
     rows: [
       {
-        feature: 'Monthly New Creatives',
-        tiers: ['8 static + 2 videos (one-time)', '4 fresh performance creatives / mo', '12 fresh performance creatives / mo'],
+        feature: 'Service Format',
+        tiers: ['One-time launch sprint', 'Monthly ongoing campaign management', 'Multi-campaign scaling & growth management'],
       },
       {
-        feature: 'Creative Formats',
-        tiers: ['Feed (1:1), Story (9:16), Reel', 'Feed, Story, Reel', 'Feed, Story, Reel, Carousel & Hooks'],
+        feature: 'Campaign Funnel Structure',
+        tiers: ['Business Manager audit & 2 launch funnels', 'Full-funnel management (TOF to Retargeting)', 'Multi-tier funnel architecture & custom audiences'],
       },
       {
-        feature: 'Campaign Setup & Tuning',
-        tiers: ['Asset pack only', 'Weekly budget & audience optimization', 'Multi-campaign scaling & daily monitoring'],
+        feature: 'Creative Allowance',
+        tiers: ['4 initial static & copy variations', '4 fresh performance creatives refreshed monthly', 'Up to 8 fresh ad creative variants refreshed monthly'],
       },
       {
-        feature: 'Landing Page Guidance',
-        tiers: ['Not included', 'Conversion recommendations', 'Continuous landing page CRO tweaks'],
+        feature: 'Tracking & Telemetry',
+        tiers: ['Meta Pixel & CAPI verification', 'CAPI + lead event audit & conversion tracking', 'Full attribution audit, GA4 + CRM lead pipeline sync'],
       },
       {
-        feature: 'Reporting & Sync',
-        tiers: ['Asset delivery handover', 'Monthly transparent performance report', 'Weekly strategy call + monthly dashboard'],
+        feature: 'Reporting & Review',
+        tiers: ['Launch walkthrough & handover', 'Bi-weekly performance report & ROAS insights', 'Bi-weekly 1-on-1 strategy call + monthly dashboard'],
       },
       {
-        feature: 'Commitment Period',
-        tiers: ['One-time sprint (7 days)', '3-month minimum partnership', '3-month minimum partnership'],
-      },
-      {
-        feature: 'Ad Spend Allocation',
+        feature: 'Meta Ad Spend',
         tiers: ['Paid directly by client to Meta', 'Paid directly by client to Meta', 'Paid directly by client to Meta'],
       },
     ],
@@ -277,12 +170,14 @@ const COMPARISON_DATA = {
 
 export default function ServicesPage() {
   const { currency } = useCurrency();
-  const [activeTab, setActiveTab] = useState('website');
+  const [activeTab, setActiveTab] = useState('digital-experiences');
   const [openFaq, setOpenFaq] = useState(0);
   const [mobileAccordionTier, setMobileAccordionTier] = useState(1);
   const [dotPos, setDotPos] = useState({ x: '50%', y: '50%' });
-  const { playClick, playHover } = useSound();
-  const pricingSectionRef = useRef(null);
+  const { playClick } = useSound();
+  const packagesSectionRef = useRef(null);
+  const retainersSectionRef = useRef(null);
+  const servicesCardsRef = useRef(null);
   const reducedMotion = useReducedMotion();
 
   // Mouse coordinate tracker for patron-puntos illuminated halo
@@ -294,23 +189,33 @@ export default function ServicesPage() {
     setDotPos({ x, y });
   };
 
-  // Sync active tab with URL hash on load and hash change
+  // Sync active tab with URL hash on load and hash change, with backward-compatibility for legacy slugs
   useEffect(() => {
-    const validHashes = [
-      'website',
-      'landing',
-      'ui-ux',
-      'dashboard',
-      'graphics',
-      'video',
-      'brand',
-      'meta-ads',
-    ];
+    const mapHashToPillar = (hash) => {
+      const clean = hash.replace('#', '').toLowerCase();
+      if (['digital-experiences', 'brand-identity', 'content-production', 'performance-marketing'].includes(clean)) {
+        return clean;
+      }
+      if (['website', 'landing', 'ui-ux', 'dashboard'].includes(clean)) {
+        return 'digital-experiences';
+      }
+      if (['graphics', 'brand'].includes(clean)) {
+        return 'brand-identity';
+      }
+      if (['video'].includes(clean)) {
+        return 'content-production';
+      }
+      if (['meta-ads'].includes(clean)) {
+        return 'performance-marketing';
+      }
+      return null;
+    };
 
     const handleHash = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (validHashes.includes(hash)) {
-        setActiveTab(hash);
+      if (typeof window === 'undefined') return;
+      const targetPillar = mapHashToPillar(window.location.hash);
+      if (targetPillar) {
+        setActiveTab(targetPillar);
       }
     };
 
@@ -327,29 +232,32 @@ export default function ServicesPage() {
     }
   };
 
-  const scrollToPricingForService = (serviceId) => {
+  const scrollToSection = (ref, targetPillarId = null) => {
     playClick();
-    setActiveTab(serviceId);
-    if (typeof window !== 'undefined') {
-      window.history.replaceState(null, '', `#${serviceId}`);
+    if (targetPillarId) {
+      setActiveTab(targetPillarId);
+      if (typeof window !== 'undefined') {
+        window.history.replaceState(null, '', `#${targetPillarId}`);
+      }
     }
-    if (pricingSectionRef.current) {
-      pricingSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const activeService =
-    SERVICES_DATA.find((s) => s.id === activeTab) || SERVICES_DATA[0];
-  const comparison = COMPARISON_DATA[activeTab] || COMPARISON_DATA.website;
+    FOUR_PILLARS_SERVICES.find((s) => s.id === activeTab) || FOUR_PILLARS_SERVICES[0];
+  const comparison = COMPARISON_DATA[activeTab] || COMPARISON_DATA['digital-experiences'];
 
   return (
-    <div className="w-full bg-white text-[#1D1D1F] min-h-screen selection:bg-[#0859D4] selection:text-white">
+    <div className="w-full bg-white text-[#0A0F1F] min-h-screen selection:bg-[#1F3FFF] selection:text-white">
       {/* =========================================================================
-          SECTION 1: HERO CANVAS (ONLINES PATRON-PUNTOS + SELECTION FRAME)
+          01 — HERO SECTION
+          One studio. Four ways to grow.
           ========================================================================= */}
       <section
         onMouseMove={handleMouseMove}
-        className="relative border-b border-[rgba(18,18,19,0.08)] pt-28 pb-16 md:pt-32 md:pb-20 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
+        className="relative border-b border-[#E4E6EB] pt-28 pb-16 md:pt-36 md:pb-24 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
         style={{
           '--dot-x': dotPos.x,
           '--dot-y': dotPos.y,
@@ -359,372 +267,240 @@ export default function ServicesPage() {
         <div className="grilla-celdas opacity-40 pointer-events-none" aria-hidden="true" />
 
         <div className="max-w-[1920px] mx-auto relative z-10">
-          {/* Header Metadata & Currency Switcher */}
+          {/* Header Metadata */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
-              <span className="text-xs font-bold uppercase tracking-wider text-[#1D1D1F]">
+              <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[#0A0F1F]">
                 01 // SERVICES &amp; PRICING
               </span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-[#424242] font-medium">
-                8 Core Disciplines Under One Roof
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] text-[#5B6275] font-medium">
+                Four Pillars · Projects &amp; Retainers
               </span>
+            </div>
+            <div className="text-xs text-[#5B6275] font-medium flex items-center gap-2">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#1F3FFF]" />
+              <span>Break the Template. Built Different.</span>
             </div>
           </div>
 
-          {/* Monumental Hero Headline with Dotted Baseline */}
+          {/* Monumental Hero Headline */}
           <h1
-            className="font-display font-bold tracking-tight text-[#1D1D1F] max-w-5xl"
+            className="font-display font-extrabold tracking-tight text-[#0A0F1F] max-w-5xl"
             style={{
-              fontSize: 'clamp(32px, 5.2vw, 68px)',
-              lineHeight: 1.08,
+              fontSize: 'clamp(36px, 5.8vw, 76px)',
+              lineHeight: 1.05,
             }}
           >
-            <span className="dotted-baseline">Built different. Designed to perform.</span>
+            One studio.{' '}
+            <span className="dotted-baseline">
+              <span className="brand-highlight">Four ways to grow.</span>
+            </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#424242] max-w-3xl mt-6 leading-relaxed font-normal">
-            {ONE_LINER}
+          <p className="text-lg sm:text-xl text-[#5B6275] max-w-3xl mt-6 leading-relaxed font-normal">
+            Design, development, content and performance marketing for ambitious brands. Fixed project sprints for building new digital assets, and recurring monthly retainers for predictable, compounding growth.
           </p>
 
+          {/* Dual Action CTAs */}
           <div className="flex flex-wrap items-center gap-4 mt-8 text-xs">
             <button
-              onClick={() => {
-                if (pricingSectionRef.current) {
-                  pricingSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="btn-onlines-blue py-3 px-6 cursor-pointer"
+              onClick={() => scrollToSection(servicesCardsRef)}
+              className="btn-onlines-blue py-3.5 px-7 cursor-pointer font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:shadow"
             >
-              <span>EXPLORE ALL 8 PACKAGES &amp; RATES</span>
-              <span className="ml-2">↓</span>
+              <span>Explore Services</span>
+              <span>↓</span>
+            </button>
+            <button
+              onClick={() => scrollToSection(retainersSectionRef)}
+              className="btn-onlines-outline py-3.5 px-7 cursor-pointer font-bold tracking-wider uppercase flex items-center gap-2"
+            >
+              <span>Monthly Retainers</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <Link
               href="/contact"
               onClick={playClick}
-              className="btn-onlines-outline py-3 px-6"
+              className="text-xs text-[#5B6275] hover:text-[#1F3FFF] font-semibold underline underline-offset-4 ml-2"
             >
-              <span>TALK WITH A DESIGNER</span>
-              <span className="ml-2">→</span>
+              Request custom proposal →
             </Link>
           </div>
-
-          {/* 3 Featured Onlines Vertical Blue Cards */}
-          <div className="home-servicios__grilla mt-14 mb-4">
-            <div className="card-servicio--vertical">
-              <div className="card-servicio__tarjeta shader-halftone">
-                <div className="card-servicio__textos">
-                  <h3 className="card-servicio__titulo">
-                    <span>Experience &amp; Interface Design</span>
-                    <span className="card-servicio__titulo-puntos" />
-                  </h3>
-                  <p className="card-servicio__descripcion">
-                    Design systems, wireframing, high-fidelity UI/UX, and brand identities crafted pixel-by-pixel for maximum clarity and engagement.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => scrollToPricingForService('ui-ux')}
-                  className="card-servicio__cta--vertical cursor-pointer"
-                >
-                  View Packages
-                </button>
-              </div>
-              <p className="card-servicio__texto-debajo">
-                Our design thinking process empowers your brand from day zero to launch.
-              </p>
-            </div>
-
-            <div className="card-servicio--vertical">
-              <div className="card-servicio__tarjeta shader-halftone">
-                <div className="card-servicio__textos">
-                  <h3 className="card-servicio__titulo">
-                    <span>Bespoke Web Development</span>
-                    <span className="card-servicio__titulo-puntos" />
-                  </h3>
-                  <p className="card-servicio__descripcion">
-                    Engineering scalable, fully responsive web apps on Next.js 16 and modern cloud architectures. Built for speed, SEO, and security.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => scrollToPricingForService('website')}
-                  className="card-servicio__cta--vertical cursor-pointer"
-                >
-                  View Packages
-                </button>
-              </div>
-              <p className="card-servicio__texto-debajo">
-                Adhering to international performance and accessibility standards.
-              </p>
-            </div>
-
-            <div className="card-servicio--vertical">
-              <div className="card-servicio__tarjeta shader-halftone">
-                <div className="card-servicio__textos">
-                  <h3 className="card-servicio__titulo">
-                    <span>Performance &amp; Growth Strategy</span>
-                    <span className="card-servicio__titulo-puntos" />
-                  </h3>
-                  <p className="card-servicio__descripcion">
-                    Full-funnel Meta Ads, viral content creation, conversion rate optimization, and deep telemetry analytics to drive compounding revenue.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => scrollToPricingForService('meta-ads')}
-                  className="card-servicio__cta--vertical cursor-pointer"
-                >
-                  View Packages
-                </button>
-              </div>
-              <p className="card-servicio__texto-debajo">
-                Your growth is our accountability. End-to-end management with transparent reporting.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* =========================================================================
-          QUICK JUMP NAVIGATION STRIP
+          02 — FOUR SERVICE CARDS (BENTO OVERVIEW)
+          Quick overview with starting prices & clear pillars
           ========================================================================= */}
-      <section className="sticky top-20 z-20 bg-white/95 backdrop-blur-md border-b border-[rgba(18,18,19,0.08)] py-3 px-4 sm:px-8 md:px-12 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
-        <div className="max-w-[1920px] mx-auto flex items-center justify-between gap-4 overflow-x-auto no-scrollbar text-xs">
-          <span className="font-bold text-[#1D1D1F] uppercase tracking-wider flex-shrink-0">
-            JUMP TO SERVICE:
-          </span>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {SERVICES_DATA.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => scrollToPricingForService(s.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  activeTab === s.id
-                    ? 'bg-[#0859D4] text-white shadow-sm'
-                    : 'bg-[#F5F5F7] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBEF] border border-[rgba(18,18,19,0.08)]'
-                }`}
-              >
-                {s.num} {s.shortName}
-              </button>
-            ))}
+      <section
+        ref={servicesCardsRef}
+        id="overview"
+        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
+      >
+        <div className="max-w-[1920px] mx-auto">
+          <div className="mb-10 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF] block mb-2">
+                02 // CORE CAPABILITIES
+              </span>
+              <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
+                The Four Pillars.
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-[#5B6275] max-w-md font-medium">
+              We separate one-time project sprints from predictable monthly subscriptions so your marketing engine never stalls.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* =========================================================================
-          THE 8 PILLARS (DEEP DIVE DISCIPLINE SECTIONS)
-          ========================================================================= */}
-      <section className="max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 divide-y divide-[rgba(18,18,19,0.08)] bg-white">
-        {SERVICES_DATA.map((serv, index) => {
-          const isEven = index % 2 === 1;
-          return (
-            <div
-              key={serv.id}
-              id={`service-${serv.id}`}
-              className="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-            >
-              {/* Content Column */}
-              <div
-                className={`space-y-6 ${
-                  isEven ? 'lg:col-span-5 lg:order-2' : 'lg:col-span-5 lg:order-1'
-                }`}
-              >
-                <div className="flex flex-wrap items-center gap-3 text-xs">
-                  <span className="font-bold text-lg text-[#1D1D1F]">{serv.num}</span>
-                  <span className="text-[rgba(18,18,19,0.2)]">|</span>
-                  <span className="px-3 py-1 rounded-full border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] text-[#1D1D1F] font-semibold flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-[#0859D4]" />
-                    <span>{serv.tag}</span>
-                  </span>
-                  <span className="px-3 py-1 rounded-full border border-[#0859D4]/25 bg-[#0859D4]/8 text-[#0859D4] font-bold">
-                    Starting at {formatPrice(currency === 'INR' ? serv.tiers[0].priceINR : serv.tiers[0].priceUSD, currency)}
-                  </span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {FOUR_PILLARS_SERVICES.map((pillar) => {
+              const startPrice = getTierPrice(pillar.tiers[0], currency);
+              const formattedStartPrice = formatPrice(startPrice, currency);
+              const isActive = activeTab === pillar.id;
 
-                <h2
-                  className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#1D1D1F] tracking-tight"
+              return (
+                <div
+                  key={pillar.id}
+                  className={`p-6 sm:p-7 rounded-3xl bg-white border flex flex-col justify-between transition-all duration-300 hover:shadow-lg ${
+                    isActive
+                      ? 'border-[#1F3FFF] ring-2 ring-[#1F3FFF]/15 shadow-md'
+                      : 'border-[#E4E6EB] hover:border-[#1F3FFF]/50'
+                  }`}
                 >
-                  {serv.name}
-                </h2>
-
-                <p className="text-base text-[#424242] leading-relaxed font-normal">
-                  {serv.headline}
-                </p>
-
-                <div className="p-4 rounded-xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] text-xs text-[#424242]">
-                  <strong className="text-[#1D1D1F] block mb-1 uppercase tracking-wider">
-                    IDEAL FIT:
-                  </strong>
-                  <span>{serv.idealFor}</span>
-                </div>
-
-                <div className="pt-2 flex flex-wrap items-center gap-3 text-xs">
-                  <button
-                    onClick={() => scrollToPricingForService(serv.id)}
-                    className="btn-onlines-blue py-3 px-6 flex items-center gap-2 cursor-pointer font-bold shadow-sm hover:shadow"
-                  >
-                    <span>VIEW {serv.shortName.toUpperCase()} TIERS</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                  <Link
-                    href={`/contact?service=${serv.id}`}
-                    onClick={playClick}
-                    className="btn-onlines-outline py-3 px-6 font-bold"
-                  >
-                    <span>BOOK SPRINT</span>
-                    <span className="ml-1">→</span>
-                  </Link>
-                </div>
-              </div>
-
-              {/* Visuals & Key Deliverables Card */}
-              <div
-                className={`${
-                  isEven ? 'lg:col-span-7 lg:order-1' : 'lg:col-span-7 lg:order-2'
-                }`}
-              >
-                <div className="p-6 sm:p-8 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white shadow-sm space-y-6 group">
-                  {/* Fixed Aspect Image Preview (16:10, full cover) */}
-                  <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)]">
-                    <Image
-                      src={serv.image}
-                      alt={serv.alt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 55vw"
-                      className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                    />
-                    {serv.id === 'video' && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors pointer-events-none">
-                        <div className="w-16 h-16 rounded-full bg-[#0859D4] text-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                          <Play className="w-7 h-7 fill-white ml-1" />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
                   <div>
-                    <span className="text-xs text-[#5A5A5E] font-bold block mb-3 uppercase tracking-wider">
-                      CORE DELIVERABLES INCLUDED:
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
-                      {serv.deliverables.map((del, dIdx) => (
-                        <div
-                          key={dIdx}
-                          className="flex items-start gap-2 text-[#424242] leading-snug"
-                        >
-                          <Check className="w-4 h-4 text-[#0859D4] flex-shrink-0 mt-0.5" />
-                          <span>{del}</span>
+                    {/* Pillar Meta */}
+                    <div className="flex items-center justify-between text-xs mb-4">
+                      <span className="font-bold text-lg text-[#0A0F1F] font-mono">
+                        {pillar.num}
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#1F3FFF]/10 text-[#1F3FFF] font-bold text-[11px] border border-[#1F3FFF]/20">
+                        From {formattedStartPrice}
+                      </span>
+                    </div>
+
+                    <h3 className="font-display text-2xl font-extrabold text-[#0A0F1F] mb-2">
+                      {pillar.name}
+                    </h3>
+
+                    <p className="text-xs font-semibold text-[#1F3FFF] uppercase tracking-wider mb-4">
+                      {pillar.tag}
+                    </p>
+
+                    <p className="text-sm text-[#5B6275] leading-relaxed mb-6">
+                      {pillar.idealFor}
+                    </p>
+
+                    {/* Key Deliverables Pills */}
+                    <div className="space-y-2 mb-6 pt-4 border-t border-[#E4E6EB] text-xs">
+                      {pillar.deliverables.slice(0, 3).map((del, dIdx) => (
+                        <div key={dIdx} className="flex items-start gap-2 text-[#5B6275]">
+                          <Check className="w-3.5 h-3.5 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
+                          <span className="leading-snug">{del}</span>
                         </div>
                       ))}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </section>
 
-      {/* =========================================================================
-          WHY CLIENTS CHOOSE US (ARCHITECTURAL BENEFIT GRID)
-          ========================================================================= */}
-      <section className="border-t border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] py-20 px-4 sm:px-8 md:px-12 patron-puntos">
-        <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[rgba(18,18,19,0.08)] flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block mb-2">
-                THE ADVANTAGE
-              </span>
-              <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-[#1D1D1F] tracking-tight">
-                Why clients choose us.
-              </h2>
-            </div>
-            <span className="text-xs text-[#5A5A5E] font-semibold uppercase tracking-wider">
-              NO JUGGLING MULTIPLE FREELANCERS. ONE DEDICATED STUDIO TEAM.
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {WHY_CHOOSE_US.map((item, idx) => (
-              <div
-                key={item.num}
-                className="p-6 rounded-2xl border border-[rgba(18,18,19,0.08)] bg-white flex flex-col justify-between shadow-sm hover:border-[#0859D4] transition-colors"
-              >
-                <div>
-                  <span className="text-xs font-bold text-[#0859D4] block mb-3 uppercase tracking-wider">
-                    0{idx + 1} // BENEFIT
-                  </span>
-                  <h3 className="font-display text-lg font-bold text-[#1D1D1F] mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-[#424242] leading-relaxed">
-                    {item.desc}
-                  </p>
+                  <div className="pt-4 border-t border-[#E4E6EB] flex flex-col gap-2">
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection(packagesSectionRef, pillar.id)}
+                      className={`w-full py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                        isActive
+                          ? 'btn-onlines-blue'
+                          : 'btn-onlines-outline hover:border-[#1F3FFF]'
+                      }`}
+                    >
+                      <span>View 3 Tiers</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          PRICING PACKAGES & TIERS
+          03 — PROJECT PACKAGES
+          Choose your level. Three clearly comparable tiers per service.
+          Growth is highlighted as the recommended tier.
           ========================================================================= */}
       <section
-        ref={pricingSectionRef}
-        id="pricing"
-        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-t border-[rgba(18,18,19,0.08)] bg-white"
+        ref={packagesSectionRef}
+        id="packages"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
         <div className="max-w-[1920px] mx-auto">
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-[rgba(18,18,19,0.08)]">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-[#E4E6EB]">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
-                <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
-                <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4]">
-                  CLEAR PRICING
+                <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF]">
+                  03 // ONE-TIME SPRINT PACKAGES
                 </span>
-                <span className="text-[#424242] px-2.5 py-0.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)]">
-                  Zero Hidden Fees • 100% IP Ownership
+                <span className="text-[#5B6275] px-2.5 py-0.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB]">
+                  Fixed Scope · Defined Milestones · 100% IP Ownership
                 </span>
               </div>
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#1D1D1F] tracking-tight">
-                Transparent rates.
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#0A0F1F] tracking-tight">
+                Choose your level.
               </h2>
-              <p className="text-sm sm:text-base text-[#424242] mt-2 font-normal">
-                Select your service discipline below to review tier options.
+              <p className="text-sm sm:text-base text-[#5B6275] mt-2 font-normal max-w-2xl">
+                Three clearly defined project packages for each pillar. Select a discipline below to review exact deliverables, turnaround times, and pricing.
               </p>
             </div>
-
+            <div className="text-xs text-[#5B6275] bg-[#F5F6F8] p-3 rounded-xl border border-[#E4E6EB] max-w-xs">
+              <strong className="text-[#0A0F1F] block mb-0.5">Need ongoing monthly output?</strong>
+              Check out our <button onClick={() => scrollToSection(retainersSectionRef)} className="text-[#1F3FFF] underline font-bold cursor-pointer">Monthly Retainers</button> below instead.
+            </div>
           </div>
 
-          {/* 8 Service Tabs with URL Hash Sync */}
+          {/* 4 Pillar Switcher Tabs */}
           <div className="flex flex-wrap items-center gap-2 pt-8 pb-10 overflow-x-auto">
-            {SERVICES_DATA.map((service) => {
-              const isActive = activeTab === service.id;
+            {FOUR_PILLARS_SERVICES.map((pillar) => {
+              const isActive = activeTab === pillar.id;
               return (
                 <button
-                  key={service.id}
-                  onClick={() => handleTabSelect(service.id)}
-                  className={`px-4 py-2.5 rounded-full text-xs uppercase tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                  key={pillar.id}
+                  onClick={() => handleTabSelect(pillar.id)}
+                  className={`px-5 py-3 rounded-full text-xs uppercase tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer ${
                     isActive
-                      ? 'bg-[#0859D4] text-white shadow-md'
-                      : 'bg-[#F5F5F7] text-[#424242] hover:text-[#1D1D1F] hover:border-[#0859D4] border border-[rgba(18,18,19,0.08)]'
+                      ? 'bg-[#1F3FFF] text-white shadow-md'
+                      : 'bg-[#F5F6F8] text-[#5B6275] hover:text-[#0A0F1F] hover:border-[#1F3FFF] border border-[#E4E6EB]'
                   }`}
                   data-cursor="TAB"
                 >
-                  <span>{service.num} {service.shortName}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                  <span className="font-mono">{pillar.num}</span>
+                  <span>{pillar.name}</span>
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white ml-1" />}
                 </button>
               );
             })}
           </div>
 
-          {/* 3 Equal-Height Pricing Cards for the Active Service */}
+          {/* Active Pillar Focus Banner */}
+          <div className="mb-10 p-6 rounded-2xl bg-[#F5F6F8] border border-[#E4E6EB] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span className="text-xs font-mono font-bold text-[#1F3FFF] uppercase block mb-1">
+                {activeService.code}
+              </span>
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-[#0A0F1F]">
+                {activeService.name} — <span className="text-[#5B6275] font-normal text-lg">{activeService.headline}</span>
+              </h3>
+            </div>
+            <div className="text-xs text-[#5B6275] max-w-md">
+              <strong className="text-[#0A0F1F]">Best suited for:</strong> {activeService.idealFor}
+            </div>
+          </div>
+
+          {/* 3 Tier Pricing Cards for Active Pillar */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {activeService.tiers.map((tier) => {
-              const price = currency === 'INR' ? tier.priceINR : tier.priceUSD;
+              const price = getTierPrice(tier, currency);
               const formattedPrice = formatPrice(price, currency);
 
               return (
@@ -732,69 +508,69 @@ export default function ServicesPage() {
                   key={tier.id}
                   className={`p-8 md:p-10 rounded-3xl flex flex-col justify-between shadow-sm relative transition-all bg-white ${
                     tier.isPopular
-                      ? 'border-2 border-[#0859D4] shadow-xl ring-2 ring-[#0859D4]/15'
-                      : 'border border-[rgba(18,18,19,0.08)] hover:border-[#0859D4]/40'
+                      ? 'border-2 border-[#1F3FFF] shadow-xl ring-2 ring-[#1F3FFF]/15'
+                      : 'border border-[#E4E6EB] hover:border-[#1F3FFF]/40'
                   }`}
                 >
-                  {/* "Most popular" Badge */}
+                  {/* Growth / Most Popular Highlight Badge */}
                   {tier.isPopular && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#0859D4] text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 shadow-md border border-[#0859D4]">
+                    <div className="brand-badge-popular absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-md flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Most popular</span>
+                      <span>Recommended Tier</span>
                     </div>
                   )}
 
                   <div>
                     {/* Top Tier Meta */}
-                    <div className="flex items-center justify-between text-xs mb-3 text-[#5A5A5E]">
-                      <span className="font-bold text-[#1D1D1F] uppercase tracking-wider">
+                    <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
+                      <span className="font-bold text-[#0A0F1F] uppercase tracking-wider font-mono">
                         {tier.name}
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-semibold flex items-center gap-1 border border-[rgba(18,18,19,0.08)]">
-                        <Clock className="w-3 h-3 text-[#0859D4]" />
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold flex items-center gap-1 border border-[#E4E6EB]">
+                        <Clock className="w-3 h-3 text-[#1F3FFF]" />
                         <span>{tier.timeline}</span>
                       </span>
                     </div>
 
-                    <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#1D1D1F] mb-2">
+                    <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-2">
                       {tier.name}
                     </h3>
 
-                    <p className="text-xs text-[#424242] min-h-[36px] mb-6 leading-relaxed">
+                    <p className="text-sm text-[#5B6275] min-h-[40px] mb-6 leading-relaxed">
                       {tier.tagline}
                     </p>
 
                     {/* Price Block */}
-                    <div className="py-5 border-y border-[rgba(18,18,19,0.08)] mb-6">
-                      <div className="text-[11px] uppercase tracking-wider text-[#5A5A5E] font-semibold mb-1">
+                    <div className="py-5 border-y border-[#E4E6EB] mb-6">
+                      <div className="text-[11px] uppercase tracking-wider text-[#5B6275] font-semibold mb-1">
                         Starting at
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="font-display text-4xl sm:text-5xl font-extrabold text-[#1D1D1F] tracking-tight">
+                        <span className="font-display text-4xl sm:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
                           {formattedPrice}
                         </span>
                         {tier.period && (
-                          <span className="text-xs text-[#5A5A5E] font-semibold">
+                          <span className="text-xs text-[#5B6275] font-semibold">
                             / {tier.period}
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-[#5A5A5E] mt-2 italic">
-                        Final quote depends on specific project scope.
+                      <div className="text-xs text-[#5B6275] mt-2 italic">
+                        Fixed project sprint scope. Defined deliverables.
                       </div>
                     </div>
 
-                    {/* Checklist of Features */}
-                    <div className="space-y-3 text-xs mb-8">
+                    {/* Features Checklist */}
+                    <div className="space-y-3 text-sm mb-8">
                       {tier.inheritsText && (
-                        <div className="font-bold text-[#1D1D1F] text-[11px] pb-1 border-b border-[rgba(18,18,19,0.08)] flex items-center gap-1.5">
-                          <Layers className="w-3 h-3 text-[#0859D4]" />
+                        <div className="font-bold text-[#0A0F1F] text-xs pb-1 border-b border-[#E4E6EB] flex items-center gap-1.5">
+                          <Layers className="w-3 h-3 text-[#1F3FFF]" />
                           <span>{tier.inheritsText}</span>
                         </div>
                       )}
                       {tier.features.map((feat, idx) => (
-                        <div key={idx} className="flex items-start gap-2.5 text-[#424242]">
-                          <Check className="w-4 h-4 text-[#0859D4] flex-shrink-0 mt-0.5" />
+                        <div key={idx} className="flex items-start gap-2.5 text-[#5B6275]">
+                          <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                           <span className="font-medium leading-relaxed">{feat}</span>
                         </div>
                       ))}
@@ -820,49 +596,49 @@ export default function ServicesPage() {
             })}
           </div>
 
-          {/* Note for Meta Ads spend */}
-          {activeTab === 'meta-ads' && (
-            <div className="mt-6 p-4 rounded-2xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] text-xs text-[#424242] flex items-center gap-2 shadow-sm">
-              <span className="text-[#0859D4] font-bold text-sm">ℹ</span>
+          {/* Performance Marketing Ad Spend Note */}
+          {activeTab === 'performance-marketing' && (
+            <div className="mt-6 p-4 rounded-2xl border border-[#E4E6EB] bg-[#F5F6F8] text-sm text-[#5B6275] flex items-center gap-2 shadow-sm">
+              <span className="text-[#1F3FFF] font-bold text-base">ℹ</span>
               <span>
-                <strong>Important note:</strong> Ad spend is paid directly by the client to Meta and is separate from our management and creative fees.
+                <strong>Important pricing rule:</strong> Our fee covers account setup, campaign management, and creative optimization. The client pays Meta advertising spend directly to their Meta Business account.
               </span>
             </div>
           )}
 
           {/* =========================================================================
-              COMPARE PACKAGES TABLE
+              SIDE-BY-SIDE FEATURE COMPARISON TABLE
               ========================================================================= */}
-          <div className="mt-20 pt-12 border-t border-[rgba(18,18,19,0.08)]">
+          <div className="mt-20 pt-12 border-t border-[#E4E6EB]">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block mb-2">
-                  DETAILED BREAKDOWN
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF] block mb-2">
+                  DETAILED DELIVERABLE MATRIX
                 </span>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#1D1D1F]">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F]">
                   Compare {activeService.shortName} packages.
                 </h3>
               </div>
-              <span className="text-xs text-[#5A5A5E] font-medium uppercase tracking-wider">
-                Side-by-side feature comparison
+              <span className="text-xs text-[#5B6275] font-medium uppercase tracking-wider">
+                Full side-by-side scope breakdown
               </span>
             </div>
 
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white shadow-sm">
+            <div className="hidden md:block overflow-x-auto rounded-3xl border border-[#E4E6EB] bg-white shadow-sm">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] sticky top-0 z-10">
-                    <th className="p-4 sm:p-5 font-bold text-[#1D1D1F] w-1/4 uppercase tracking-wider">
-                      FEATURE / SPEC
+                  <tr className="border-b border-[#E4E6EB] bg-[#F5F6F8] sticky top-0 z-10">
+                    <th className="p-4 sm:p-5 font-bold text-[#0A0F1F] w-1/4 uppercase tracking-wider">
+                      SPECIFICATION / SCOPE
                     </th>
                     {comparison.headers.map((header, idx) => (
                       <th
                         key={idx}
                         className={`p-4 sm:p-5 font-extrabold text-sm w-1/4 ${
                           header.includes('Popular')
-                            ? 'text-[#0859D4] bg-[#0859D4]/10 border-x border-[rgba(18,18,19,0.08)]'
-                            : 'text-[#1D1D1F]'
+                            ? 'text-[#1F3FFF] bg-[#1F3FFF]/10 border-x border-[#E4E6EB]'
+                            : 'text-[#0A0F1F]'
                         }`}
                       >
                         {header}
@@ -870,20 +646,20 @@ export default function ServicesPage() {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[rgba(18,18,19,0.08)]">
+                <tbody className="divide-y divide-[#E4E6EB]">
                   {comparison.rows.map((row, rIdx) => (
                     <tr
                       key={rIdx}
-                      className="hover:bg-[#F5F5F7]/80 transition-colors"
+                      className="hover:bg-[#F5F6F8]/80 transition-colors"
                     >
-                      <td className="p-4 sm:p-5 font-bold text-[#1D1D1F] bg-[#F5F5F7]/40">
+                      <td className="p-4 sm:p-5 font-bold text-[#0A0F1F] bg-[#F5F6F8]/40">
                         {row.feature}
                       </td>
                       {row.tiers.map((val, cIdx) => (
                         <td
                           key={cIdx}
-                          className={`p-4 sm:p-5 text-[#424242] leading-relaxed ${
-                            cIdx === 1 ? 'bg-[#0859D4]/5 border-x border-[rgba(18,18,19,0.08)] font-medium text-[#1D1D1F]' : ''
+                          className={`p-4 sm:p-5 text-[#5B6275] leading-relaxed text-sm ${
+                            cIdx === 1 ? 'bg-[#1F3FFF]/5 border-x border-[#E4E6EB] font-medium text-[#0A0F1F]' : ''
                           }`}
                         >
                           {val}
@@ -897,15 +673,15 @@ export default function ServicesPage() {
 
             {/* Mobile Accordion View */}
             <div className="md:hidden space-y-3">
-              <div className="flex rounded-full bg-[#F5F5F7] p-1 border border-[rgba(18,18,19,0.08)] text-xs mb-4">
+              <div className="flex rounded-full bg-[#F5F6F8] p-1 border border-[#E4E6EB] text-xs mb-4">
                 {comparison.headers.map((header, idx) => (
                   <button
                     key={idx}
                     onClick={() => setMobileAccordionTier(idx)}
                     className={`flex-1 py-2 text-center rounded-full font-bold text-[11px] transition-all cursor-pointer ${
                       mobileAccordionTier === idx
-                        ? 'bg-[#0859D4] text-white shadow-sm'
-                        : 'text-[#424242]'
+                        ? 'bg-[#1F3FFF] text-white shadow-sm'
+                        : 'text-[#5B6275]'
                     }`}
                   >
                     {header.split(' ')[0]}
@@ -913,13 +689,13 @@ export default function ServicesPage() {
                 ))}
               </div>
 
-              <div className="p-5 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white divide-y divide-[rgba(18,18,19,0.08)] text-xs">
+              <div className="p-5 rounded-3xl border border-[#E4E6EB] bg-white divide-y divide-[#E4E6EB] text-xs">
                 {comparison.rows.map((row, rIdx) => (
                   <div key={rIdx} className="py-3 first:pt-0 last:pb-0">
-                    <span className="text-[11px] text-[#5A5A5E] block font-semibold mb-1 uppercase tracking-wider">
+                    <span className="text-[11px] text-[#5B6275] block font-semibold mb-1 uppercase tracking-wider">
                       {row.feature}
                     </span>
-                    <p className="text-[#1D1D1F] font-medium leading-relaxed">
+                    <p className="text-[#0A0F1F] font-medium leading-relaxed text-sm">
                       {row.tiers[mobileAccordionTier]}
                     </p>
                   </div>
@@ -927,20 +703,289 @@ export default function ServicesPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          04 — MONTHLY RETAINERS
+          Your creative team, on subscription.
+          3 Standalone Monthly Retainers + Growth Partner Bundles
+          ========================================================================= */}
+      <section
+        ref={retainersSectionRef}
+        id="retainers"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
+      >
+        <div className="max-w-[1920px] mx-auto">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#E4E6EB]">
+            <div>
+              <div className="flex items-center gap-2 mb-2 text-xs">
+                <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF]">
+                  04 // RECURRING SUBSCRIPTIONS
+                </span>
+                <span className="text-[#5B6275] px-2.5 py-0.5 rounded-full bg-white border border-[#E4E6EB]">
+                  Keep Growing · Predictable Monthly Output
+                </span>
+              </div>
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#0A0F1F] tracking-tight">
+                Your creative team, on subscription.
+              </h2>
+              <p className="text-sm sm:text-base text-[#5B6275] mt-2 font-normal max-w-2xl">
+                A website is a one-time project; visual content, dynamic video editing, and performance advertising drive ongoing monthly revenue. Hire our specialized team on a recurring retainer with zero hiring overhead.
+              </p>
+            </div>
+            <div className="flex flex-col gap-1 text-xs text-[#5B6275] text-left md:text-right">
+              <span className="font-bold text-[#0A0F1F]">Billed monthly in advance</span>
+              <span>3-month initial commitment • Transparent quotas</span>
+            </div>
+          </div>
+
+          {/* 3 Standalone Monthly Retainers */}
+          <div className="pt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            {MONTHLY_RETAINERS.map((ret) => {
+              const displayRange = currency === 'INR' ? ret.priceRangeINR : ret.priceRangeUSD;
+
+              return (
+                <div
+                  key={ret.id}
+                  className="p-8 md:p-10 rounded-3xl bg-white border border-[#E4E6EB] flex flex-col justify-between shadow-sm hover:border-[#1F3FFF] transition-all"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-3">
+                      <span className="font-mono font-bold text-sm text-[#1F3FFF]">
+                        {ret.num} // RETAINER
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#5B6275] font-semibold text-[11px] border border-[#E4E6EB]">
+                        Monthly Retainer
+                      </span>
+                    </div>
+
+                    <h3 className="font-display text-2xl font-extrabold text-[#0A0F1F] mb-2">
+                      {ret.name}
+                    </h3>
+
+                    <p className="text-xs font-semibold text-[#1F3FFF] mb-3">
+                      {ret.tagline}
+                    </p>
+
+                    <p className="text-sm text-[#5B6275] mb-6 leading-relaxed">
+                      {ret.idealFor}
+                    </p>
+
+                    {/* Price Range Banner */}
+                    <div className="py-4 px-5 rounded-2xl bg-[#F5F6F8] border border-[#E4E6EB] mb-6">
+                      <span className="text-[11px] uppercase tracking-wider text-[#5B6275] font-semibold block">
+                        Monthly Fee Range
+                      </span>
+                      <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F]">
+                        {displayRange}
+                      </span>
+                      <span className="text-[11px] text-[#5B6275] block mt-1">
+                        Exact tier tailored to deliverable volume
+                      </span>
+                    </div>
+
+                    {/* What's Included */}
+                    <div className="space-y-2.5 text-xs text-[#5B6275] mb-6">
+                      <span className="font-bold text-[#0A0F1F] block uppercase tracking-wider text-[11px] pb-1 border-b border-[#E4E6EB]">
+                        Monthly Deliverables Included:
+                      </span>
+                      {ret.includes.map((inc, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <Check className="w-3.5 h-3.5 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
+                          <span className="leading-snug">{inc}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Scope Boundaries & Exclusions */}
+                    <div className="p-4 rounded-xl bg-[#FFF9EB] border border-[#FFE1A6] text-[11px] text-[#8C5D00] space-y-1 mb-6">
+                      <strong className="block uppercase tracking-wider text-[10px] text-[#8C5D00]">
+                        Scope Boundaries &amp; Rules:
+                      </strong>
+                      {ret.limits.map((lim, lIdx) => (
+                        <div key={lIdx} className="flex items-start gap-1.5">
+                          <span>•</span>
+                          <span>{lim}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-[#E4E6EB]">
+                    <div className="text-[11px] text-[#5B6275] mb-3 text-center">
+                      {ret.terms}
+                    </div>
+                    <Link
+                      href={`/contact?service=${ret.id}`}
+                      onClick={playClick}
+                      className="w-full py-3.5 rounded-full btn-onlines-blue text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Apply for {ret.shortName}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
           {/* =========================================================================
-              STARTUP LAUNCH KIT BANNER (ONLINES DARK BENTO CARD)
+              GROWTH PARTNER BUNDLES (COMBINED MONTHLY RETAINERS)
               ========================================================================= */}
-          <div className="mt-16 p-8 md:p-12 rounded-3xl bg-[#050B14] text-white shadow-2xl relative overflow-hidden border border-[rgba(255,255,255,0.08)]">
+          <div className="mt-20 pt-16 border-t border-[#E4E6EB]">
+            <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF] block mb-2">
+                  ALL-IN-ONE GROWTH PARTNERSHIPS
+                </span>
+                <h3 className="font-display text-3xl sm:text-4xl font-extrabold text-[#0A0F1F]">
+                  PixelMutiny Growth Partner Bundles.
+                </h3>
+                <p className="text-sm text-[#5B6275] mt-1 max-w-2xl">
+                  Once your brand needs both content production and active customer acquisition, our combined monthly partner plans provide a complete external marketing department.
+                </p>
+              </div>
+              <span className="text-xs text-[#5B6275] font-semibold uppercase tracking-wider">
+                Full-Stack Creative + Media Buying
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+              {GROWTH_PARTNER_BUNDLES.map((bundle) => {
+                const feeDisplay = currency === 'INR' ? bundle.feeDisplayINR : bundle.feeDisplayUSD;
+
+                return (
+                  <div
+                    key={bundle.id}
+                    className={`p-8 md:p-10 rounded-3xl flex flex-col justify-between shadow-sm relative transition-all bg-white ${
+                      bundle.isPopular
+                        ? 'border-2 border-[#1F3FFF] shadow-xl ring-2 ring-[#1F3FFF]/15'
+                        : 'border border-[#E4E6EB] hover:border-[#1F3FFF]/40'
+                    }`}
+                  >
+                    {bundle.isPopular && (
+                      <div className="brand-badge-popular absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-md flex items-center gap-1.5">
+                        <Flame className="w-3.5 h-3.5" />
+                        <span>Most Popular Growth Bundle</span>
+                      </div>
+                    )}
+
+                    <div>
+                      <div className="flex items-center justify-between text-xs mb-3">
+                        <span className="font-bold text-[#0A0F1F] uppercase tracking-wider font-mono">
+                          PARTNER BUNDLE
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#1F3FFF]/10 text-[#1F3FFF] font-bold text-[11px]">
+                          Monthly Retainer
+                        </span>
+                      </div>
+
+                      <h4 className="font-display text-2xl font-extrabold text-[#0A0F1F] mb-1">
+                        {bundle.name}
+                      </h4>
+
+                      <p className="text-xs font-semibold text-[#1F3FFF] mb-3">
+                        {bundle.tagline}
+                      </p>
+
+                      <p className="text-sm text-[#5B6275] mb-6 leading-relaxed">
+                        {bundle.bestFor}
+                      </p>
+
+                      {/* Fee Card */}
+                      <div className="py-5 border-y border-[#E4E6EB] mb-6">
+                        <span className="text-[11px] uppercase tracking-wider text-[#5B6275] font-semibold block mb-1">
+                          Monthly Retainer Fee
+                        </span>
+                        <span className="font-display text-3xl sm:text-4xl font-extrabold text-[#0A0F1F]">
+                          {feeDisplay}
+                        </span>
+                        <span className="text-xs text-[#5B6275] block mt-1">
+                          {bundle.terms}
+                        </span>
+                      </div>
+
+                      {/* Deliverables */}
+                      <div className="space-y-2.5 text-xs text-[#5B6275] mb-8">
+                        <span className="font-bold text-[#0A0F1F] block uppercase tracking-wider text-[11px] pb-1 border-b border-[#E4E6EB]">
+                          Combined Monthly Output:
+                        </span>
+                        {bundle.deliverables.map((del, dIdx) => (
+                          <div key={dIdx} className="flex items-start gap-2">
+                            <Check className="w-3.5 h-3.5 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
+                            <span className="leading-snug">{del}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Link
+                      href={`/contact?service=${bundle.id}`}
+                      onClick={playClick}
+                      className={`w-full py-3.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all ${
+                        bundle.isPopular ? 'btn-onlines-blue' : 'btn-onlines-outline'
+                      }`}
+                    >
+                      <span>Join as {bundle.name}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* =========================================================================
+              TWO IMPORTANT PRICING RULES (GOVERNANCE CALLOUT)
+              ========================================================================= */}
+          <div className="mt-16 p-8 rounded-3xl bg-white border border-[#E4E6EB] shadow-sm">
+            <div className="flex items-center gap-2 mb-4 text-[#0A0F1F] font-bold">
+              <ShieldCheck className="w-5 h-5 text-[#1F3FFF]" />
+              <h4 className="font-display text-lg uppercase tracking-wider">
+                Two Non-Negotiable Pricing Rules We Stand By:
+              </h4>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#5B6275]">
+              <div className="p-5 rounded-2xl bg-[#F5F6F8] border border-[#E4E6EB]">
+                <strong className="text-[#0A0F1F] block font-display text-base mb-2">
+                  1. We Do Not Sell &ldquo;Unlimited Output&rdquo;
+                </strong>
+                <p className="leading-relaxed">
+                  Agencies promising unlimited revisions and unlimited requests either produce substandard cookie-cutter work or bottleneck turnaround times. We strictly define the number of pages, creatives, videos, campaigns, and revision rounds for every package so quality remains immaculate.
+                </p>
+              </div>
+              <div className="p-5 rounded-2xl bg-[#F5F6F8] border border-[#E4E6EB]">
+                <strong className="text-[#0A0F1F] block font-display text-base mb-2">
+                  2. We Protect Your Margins &amp; Keep Costs Transparent
+                </strong>
+                <p className="leading-relaxed">
+                  Third-party costs (domain hosting, paid font licenses, proprietary stock footage, and Meta advertising budgets) are never secretly marked up. They are paid directly to providers or explicitly itemized. For complex enterprise needs, we provide bespoke, fixed quotes before work commences.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          STARTUP LAUNCH KIT BANNER
+          The all-in-one bridge bundle
+          ========================================================================= */}
+      <section className="py-16 px-4 sm:px-8 md:px-12 bg-white">
+        <div className="max-w-[1920px] mx-auto">
+          <div className="p-8 md:p-12 rounded-3xl bg-[#0A0F1F] text-white shadow-2xl relative overflow-hidden border border-white/10">
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-7 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-3.5 py-1 rounded-full bg-[#0859D4] text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                  <span className="px-3.5 py-1 rounded-full bg-[#1F3FFF] text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>ALL-IN-ONE BUNDLE</span>
+                    <span>ALL-IN-ONE LAUNCH SPRINT</span>
                   </span>
                   <span className="px-3 py-1 rounded-full bg-white/10 text-white text-[11px] border border-white/20">
-                    Saves {currency === 'INR' ? '₹10,000' : '$300'}
+                    Saves {currency === 'INR' ? '₹20,000' : '$250'}
                   </span>
                 </div>
 
@@ -948,7 +993,7 @@ export default function ServicesPage() {
                   {STARTUP_LAUNCH_KIT.name}.
                 </h3>
 
-                <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-xl font-normal">
+                <p className="text-sm text-white/80 leading-relaxed max-w-xl font-normal">
                   {STARTUP_LAUNCH_KIT.subtitle}
                 </p>
 
@@ -958,8 +1003,9 @@ export default function ServicesPage() {
                       key={i}
                       className="p-4 rounded-2xl bg-white/5 border border-white/10"
                     >
-                      <span className="font-bold text-[#0859D4] block mb-1">
-                        ✓ {inc.title}
+                      <span className="font-bold text-[#1F3FFF] flex items-center gap-1.5 mb-1">
+                        <Check className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span>{inc.title}</span>
                       </span>
                       <p className="text-white/70 text-[11px] leading-relaxed">
                         {inc.desc}
@@ -970,36 +1016,29 @@ export default function ServicesPage() {
               </div>
 
               {/* Bundle Pricing Card */}
-              <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-white text-[#1D1D1F] flex flex-col justify-between shadow-xl">
+              <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-white text-[#0A0F1F] flex flex-col justify-between shadow-xl">
                 <div>
-                  <div className="flex items-center justify-between text-xs text-[#5A5A5E] mb-2">
-                    <span className="font-bold uppercase tracking-wider text-[#1D1D1F]">
+                  <div className="flex items-center justify-between text-xs text-[#5B6275] mb-2">
+                    <span className="font-bold uppercase tracking-wider text-[#0A0F1F]">
                       Sprint Turnaround:
                     </span>
-                    <span className="font-semibold text-[#0859D4]">{STARTUP_LAUNCH_KIT.timeline}</span>
+                    <span className="font-semibold text-[#1F3FFF]">{STARTUP_LAUNCH_KIT.timeline}</span>
                   </div>
 
                   <div className="flex items-baseline gap-3 my-4">
-                    <span className="font-display text-4xl sm:text-5xl font-extrabold text-[#1D1D1F] tracking-tight">
-                      {formatPrice(
-                        currency === 'INR'
-                          ? STARTUP_LAUNCH_KIT.priceINR
-                          : STARTUP_LAUNCH_KIT.priceUSD,
-                        currency
-                      )}
+                    <span className="font-display text-4xl sm:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
+                      {formatPrice(getLaunchKitPrice(currency).price, currency)}
                     </span>
-                    <span className="text-sm text-[#71717A] line-through">
+                    <span className="text-sm text-[#5B6275] line-through">
                       {formatPrice(
-                        currency === 'INR'
-                          ? STARTUP_LAUNCH_KIT.originalINR
-                          : STARTUP_LAUNCH_KIT.originalUSD,
+                        getLaunchKitPrice(currency).price + getLaunchKitPrice(currency).savings,
                         currency
                       )}
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#424242] mb-6 leading-relaxed">
-                    Launch your brand, flagship landing page, and acquisition campaign simultaneously with full cross-team alignment.
+                  <p className="text-sm text-[#5B6275] mb-6 leading-relaxed">
+                    Launch your brand identity, conversion landing page, dynamic creative assets, and Meta ads campaign simultaneously under one unified partner.
                   </p>
                 </div>
 
@@ -1019,45 +1058,45 @@ export default function ServicesPage() {
       </section>
 
       {/* =========================================================================
-          A LA CARTE ADD-ONS TABLE
+          CUSTOM SCOPE ADD-ONS
           ========================================================================= */}
-      <section className="py-20 px-4 sm:px-8 md:px-12 border-t border-[rgba(18,18,19,0.08)] bg-[#F5F5F7]">
+      <section className="py-20 px-4 sm:px-8 md:px-12 border-t border-[#E4E6EB] bg-[#F5F6F8]">
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-10 pb-6 border-b border-[rgba(18,18,19,0.08)] flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="mb-10 pb-6 border-b border-[#E4E6EB] flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF] block mb-2">
                 CUSTOM SCOPE ADD-ONS
               </span>
-              <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#1D1D1F]">
+              <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#0A0F1F]">
                 Sprint Add-ons &amp; Extensions
               </h2>
             </div>
-            <span className="text-xs text-[#5A5A5E] font-semibold uppercase tracking-wider">
-              Available on any active sprint
+            <span className="text-xs text-[#5B6275] font-semibold uppercase tracking-wider">
+              Available on any active sprint or retainer
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {ADD_ONS_DATA.map((addon) => {
-              const price = currency === 'INR' ? addon.priceINR : addon.priceUSD;
+              const price = getAddonPrice(addon, currency);
               const displayPrice =
                 price === 0 ? addon.unit : `${formatPrice(price, currency)} ${addon.unit}`;
 
               return (
                 <div
                   key={addon.id}
-                  className="p-6 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white flex flex-col justify-between shadow-sm hover:border-[#0859D4] transition-colors"
+                  className="p-6 rounded-3xl border border-[#E4E6EB] bg-white flex flex-col justify-between shadow-sm hover:border-[#1F3FFF] transition-colors"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <h4 className="font-display text-lg font-bold text-[#1D1D1F]">
+                      <h4 className="font-display text-lg font-bold text-[#0A0F1F]">
                         {addon.name}
                       </h4>
-                      <span className="text-xs font-bold text-[#0859D4] px-3 py-1 rounded-full bg-[#0859D4]/10 border border-[#0859D4]/20 flex-shrink-0">
+                      <span className="text-xs font-bold text-[#1F3FFF] px-3 py-1 rounded-full bg-[#1F3FFF]/10 border border-[#1F3FFF]/20 flex-shrink-0">
                         {displayPrice}
                       </span>
                     </div>
-                    <p className="text-xs text-[#424242] leading-relaxed">
+                    <p className="text-sm text-[#5B6275] leading-relaxed">
                       {addon.description}
                     </p>
                   </div>
@@ -1069,43 +1108,19 @@ export default function ServicesPage() {
       </section>
 
       {/* =========================================================================
-          TERMS & CONDITIONS
-          ========================================================================= */}
-      <section className="pt-12 pb-6 px-4 sm:px-8 md:px-12 border-t border-[rgba(18,18,19,0.08)] bg-white text-xs">
-        <div className="max-w-[1920px] mx-auto">
-          <div className="p-8 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] shadow-sm">
-            <div className="flex items-center gap-2 mb-4 text-[#1D1D1F] font-bold">
-              <ShieldCheck className="w-4 h-4 text-[#0859D4]" />
-              <span className="uppercase tracking-wider">
-                TRANSPARENT TERMS &amp; PAYMENT CONDITIONS ({COMPANY_LEGAL_NAME})
-              </span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-[#424242]">
-              {TERMS_CONDITIONS.map((term, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <span className="text-[#0859D4] font-bold">●</span>
-                  <span>{term}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
           FAQ ACCORDION
           ========================================================================= */}
-      <section id="faq" className="pt-8 pb-20 px-4 sm:px-8 md:px-12 bg-white">
+      <section id="faq" className="pt-20 pb-20 px-4 sm:px-8 md:px-12 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF] block mb-2">
               FREQUENTLY ASKED QUESTIONS
             </span>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#1D1D1F]">
-              Frequently asked questions.
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0A0F1F]">
+              <span className="brand-highlight">Frequently asked</span> questions.
             </h2>
-            <p className="text-xs sm:text-sm text-[#424242] mt-3">
-              Clear answers about scope, revisions, ad spend, and delivery.
+            <p className="text-sm text-[#5B6275] mt-3">
+              Clear answers about scope boundaries, revisions, ad spend, and billing.
             </p>
           </div>
 
@@ -1115,7 +1130,7 @@ export default function ServicesPage() {
               return (
                 <div
                   key={index}
-                  className="rounded-2xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] overflow-hidden shadow-sm transition-all hover:border-[#0859D4]/40"
+                  className="rounded-2xl border border-[#E4E6EB] bg-[#F5F6F8] overflow-hidden shadow-sm transition-all hover:border-[#1F3FFF]/40"
                 >
                   <button
                     type="button"
@@ -1123,17 +1138,17 @@ export default function ServicesPage() {
                       playClick();
                       setOpenFaq(isOpen ? null : index);
                     }}
-                    className="w-full p-6 text-left flex items-center justify-between gap-4 font-display text-lg font-bold text-[#1D1D1F] hover:bg-white transition-colors cursor-pointer"
+                    className="w-full p-6 text-left flex items-center justify-between gap-4 font-display text-lg font-bold text-[#0A0F1F] hover:bg-white transition-colors cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#1D1D1F] flex-shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-[#0859D4]' : ''
+                      className={`w-5 h-5 text-[#0A0F1F] flex-shrink-0 transition-transform duration-300 ${
+                        isOpen ? 'rotate-180 text-[#1F3FFF]' : ''
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-6 pt-2 text-xs sm:text-sm text-[#424242] leading-relaxed border-t border-[rgba(18,18,19,0.08)] bg-white">
+                    <div className="px-6 pb-6 pt-2 text-sm text-[#5B6275] leading-relaxed border-t border-[#E4E6EB] bg-white">
                       <p>{faq.a}</p>
                     </div>
                   )}
@@ -1145,27 +1160,60 @@ export default function ServicesPage() {
       </section>
 
       {/* =========================================================================
-          BOTTOM CTA BANNER
+          TERMS & CONDITIONS
           ========================================================================= */}
-      <section className="py-20 px-4 sm:px-8 md:px-12 border-t border-[rgba(18,18,19,0.08)] bg-[#050B14] text-white text-center">
-        <div className="max-w-2xl mx-auto space-y-6">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#0859D4] block">
-            INITIATE YOUR SPRINT
+      <section className="pt-10 pb-16 px-4 sm:px-8 md:px-12 border-t border-[#E4E6EB] bg-[#F5F6F8] text-xs">
+        <div className="max-w-[1920px] mx-auto">
+          <div className="p-8 rounded-3xl border border-[#E4E6EB] bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-4 text-[#0A0F1F] font-bold">
+              <ShieldCheck className="w-4 h-4 text-[#1F3FFF]" />
+              <span className="uppercase tracking-wider">
+                TRANSPARENT TERMS &amp; PAYMENT CONDITIONS ({COMPANY_LEGAL_NAME})
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-[#5B6275]">
+              {TERMS_CONDITIONS.map((term, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-[#1F3FFF] font-bold">●</span>
+                  <span>{term}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          05 — FINAL CTA
+          Let's build your next advantage.
+          ========================================================================= */}
+      <section className="py-24 px-4 sm:px-8 md:px-12 border-t border-[#E4E6EB] bg-[#0A0F1F] text-white text-center">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF] block">
+            05 // GET IN TOUCH
           </span>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Break the template.
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+            Let&apos;s build your next advantage.
           </h2>
-          <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-normal">
-            Ready to build a digital presence that stands out instead of blending in? We review briefs and reply with a transparent quote within 24 hours.
+          <p className="text-base text-white/80 leading-relaxed font-normal max-w-2xl mx-auto">
+            Ready to break the template? Whether you need a fixed-scope project sprint or an ongoing monthly creative and performance team, we review briefs and provide structured proposals within 24 hours.
           </p>
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+          <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
               onClick={playClick}
-              className="btn-onlines-blue py-3.5 px-8 text-xs font-bold"
+              className="btn-onlines-blue py-4 px-8 text-xs font-bold uppercase tracking-wider shadow-lg hover:shadow-xl"
             >
-              <span>COMMENCE SPRINT INTAKE</span>
+              <span>Request a Proposal</span>
               <span className="ml-2">→</span>
+            </Link>
+            <Link
+              href="/contact?type=meeting"
+              onClick={playClick}
+              className="px-8 py-4 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/10 text-xs font-bold uppercase tracking-wider transition-all"
+            >
+              <span>Book Discovery Call</span>
+              <span className="ml-2">↗</span>
             </Link>
           </div>
         </div>

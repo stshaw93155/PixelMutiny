@@ -115,7 +115,7 @@ function WorksContent() {
   });
 
   return (
-    <div className="w-full bg-white text-[#1D1D1F] min-h-screen select-none selection:bg-[#0859D4] selection:text-white">
+    <div className="w-full bg-white text-[#0A0F1F] min-h-screen select-none selection:bg-[#1F3FFF] selection:text-white">
       <QuickInquiryDrawer
         isOpen={isInquiryOpen}
         onClose={() => setIsInquiryOpen(false)}
@@ -132,7 +132,7 @@ function WorksContent() {
       {/* Top Header & Breadcrumb with explicit top padding (pt-32) below sticky nav */}
       <section
         onMouseMove={handleMouseMove}
-        className="relative border-b border-[rgba(18,18,19,0.08)] pt-32 pb-12 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
+        className="relative border-b border-[#E4E6EB] pt-32 pb-12 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
         style={{
           '--dot-x': dotPos.x,
           '--dot-y': dotPos.y,
@@ -143,30 +143,30 @@ function WorksContent() {
 
         <div className="max-w-[1920px] mx-auto relative z-10">
           {/* Breadcrumb with generous spacing */}
-          <div className="flex items-center gap-3 text-xs text-[#1D1D1F] font-bold mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
+          <div className="flex items-center gap-3 text-xs text-[#0A0F1F] font-bold mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
             <span className="uppercase tracking-wider">02 // SELECTED WORKS (08)</span>
-            <span className="text-[rgba(18,18,19,0.2)]">|</span>
-            <span className="text-[#424242] font-medium hidden sm:inline uppercase tracking-wider">
+            <span className="text-[#E4E6EB]">|</span>
+            <span className="text-[#5B6275] font-medium hidden sm:inline uppercase tracking-wider">
               CURATED BENCHMARK PORTFOLIO
             </span>
-            <span className="text-[rgba(18,18,19,0.2)] hidden sm:inline">|</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-[#424242] text-xs font-normal">
+            <span className="text-[#E4E6EB] hidden sm:inline">|</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] text-[#5B6275] text-xs font-normal">
               Bespoke Client Platforms
             </span>
           </div>
 
           {/* Title with Dotted Baseline */}
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#1D1D1F] mb-4">
-            <span className="dotted-baseline">Selected Works (08)</span>
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#0A0F1F] mb-4">
+            <span className="dotted-baseline">Selected Works <span className="brand-highlight">(08)</span></span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#424242] max-w-2xl leading-relaxed mb-8 font-normal">
+          <p className="text-base sm:text-lg text-[#5B6275] max-w-2xl leading-relaxed mb-8 font-normal">
             A showcase of conversion-engineered landing pages, interactive high-performance web systems, and scalable product design architectures.
           </p>
 
           {/* Filter Pills */}
-          <div className="pt-6 border-t border-[rgba(18,18,19,0.08)]">
+          <div className="pt-6 border-t border-[#E4E6EB]">
             <div
               role="tablist"
               aria-label="Filter case studies by category"
@@ -182,15 +182,15 @@ function WorksContent() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => handleCategorySelect(tab.id)}
-                    className={`relative text-xs px-4 py-2 rounded-full border transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0859D4] ${
+                    className={`relative text-xs px-4 py-2 rounded-full border transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F3FFF] ${
                       active
-                        ? 'border-[#1D1D1F] bg-[#1D1D1F] text-white font-bold shadow-sm'
-                        : 'border-[rgba(18,18,19,0.16)] text-[#1D1D1F] bg-white hover:border-[#1D1D1F] font-semibold'
+                        ? 'border-[#0A0F1F] bg-[#0A0F1F] text-white font-bold shadow-sm'
+                        : 'border-[#E4E6EB] text-[#0A0F1F] bg-white hover:border-[#1F3FFF] font-semibold'
                     }`}
                     data-cursor="FILTER"
                   >
                     <span>{tab.label}</span>
-                    <span className={active ? 'text-white/80 font-bold' : 'text-[#6B7280] font-semibold'}>
+                    <span className={active ? 'text-white/80 font-bold' : 'text-[#5B6275] font-semibold'}>
                       ({formattedCount})
                     </span>
                   </button>
@@ -254,9 +254,9 @@ function WorksContent() {
 
                     {/* Subtle Hover Overlay with Quick Preview CTA */}
                     <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                      <span className="px-3.5 py-1.5 rounded-full bg-white/95 text-[#1D1D1F] text-xs font-bold shadow-lg flex items-center gap-1.5 backdrop-blur-md transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                      <span className="px-3.5 py-1.5 rounded-full bg-white/95 text-[#0A0F1F] text-xs font-bold shadow-lg flex items-center gap-1.5 backdrop-blur-md transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                         <span>Showcase</span>
-                        <Maximize2 className="w-3.5 h-3.5 text-[#0859D4]" />
+                        <Maximize2 className="w-3.5 h-3.5 text-[#1F3FFF]" />
                       </span>
                     </div>
                   </div>
@@ -268,13 +268,13 @@ function WorksContent() {
                       onClick={() => handleOpenShowcase(project)}
                       className="flex items-center gap-2 min-w-0 cursor-pointer"
                     >
-                      <div className="w-5 h-5 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow-sm">
+                      <div className="w-5 h-5 rounded-full bg-[#0A0F1F] text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow-sm">
                         {project.client?.charAt(0) || 'P'}
                       </div>
-                      <span className="font-bold text-[#1D1D1F] truncate group-hover:text-[#0859D4] transition-colors">
+                      <span className="font-bold text-[#0A0F1F] truncate group-hover:text-[#1F3FFF] transition-colors">
                         {project.client}
                       </span>
-                      <span className="text-[9px] font-bold uppercase text-[#5A5A5E] bg-[#F5F5F7] px-1.5 py-0.5 rounded border border-[rgba(18,18,19,0.08)] flex-shrink-0">
+                      <span className="text-[9px] font-bold uppercase text-[#5B6275] bg-[#F5F6F8] px-1.5 py-0.5 rounded border border-[#E4E6EB] flex-shrink-0">
                         PRO
                       </span>
                     </div>
@@ -286,13 +286,13 @@ function WorksContent() {
                           SOTD
                         </span>
                       ) : null}
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded border border-[rgba(18,18,19,0.12)] text-[#5A5A5E] bg-white uppercase">
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded border border-[#E4E6EB] text-[#5B6275] bg-white uppercase">
                         DEV
                       </span>
                       <Link
                         href={`/works/${project.slug}`}
                         onClick={playClick}
-                        className="w-5 h-5 rounded-full flex items-center justify-center text-[#5A5A5E] hover:text-[#0859D4] hover:bg-[#F5F5F7] transition-all"
+                        className="w-5 h-5 rounded-full flex items-center justify-center text-[#5B6275] hover:text-[#1F3FFF] hover:bg-[#F5F6F8] transition-all"
                         title={`Open dedicated ${project.client} case study`}
                         aria-label={`Open ${project.client} case study page`}
                       >

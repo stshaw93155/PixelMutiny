@@ -238,13 +238,13 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="w-full bg-white text-[#1D1D1F] min-h-screen selection:bg-[#0859D4] selection:text-white">
+    <div className="w-full bg-white text-[#0A0F1F] min-h-screen selection:bg-[#1F3FFF] selection:text-white">
       {/* =========================================================================
           HERO SECTION: MANIFESTO & ORIGIN + REAL FEATURED PREVIEW CARD
           ========================================================================= */}
       <section
         onMouseMove={handleMouseMove}
-        className="relative border-b border-[rgba(18,18,19,0.08)] pt-28 pb-16 md:pt-32 md:pb-20 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
+        className="relative border-b border-[#E4E6EB] pt-28 pb-16 md:pt-32 md:pb-20 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
         style={{
           '--dot-x': dotPos.x,
           '--dot-y': dotPos.y,
@@ -254,53 +254,53 @@ export default function AboutPage() {
         <div className="grilla-celdas opacity-40 pointer-events-none" aria-hidden="true" />
 
         <div className="max-w-[1920px] mx-auto relative z-10">
-          <div className="text-xs text-[#6B7280] mb-4 flex flex-wrap items-center gap-2 font-medium">
-            <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
-            <span className="font-bold text-[#1D1D1F]">{COMPANY_LEGAL_NAME}</span>
-            <span className="text-[rgba(18,18,19,0.2)]">|</span>
-            <span className="text-xs text-[#0859D4] font-bold uppercase tracking-wider">
+          <div className="text-xs text-[#5B6275] mb-4 flex flex-wrap items-center gap-2 font-medium">
+            <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
+            <span className="font-bold text-[#0A0F1F]">{COMPANY_LEGAL_NAME}</span>
+            <span className="text-[#5B6275]/30">|</span>
+            <span className="text-xs text-[#1F3FFF] font-bold uppercase tracking-wider">
               01 // AGENCY MANIFESTO &amp; ORIGIN
             </span>
-            <span className="text-[rgba(18,18,19,0.2)] hidden sm:inline">|</span>
-            <span className="hidden sm:inline text-[#6B7280] uppercase tracking-wider">
+            <span className="text-[#5B6275]/30 hidden sm:inline">|</span>
+            <span className="hidden sm:inline text-[#5B6275] uppercase tracking-wider">
               NEW DELHI, INDIA
             </span>
           </div>
 
           {/* Primary Tagline H1 with Dotted Baseline */}
           <h1
-            className="font-display font-bold tracking-tight text-[#1D1D1F] max-w-6xl mb-6 pb-2"
+            className="font-display font-bold tracking-tight text-[#0A0F1F] max-w-6xl mb-6 pb-2"
             style={{
               lineHeight: 1.15,
               fontSize: 'clamp(2.5rem, 5.5vw, 5.25rem)',
             }}
           >
-            <span className="dotted-baseline">A studio team that lives and breathes the web.</span>
+            <span className="dotted-baseline">A studio team that <span className="brand-highlight">lives and breathes the web.</span></span>
           </h1>
 
           {/* Two-Column Hero Grid: Narrative + Featured Visual Card */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8 mt-6 border-t border-[rgba(18,18,19,0.08)] text-sm text-[#424242]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8 mt-6 border-t border-[#E4E6EB] text-sm text-[#5B6275]">
             {/* Left Side: Subheading, One-liner and CTAs */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex flex-wrap items-center gap-3 text-xs">
-                <span className="px-3.5 py-1 rounded-full bg-[#0859D4] text-white font-bold shadow-sm">
+                <span className="px-3.5 py-1 rounded-full bg-[#1F3FFF] text-white font-bold shadow-sm">
                   {TAGLINE_OPTIONS.secondary}
                 </span>
-                <span className="px-3.5 py-1 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-[#1D1D1F] font-semibold">
+                <span className="px-3.5 py-1 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] text-[#0A0F1F] font-semibold">
                   {TAGLINE_OPTIONS.tertiary}
                 </span>
               </div>
 
               {/* Subheading requested by QA */}
-              <p className="text-xl sm:text-2xl font-bold text-[#1D1D1F] leading-snug">
+              <p className="text-xl sm:text-2xl font-bold text-[#0A0F1F] leading-snug">
                 Brand, web and growth design for startups and creators, shipped in 2-week sprints.
               </p>
 
-              <p className="text-sm sm:text-base text-[#424242] leading-relaxed font-normal">
+              <p className="text-sm sm:text-base text-[#5B6275] leading-relaxed font-normal">
                 {ONE_LINER}
               </p>
 
-              <p className="text-xs sm:text-sm text-[#6B7280] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#5B6275] leading-relaxed">
                 {SHORT_BIO}
               </p>
 
@@ -811,7 +811,7 @@ export default function AboutPage() {
                   <span className="text-xs text-white/70">Mon – Sat · 10:00 AM – 7:00 PM IST</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="w-4 h-4 text-[#1BC47D] flex-shrink-0 flex items-center justify-center text-base leading-none">⚡</span>
+                  <Zap className="w-4 h-4 text-[#1BC47D] flex-shrink-0" />
                   <span className="text-xs text-[#1BC47D] font-semibold">Replies within 24 business hours</span>
                 </div>
               </div>

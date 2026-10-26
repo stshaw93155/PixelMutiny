@@ -53,8 +53,8 @@ function ShellInner({ children }) {
         </main>
       </PageTransition>
 
-      {/* FOOTER */}
-      <footer className="w-full bg-[#FAFAFC] border-t border-[rgba(0,0,0,0.08)] text-[#1a1a1f]">
+      {/* FOOTER — Deep Ink Contrast */}
+      <footer className="w-full bg-[#0A0F1F] border-t border-white/10 text-white">
         <div className="w-full px-6 sm:px-10 lg:px-16 pt-12 pb-8">
 
           {/* Main row: logo+button | spacer | 4 nav columns */}
@@ -64,7 +64,7 @@ function ShellInner({ children }) {
             <div className="flex flex-col items-start gap-6 flex-shrink-0">
               <Link href="/" className="inline-flex items-center hover:opacity-80 transition-opacity">
                 <Image
-                  src="/img/logo-main.png"
+                  src="/img/PixelMutiny reverse.png"
                   alt="PixelMutiny"
                   width={140}
                   height={32}
@@ -78,16 +78,16 @@ function ShellInner({ children }) {
                 type="button"
                 onClick={() => { playClick(); setIsInquiryOpen(true); }}
                 className="group inline-flex items-center rounded-sm overflow-hidden cursor-pointer transition-all active:scale-95"
-                style={{ backgroundColor: '#0859D4' }}
+                style={{ backgroundColor: '#1F3FFF' }}
               >
-                <span className="px-5 py-3 text-[13px] font-bold tracking-wide uppercase" style={{ color: '#FFFFFF' }}>
+                <span className="px-5 py-3 text-[13px] font-bold tracking-wide uppercase text-white">
                   Get in Touch
                 </span>
                 <span
                   className="px-3.5 py-3 flex items-center justify-center"
                   style={{ borderLeft: '1px solid rgba(255,255,255,0.2)', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFFFFF' }}
                 >
-                  <ArrowUpRight className="w-4 h-4" style={{ color: '#FFFFFF' }} />
+                  <ArrowUpRight className="w-4 h-4 text-white" />
                 </span>
               </button>
             </div>
@@ -100,59 +100,59 @@ function ShellInner({ children }) {
 
               {/* Disciplines */}
               <div className="flex flex-col gap-3">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Disciplines
                 </span>
-                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Web Systems</Link>
-                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Landing Pages</Link>
-                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">UI/UX Systems</Link>
-                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Web Apps</Link>
-                <Link href="/services" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Brand Identity</Link>
+                <Link href="/services" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Web Systems</Link>
+                <Link href="/services" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Landing Pages</Link>
+                <Link href="/services" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">UI/UX Systems</Link>
+                <Link href="/services" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Web Apps</Link>
+                <Link href="/services" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Brand Identity</Link>
               </div>
 
               {/* Portfolio */}
               <div className="flex flex-col gap-3">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Portfolio
                 </span>
-                <Link href="/works" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Case Studies</Link>
-                <Link href="/works/avenor" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Avenor Design</Link>
-                <Link href="/works/veyra-legal" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Veyra Legal</Link>
-                <Link href="/works/flow-task" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">FlowTask App</Link>
-                <Link href="/works" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Motion Reel</Link>
+                <Link href="/works" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Case Studies</Link>
+                <Link href="/works/avenor" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Avenor Design</Link>
+                <Link href="/works/veyra-legal" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Veyra Legal</Link>
+                <Link href="/works/flow-task" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">FlowTask App</Link>
+                <Link href="/works" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Motion Reel</Link>
               </div>
 
               {/* Company */}
               <div className="flex flex-col gap-3">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Company
                 </span>
-                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">About Us</Link>
-                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Manifesto</Link>
-                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Studio Awards</Link>
-                <Link href="/contact" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Contact Us</Link>
-                <Link href="/about" className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">Press & News</Link>
+                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">About Us</Link>
+                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Manifesto</Link>
+                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Studio Awards</Link>
+                <Link href="/contact" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Contact Us</Link>
+                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Press & News</Link>
               </div>
 
               {/* Connect */}
               <div className="flex flex-col gap-3">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#111827] mb-1">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Connect
                 </span>
                 <a href="https://twitter.com" target="_blank" rel="noreferrer"
-                  className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">
+                  className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">
                   X (Twitter)
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noreferrer"
-                  className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">
+                  className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">
                   Instagram
                 </a>
                 <a href="https://wa.me/919315580036" target="_blank" rel="noreferrer"
-                  className="text-[13px] text-[#10B981] hover:opacity-80 transition-opacity font-medium">
+                  className="text-[13px] text-[#12B76A] hover:opacity-80 transition-opacity font-medium">
                   WhatsApp
                 </a>
                 <a href="https://www.linkedin.com/in/gfxsumit/" target="_blank" rel="noreferrer"
-                  className="text-[13px] text-[#6B7280] hover:text-[#0859D4] transition-colors">
+                  className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">
                   LinkedIn
                 </a>
               </div>
@@ -161,14 +161,14 @@ function ShellInner({ children }) {
           </div>
 
           {/* Bottom strip */}
-          <div className="mt-10 pt-5 border-t border-[rgba(0,0,0,0.06)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#9CA3AF]">
+          <div className="mt-10 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
             <div className="flex items-center gap-5">
-              <Link href="/contact" className="hover:text-[#4B5563] transition-colors">Privacy Policy</Link>
-              <Link href="/contact" className="hover:text-[#4B5563] transition-colors">Terms of Use</Link>
+              <Link href="/contact" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="/contact" className="hover:text-white transition-colors">Terms of Use</Link>
               <button
                 type="button"
                 onClick={handleBackToTop}
-                className="hover:text-[#0859D4] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="hover:text-[#1F3FFF] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 Back to top ↑
               </button>

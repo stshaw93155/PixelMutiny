@@ -1,27 +1,65 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SERVICES_DATA, STARTUP_LAUNCH_KIT, ADD_ONS_DATA, BUDGET_OPTIONS, TIMELINE_OPTIONS, formatPrice } from '../data/pricing.ts';
+import {
+  FOUR_PILLARS_SERVICES,
+  SERVICES_DATA,
+  MONTHLY_RETAINERS,
+  GROWTH_PARTNER_BUNDLES,
+  STARTUP_LAUNCH_KIT,
+  ADD_ONS_DATA,
+  BUDGET_OPTIONS,
+  TIMELINE_OPTIONS,
+  formatPrice,
+  getTierPrice,
+} from '../data/pricing.ts';
 import { PROJECTS } from '../app/data/projects.js';
 import nextConfig from '../next.config.mjs';
 import robots from '../app/robots.js';
 import sitemap from '../app/sitemap.js';
 
 test('1. Pricing Data & Packages Integrity', async (t) => {
-  await t.test('All 8 Core Service Packages Exist', () => {
-    assert.equal(SERVICES_DATA.length, 8, 'Expected exactly 8 core service packages');
+  await t.test('All 4 Core Service Pillars Exist', () => {
+    assert.equal(SERVICES_DATA.length, 4, 'Expected exactly 4 core service packages/pillars');
     const expectedSlugs = [
-      'website',
-      'landing',
-      'ui-ux',
-      'dashboard',
-      'graphics',
-      'video',
-      'brand',
-      'meta-ads',
+      'digital-experiences',
+      'brand-identity',
+      'content-production',
+      'performance-marketing',
     ];
     for (const slug of expectedSlugs) {
       const match = SERVICES_DATA.find((s) => s.slug === slug || s.id === slug);
-      assert.ok(match, `Missing expected service package: ${slug}`);
+      assert.ok(match, `Missing expected service pillar: ${slug}`);
+    }
+  });
+
+  await t.test('All 3 Monthly Retainers Exist with Defined Deliverables', () => {
+    assert.equal(MONTHLY_RETAINERS.length, 3, 'Expected exactly 3 monthly retainers');
+    const expectedRetainerIds = [
+      'social-media-retainer',
+      'reels-video-retainer',
+      'ads-management-retainer',
+    ];
+    for (const rId of expectedRetainerIds) {
+      const r = MONTHLY_RETAINERS.find((ret) => ret.id === rId);
+      assert.ok(r, `Missing expected monthly retainer: ${rId}`);
+      assert.ok(r.includes.length >= 3, `Retainer ${rId} should have at least 3 deliverables`);
+      assert.ok(r.limits.length >= 2, `Retainer ${rId} should have explicit limits`);
+    }
+  });
+
+  await t.test('All 3 Growth Partner Bundles Exist', () => {
+    assert.equal(GROWTH_PARTNER_BUNDLES.length, 3, 'Expected exactly 3 growth partner bundles');
+    const expectedBundleIds = [
+      'creative-partner',
+      'growth-partner',
+      'full-service-partner',
+    ];
+    for (const bId of expectedBundleIds) {
+      const b = GROWTH_PARTNER_BUNDLES.find((bnd) => bnd.id === bId);
+      assert.ok(b, `Missing expected growth bundle: ${bId}`);
+      assert.ok(b.monthlyFeeINR > 0, `Bundle ${bId} missing INR fee`);
+      assert.ok(b.monthlyFeeUSD > 0, `Bundle ${bId} missing USD fee`);
+      assert.ok(b.deliverables.length >= 3, `Bundle ${bId} should have at least 3 deliverables`);
     }
   });
 
@@ -59,6 +97,18 @@ test('1. Pricing Data & Packages Integrity', async (t) => {
     const usdFormatted = formatPrice(1500, 'USD');
     assert.match(inrFormatted, /₹|INR|50,000/, 'INR price should contain currency symbol or digits');
     assert.match(usdFormatted, /\$|USD|1,500/, 'USD price should contain currency symbol or digits');
+  });
+
+  await t.test('Pakistan Pricing and Formatter Integrity', () => {
+    assert.ok(BUDGET_OPTIONS.PK_USD, 'BUDGET_OPTIONS.PK_USD missing');
+    const pkFormatted = formatPrice(120000000, 'PK_USD');
+    assert.match(pkFormatted, /\$|120,000,000/, 'PK_USD price should contain dollar symbol and formatted digits');
+    for (const service of SERVICES_DATA) {
+      for (const tier of service.tiers) {
+        const pkPrice = getTierPrice(tier, 'PK_USD');
+        assert.ok(pkPrice >= 100000000, `Pakistan tier price must be >= $100M: got ${pkPrice}`);
+      }
+    }
   });
 });
 

@@ -9,7 +9,7 @@ import HeroShowreelModal from './components/HeroShowreelModal';
 import { useSound } from './components/SoundManager';
 import { useCurrency } from './components/useCurrency';
 import { PROJECTS } from './data/projects';
-import { SERVICES_DATA, formatPrice } from '@/data/pricing';
+import { SERVICES_DATA, formatPrice, getTierPrice } from '@/data/pricing';
 import { useReducedMotion, useIsMobile } from '@/lib/motion';
 import {
   ArrowRight,
@@ -86,7 +86,7 @@ export default function Home() {
   const featuredProjects = PROJECTS.slice(0, 3);
 
   return (
-    <div className="w-full bg-white text-[#1D1D1F] overflow-x-hidden selection:bg-[#0859D4] selection:text-white">
+    <div className="w-full bg-white text-[#0A0F1F] overflow-x-hidden selection:bg-[#1F3FFF] selection:text-white">
       {/* SHOWREEL MODAL */}
       <HeroShowreelModal
         isOpen={isShowreelOpen}
@@ -127,7 +127,7 @@ export default function Home() {
               aria-label="Toggle Studio Mode"
             >
               <span>{isAiMode ? 'Studio Mode: Active' : 'Design ↔ Code'}</span>
-              <span className={`home-hero__switch-toggle ${isAiMode ? 'bg-[#0859D4]' : 'bg-[#1D1D1F]'}`}>
+              <span className={`home-hero__switch-toggle ${isAiMode ? 'bg-[#1F3FFF]' : 'bg-[#0A0F1F]'}`}>
                 <span className="home-hero__switch-toggle-knob transition-transform duration-200" />
               </span>
             </button>
@@ -156,7 +156,7 @@ export default function Home() {
               className="home-hero__app bottom-[22%] left-[12%] lg:left-[16%]"
               title="Next.js 16.4 Engine"
             >
-              <Layers className="w-5 h-5 text-[#1D1D1F]" />
+              <Layers className="w-5 h-5 text-[#0A0F1F]" />
             </div>
 
             {/* Performance Turbo */}
@@ -164,7 +164,7 @@ export default function Home() {
               className="home-hero__app bottom-[22%] right-[12%] lg:right-[16%]"
               title="Performance & Lighthouse 100"
             >
-              <Sparkles className="w-5 h-5 text-[#0859D4]" />
+              <Sparkles className="w-5 h-5 text-[#1F3FFF]" />
             </div>
           </div>
 
@@ -186,7 +186,7 @@ export default function Home() {
             {/* Bubble 2: Bottom Left */}
             <div className="comentario-figma bottom-[12%] left-[6%] xl:left-[10%]">
               <div className="comentario-figma__burbuja">
-                <div className="comentario-figma__avatar bg-[#1BC47D]">CD</div>
+                <div className="comentario-figma__avatar bg-[#12B76A]">CD</div>
                 <div className="comentario-figma__contenido">
                   <p className="comentario-figma__header">
                     <strong>Director</strong> <span>2m ago</span>
@@ -250,11 +250,11 @@ export default function Home() {
           </h1>
 
           {/* Bottom Telemetry & Showreel Action */}
-          <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#5A5A5E] gap-4 z-20">
+          <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#5B6275] gap-4 z-20">
             <div className="flex items-center gap-3">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#1BC47D] animate-ping" />
-              <span className="text-[#1D1D1F] font-semibold">PixelMutiny DigiMedia LLP</span>
-              <span className="hidden sm:inline text-[rgba(18,18,19,0.2)]">|</span>
+              <span className="inline-block w-2 h-2 rounded-full bg-[#12B76A] animate-ping" />
+              <span className="text-[#0A0F1F] font-semibold">PixelMutiny DigiMedia LLP</span>
+              <span className="hidden sm:inline text-[#E4E6EB]">|</span>
               <span className="hidden sm:inline">New Delhi, India (HQ)</span>
             </div>
 
@@ -265,7 +265,7 @@ export default function Home() {
                   playClick();
                   setIsShowreelOpen(true);
                 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(18,18,19,0.15)] bg-white text-[#1D1D1F] hover:border-[#0859D4] hover:text-[#0859D4] transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF] hover:text-[#1F3FFF] transition-colors"
               >
                 <Play className="w-3 h-3 fill-current" />
                 <span>Showreel [01:15]</span>
@@ -298,12 +298,13 @@ export default function Home() {
         }}
       >
         <div className="home-quote-block__contenido py-12 md:py-20">
-          <p className="font-mono text-xs uppercase tracking-widest text-[#0859D4] font-bold mb-6">
+          <p className="font-mono text-xs uppercase tracking-widest text-[#1F3FFF] font-bold mb-6">
             [ 01 // Manifesto ]
           </p>
 
           <h2 className="home-quote-block__titulo">
-            We build high-performance web systems for ambitious companies and brands.
+            We build high-performance web systems for{' '}
+            <span className="brand-highlight">ambitious companies</span> and brands.
           </h2>
 
           <p className="home-quote-block__subtitulo">
@@ -336,14 +337,14 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 lg:px-16 xl:px-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <span className="font-mono text-xs uppercase text-[#0859D4] font-semibold tracking-wider block mb-2">
+              <span className="font-mono text-xs uppercase text-[#1F3FFF] font-semibold tracking-wider block mb-2">
                 [ 02 // Core Capabilities ]
               </span>
-              <h3 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-[#1D1D1F]">
-                Tailored digital solutions.
+              <h3 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-[#0A0F1F]">
+                Tailored digital <span className="brand-highlight">solutions</span>.
               </h3>
             </div>
-            <p className="max-w-md text-sm text-[#424242] font-mono leading-relaxed">
+            <p className="max-w-md text-sm text-[#5B6275] font-mono leading-relaxed">
               Every pixel has a job. We unite bespoke design, bulletproof engineering, and performance growth under one studio.
             </p>
           </div>
@@ -433,27 +434,27 @@ export default function Home() {
           </div>
 
           {/* Horizontal Specialized Service Rows with Dotted Dividers */}
-          <div className="border-t border-[rgba(18,18,19,0.1)] pt-8">
-            <h4 className="font-mono text-xs uppercase tracking-wider text-[#5A5A5E] mb-4 font-semibold">
-              All Studio Disciplines (8 Packages Available)
+          <div className="border-t border-[#E4E6EB] pt-8">
+            <h4 className="font-mono text-xs uppercase tracking-wider text-[#5B6275] mb-4 font-semibold">
+              Four Core Agency Pillars (Fixed Project Sprints &amp; Monthly Retainers)
             </h4>
-            <div className="divide-y divide-[rgba(18,18,19,0.08)]">
-              {SERVICES_DATA.slice(0, 5).map((srv) => (
+            <div className="divide-y divide-[#E4E6EB]">
+              {SERVICES_DATA.map((srv) => (
                 <div
                   key={srv.id}
                   className="card-servicio--horizontal group py-6"
                 >
                   <div>
-                    <h5 className="card-servicio__titulo-horizontal group-hover:text-[#0859D4] transition-colors">
-                      {srv.title}
+                    <h5 className="card-servicio__titulo-horizontal group-hover:text-[#1F3FFF] transition-colors">
+                      {srv.name}
                     </h5>
-                    <p className="text-xs text-[#5A5A5E] font-mono mt-1">
+                    <p className="text-sm text-[#5B6275] font-mono mt-1">
                       {srv.deliverables.slice(0, 3).join(' • ')}
                     </p>
                   </div>
                   <div className="flex items-center gap-6">
-                    <span className="font-mono text-xs text-[#1D1D1F] font-semibold hidden sm:inline">
-                      From {formatPrice(currency === 'INR' ? srv.tiers[0].priceINR : srv.tiers[0].priceUSD, currency)}
+                    <span className="font-mono text-sm text-[#0A0F1F] font-semibold hidden sm:inline">
+                      From {formatPrice(getTierPrice(srv.tiers[0], currency), currency)}
                     </span>
                     <button
                       type="button"
@@ -474,7 +475,7 @@ export default function Home() {
               <Link
                 href="/services"
                 onClick={playClick}
-                className="inline-flex items-center gap-2 text-sm font-mono font-semibold text-[#0859D4] hover:underline"
+                className="inline-flex items-center gap-2 text-sm font-mono font-semibold text-[#1F3FFF] hover:underline"
               >
                 <span>View Full Pricing Matrix & Startup Launch Kit</span>
                 <ArrowRight className="w-4 h-4" />
@@ -521,9 +522,9 @@ export default function Home() {
 
             {/* Laptop Mockup with Glowing Halftone Texture */}
             <div className="home-bloque-dark-mode__pc shader-halftone relative group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#021133] via-[#0859D4]/40 to-[#021133] opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#0A0F1F] via-[#1F3FFF]/30 to-[#0A0F1F] opacity-80" />
               <div className="relative z-10 text-center p-8 text-white font-mono space-y-3">
-                <div className="w-12 h-12 mx-auto rounded-full bg-[#0859D4] flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 mx-auto rounded-full bg-[#1F3FFF] flex items-center justify-center shadow-lg">
                   <Code className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-lg font-bold font-display">PixelMutiny DigiMedia LLP</div>
@@ -539,7 +540,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-6 text-center text-xs font-mono text-[#5A5A5E]">
+          <div className="mt-6 text-center text-xs font-mono text-[#5B6275]">
             PixelMutiny DigiMedia LLP is a hybrid digital studio based in India, delivering globally for brands across North America, Europe, UAE, and APAC.
           </div>
         </div>
@@ -548,7 +549,7 @@ export default function Home() {
       {/* ===================================================================
           SECTION 5: STUDIO TEAM & LIVE STREAM ("UN EQUIPO QUE AMA INTERNET")
           =================================================================== */}
-      <section className="home-equipo border-b border-[rgba(18,18,19,0.08)]">
+      <section className="home-equipo border-b border-[#E4E6EB]">
         <div className="home-equipo__inner">
           {/* Architectural Cell Grid */}
           <div className="grilla-celdas opacity-40 pointer-events-none" aria-hidden="true" />
@@ -557,13 +558,13 @@ export default function Home() {
           <div className="home-equipo__titulo-wrap">
             <h3 className="home-equipo__titulo">
               A studio team that{' '}
-              <strong className="home-equipo__titulo-highlight">
+              <span className="brand-highlight">
                 lives and breathes the web.
-              </strong>
+              </span>
             </h3>
           </div>
 
-          <p className="max-w-xl mx-auto text-[#424242] text-sm sm:text-base leading-relaxed mb-8">
+          <p className="max-w-xl mx-auto text-[#5B6275] text-sm sm:text-base leading-relaxed mb-8">
             Engineers, designers, copywriters, and ad strategists who refuse cookie-cutter templates. We craft digital experiences with ruthless attention to detail.
           </p>
 
@@ -579,13 +580,13 @@ export default function Home() {
           </button>
 
           {/* Live Studio Status Badges */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-xs font-mono text-[#424242]">
-            <div className="px-3 py-1.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-xs font-mono text-[#5B6275]">
+            <div className="px-3 py-1.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
               <span>PixelMutiny right now: Accepting Q4 sprint projects</span>
             </div>
-            <div className="px-3 py-1.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#1BC47D]" />
+            <div className="px-3 py-1.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
               <span>Average sprint turnaround: 7 to 14 days</span>
             </div>
           </div>
@@ -595,18 +596,18 @@ export default function Home() {
       {/* ===================================================================
           SECTION 6: CURATED WORKS ("LOS DETALLES NO SON DETALLES")
           =================================================================== */}
-      <section className="home-portfolio border-b border-[rgba(18,18,19,0.08)]">
+      <section className="home-portfolio border-b border-[#E4E6EB]">
         <div className="home-portfolio__inner">
           <div className="home-portfolio__bloque">
             {/* Left Content */}
             <div className="home-portfolio__contenido">
-              <span className="font-mono text-xs uppercase text-[#0859D4] font-semibold tracking-wider">
+              <span className="font-mono text-xs uppercase text-[#1F3FFF] font-semibold tracking-wider">
                 [ 03 // Portfolio ]
               </span>
 
               <h3 className="home-portfolio__titulo">
                 <span className="home-portfolio__titulo-linea">
-                  <span>The details</span>
+                  <span>The <span className="brand-highlight">details</span></span>
                   <span className="home-portfolio__titulo-puntos" />
                 </span>
                 <span className="home-portfolio__titulo-linea">
@@ -725,15 +726,15 @@ export default function Home() {
               </span>
 
               {/* Floating Metric Card Preview */}
-              <div className="absolute bottom-10 left-8 right-8 bg-white/95 backdrop-blur-md rounded-xl p-5 border border-[rgba(18,18,19,0.1)] shadow-xl z-10 font-mono text-xs space-y-2">
-                <div className="flex items-center justify-between text-[#5A5A5E]">
+              <div className="absolute bottom-10 left-8 right-8 bg-white/95 backdrop-blur-md rounded-xl p-5 border border-[#E4E6EB] shadow-xl z-10 font-mono text-xs space-y-2">
+                <div className="flex items-center justify-between text-[#5B6275]">
                   <span>PIXELMUTINY TELEMETRY</span>
-                  <span className="text-[#0859D4] font-bold">100% PASS</span>
+                  <span className="text-[#1F3FFF] font-bold">100% PASS</span>
                 </div>
-                <div className="text-sm font-display font-bold text-[#1D1D1F]">
+                <div className="text-sm font-display font-bold text-[#0A0F1F]">
                   Ready to break the template?
                 </div>
-                <div className="text-[11px] text-[#424242]">
+                <div className="text-xs text-[#5B6275]">
                   New Delhi studio headquarters • Worldwide remote sprint delivery.
                 </div>
               </div>
@@ -741,7 +742,7 @@ export default function Home() {
 
             {/* Right Contact Details & Trigger */}
             <div className="home-contacto__contenido">
-              <span className="font-mono text-xs uppercase text-[#0859D4] font-semibold tracking-wider">
+              <span className="font-mono text-xs uppercase text-[#1F3FFF] font-semibold tracking-wider">
                 [ 04 // Contact ]
               </span>
 
@@ -751,7 +752,7 @@ export default function Home() {
                   <span className="home-contacto__titulo-puntos" />
                 </span>
                 <span className="home-contacto__titulo-linea">
-                  <span>project together.</span>
+                  <span>project <span className="brand-highlight">together</span>.</span>
                   <span className="home-contacto__titulo-puntos" />
                 </span>
               </h3>
@@ -781,12 +782,12 @@ export default function Home() {
               </div>
 
               {/* Social Channels Matching Onlines */}
-              <div className="flex items-center gap-6 pt-6 border-t border-[rgba(18,18,19,0.1)] font-mono text-xs text-[#5A5A5E]">
+              <div className="flex items-center gap-6 pt-6 border-t border-[#E4E6EB] font-mono text-xs text-[#5B6275]">
                 <a
                   href="https://twitter.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors"
+                  className="hover:text-[#1F3FFF] transition-colors"
                 >
                   X (Twitter) ↗
                 </a>
@@ -794,7 +795,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/gfxsumit/"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors"
+                  className="hover:text-[#1F3FFF] transition-colors"
                 >
                   LinkedIn ↗
                 </a>
@@ -802,7 +803,7 @@ export default function Home() {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors"
+                  className="hover:text-[#1F3FFF] transition-colors"
                 >
                   Instagram ↗
                 </a>
@@ -810,7 +811,7 @@ export default function Home() {
                   href="https://behance.net"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[#0859D4] transition-colors"
+                  className="hover:text-[#1F3FFF] transition-colors"
                 >
                   Behance ↗
                 </a>

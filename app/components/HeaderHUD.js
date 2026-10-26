@@ -110,49 +110,48 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
           </Link>
 
           {/* Micro status chip (Onlines justo ahora style) */}
-          <div className="hidden xl:flex items-center gap-2 pl-3 border-l border-[rgba(18,18,19,0.1)] text-[12px] text-[#6B7280]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0859D4] animate-pulse"></span>
+          <div className="hidden xl:flex items-center gap-2 pl-3 border-l border-[#E4E6EB] text-[12px] text-[#5B6275]">
+            <span className="w-2 h-2 rounded-full bg-[#12B76A] animate-pulse"></span>
             <span>PixelMutiny right now:</span>
-            <span className="text-[#1D1D1F] font-semibold">Accepting Q4 projects</span>
+            <span className="text-[#0A0F1F] font-semibold">Accepting Q4 projects</span>
           </div>
         </div>
 
         {/* Center: Clean Onlines Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-[14px] font-medium text-[#424242]">
+        <nav className="hidden md:flex items-center gap-8 text-[14px] font-medium text-[#5B6275]">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={playClick}
-              className={`transition-colors relative py-1 hover:text-[#0859D4] ${
-                link.active ? 'text-[#0859D4] font-semibold' : 'text-[#424242]'
+              className={`transition-colors relative py-1 hover:text-[#1F3FFF] ${
+                link.active ? 'text-[#1F3FFF] font-semibold' : 'text-[#5B6275]'
               }`}
             >
               {link.label}
               {link.active && (
-                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#0859D4] rounded-full" />
+                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#1F3FFF] rounded-full" />
               )}
             </Link>
           ))}
         </nav>
 
         {/* Right Actions: Audio, Onlines Pill CTA */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
-
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Sound Toggle */}
           <button
             onClick={() => {
               toggleSound();
               playClick();
             }}
-            className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full border border-[rgba(18,18,19,0.12)] bg-white hover:bg-[#F5F5F7] text-[#1D1D1F] transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+            className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full border border-[#E4E6EB] bg-white hover:bg-[#F5F6F8] text-[#0A0F1F] transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-[#1F3FFF] focus-visible:outline-none cursor-pointer"
             title={soundEnabled ? 'Mute audio' : 'Enable audio'}
             aria-label={soundEnabled ? 'Mute audio' : 'Enable audio'}
           >
             {soundEnabled ? (
-              <Volume2 className="w-3.5 h-3.5 text-[#0859D4]" />
+              <Volume2 className="w-3.5 h-3.5 text-[#1F3FFF]" />
             ) : (
-              <VolumeX className="w-3.5 h-3.5 text-[#5A5A5E]" />
+              <VolumeX className="w-3.5 h-3.5 text-[#5B6275]" />
             )}
           </button>
 
@@ -162,7 +161,7 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
               playClick();
               if (onOpenInquiry) onOpenInquiry();
             }}
-            className="bg-[#1D1D1F] hover:bg-[#0859D4] text-white text-[13px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-200 shadow-sm hover:shadow active:scale-95 focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+            className="bg-[#0A0F1F] hover:bg-[#1F3FFF] text-white text-[13px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-200 shadow-sm hover:shadow active:scale-95 focus-visible:ring-2 focus-visible:ring-[#1F3FFF] focus-visible:outline-none cursor-pointer"
           >
             Let&apos;s Talk
           </button>
@@ -173,10 +172,10 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
               playClick();
               if (onOpenMenu) onOpenMenu();
             }}
-            className="flex md:hidden items-center justify-center w-10 h-10 rounded-full border border-[rgba(18,18,19,0.12)] bg-[#F5F5F7] hover:bg-white text-[#1D1D1F] transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+            className="flex md:hidden items-center justify-center w-10 h-10 rounded-full border border-[#E4E6EB] bg-[#F5F6F8] hover:bg-white text-[#0A0F1F] transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-[#1F3FFF] focus-visible:outline-none cursor-pointer"
             aria-label="Open menu"
           >
-            <Menu className="w-4 h-4 text-[#1D1D1F]" />
+            <Menu className="w-4 h-4 text-[#0A0F1F]" />
           </button>
         </div>
       </div>

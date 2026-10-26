@@ -204,13 +204,13 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
 
   // Define accent background style for Section 5 (Design System)
   const primaryProjectColor = project.colors?.[0]?.hex || '#0A0A0C';
-  const secondaryProjectColor = project.colors?.[1]?.hex || '#0859D4';
+  const secondaryProjectColor = project.colors?.[1]?.hex || '#1F3FFF';
 
   return (
-    <div className="w-full overflow-x-clip bg-white text-[#1D1D1F] min-h-screen selection:bg-[#0859D4] selection:text-white">
-      {/* 1. SLIM PROGRESS BAR (2px, royal blue) */}
+    <div className="w-full overflow-x-clip bg-white text-[#0A0F1F] min-h-screen selection:bg-[#1F3FFF] selection:text-white">
+      {/* 1. SLIM PROGRESS BAR (2px, electric blue) */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-[#0859D4] z-50 origin-left pointer-events-none transition-transform duration-75"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-[#1F3FFF] z-50 origin-left pointer-events-none transition-transform duration-75"
         style={{ transform: `scaleX(${scrollProgress})` }}
       />
 
@@ -338,7 +338,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
               {project.year}
             </span>
             {project.award && (
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider bg-[#0859D4] text-white border border-[#0859D4]">
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider bg-[#1F3FFF] text-white border border-[#1F3FFF]">
                 {project.award}
               </span>
             )}
@@ -565,7 +565,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
       >
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
           {/* Section Label */}
-          <span className="font-mono text-xs uppercase tracking-wider text-[#0859D4] block mb-3">
+          <span className="font-mono text-xs uppercase tracking-wider text-[#1F3FFF] block mb-3">
             02 / Results & Impact
           </span>
           <h2
@@ -581,7 +581,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
               {project.results.map((res, idx) => (
                 <div key={idx} className="flex flex-col justify-between">
                   <div
-                    className="font-display font-extrabold text-[#0859D4] tracking-tight leading-none mb-3"
+                    className="font-display font-extrabold text-[#1F3FFF] tracking-tight leading-none mb-3"
                     style={{ fontSize: 'clamp(56px, 6vw, 100px)' }}
                   >
                     <CountUpMetric value={res.value} />
@@ -608,7 +608,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
               <div className="font-mono text-xs uppercase tracking-wider text-white/60">
                 <span className="text-white font-bold">{project.testimonial.author}</span> —{' '}
                 <span>{project.testimonial.role}</span>,{' '}
-                <span className="text-[#0859D4] font-bold">{project.testimonial.company}</span>
+                <span className="text-[#1F3FFF] font-bold">{project.testimonial.company}</span>
               </div>
             </div>
           )}
@@ -936,7 +936,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
                         <span className="font-bold uppercase tracking-wider">{c.name}</span>
                         <span className="opacity-70 group-hover:opacity-100 transition-opacity">
                           {isCopied ? (
-                            <Check className="w-4 h-4 text-[#0859D4]" />
+                            <Check className="w-4 h-4 text-[#1F3FFF]" />
                           ) : (
                             <Copy className="w-3.5 h-3.5" />
                           )}
@@ -946,7 +946,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
                       {/* Bottom HEX & Copied Indicator */}
                       <div>
                         {isCopied ? (
-                          <span className="inline-block px-2.5 py-1 rounded-full bg-[#0859D4] text-white font-mono text-xs font-bold uppercase tracking-wider mb-2 animate-bounce">
+                          <span className="inline-block px-2.5 py-1 rounded-full bg-[#1F3FFF] text-white font-mono text-xs font-bold uppercase tracking-wider mb-2 animate-bounce">
                             Copied!
                           </span>
                         ) : null}
@@ -1053,7 +1053,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
                 <div key={idx} className="relative flex flex-col justify-between">
                   {/* Step Number Badge */}
                   <div className="flex items-center gap-4 mb-4">
-                    <span className="w-14 h-14 rounded-full bg-[#0859D4] text-white font-mono font-bold text-base flex items-center justify-center shadow-md">
+                    <span className="w-14 h-14 rounded-full bg-[#1F3FFF] text-white font-mono font-bold text-base flex items-center justify-center shadow-md">
                       {step.num}
                     </span>
                     <span className="lg:hidden font-display font-bold text-lg text-[#0A0A0C]">
@@ -1156,7 +1156,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
               </span>
             </Link>
 
-            <span className="font-mono text-xs uppercase tracking-widest text-[#0859D4]">
+            <span className="font-mono text-xs uppercase tracking-widest text-[#1F3FFF]">
               06 / Next Case Study
             </span>
           </div>
@@ -1171,18 +1171,18 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left 8 Cols: Next Label, H1 Title, Pills */}
               <div className="lg:col-span-8">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#0859D4] block mb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-[#1F3FFF] block mb-4">
                   Next Project → {nextProject.num || ''}
                 </span>
 
                 <div className="flex items-center gap-4 group-hover:translate-x-3 transition-transform duration-300">
                   <h3
-                    className="font-display font-extrabold uppercase text-white tracking-tight leading-[0.95] group-hover:text-[#0859D4] transition-colors"
+                    className="font-display font-extrabold uppercase text-white tracking-tight leading-[0.95] group-hover:text-[#1F3FFF] transition-colors"
                     style={{ fontSize: 'clamp(36px, 5.5vw, 84px)' }}
                   >
                     {nextProject.title}
                   </h3>
-                  <ArrowUpRight className="w-10 h-10 text-[#0859D4] hidden sm:block shrink-0 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300" />
+                  <ArrowUpRight className="w-10 h-10 text-[#1F3FFF] hidden sm:block shrink-0 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300" />
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 mt-6">
@@ -1192,7 +1192,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
                   <span className="font-mono text-xs text-white/60">
                     {nextProject.year}
                   </span>
-                  <span className="font-mono text-xs text-[#0859D4] font-bold">
+                  <span className="font-mono text-xs text-[#1F3FFF] font-bold">
                     {nextProject.metric}
                   </span>
                 </div>
@@ -1238,13 +1238,13 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {/* Primary Royal Blue Button */}
+            {/* Primary Electric Blue Button */}
             <button
               onClick={() => {
                 playClick();
                 setIsInquiryOpen(true);
               }}
-              className="h-12 px-8 rounded-full bg-[#0859D4] hover:bg-[#1A59F9] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg w-full sm:w-auto"
+              className="h-12 px-8 rounded-full bg-[#1F3FFF] hover:bg-[#1632D6] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg w-full sm:w-auto"
             >
               <span>Start Your Project</span>
               <ArrowRight className="w-4 h-4" />
@@ -1254,7 +1254,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             <Link
               href="/works"
               onClick={playClick}
-              className="h-12 px-8 rounded-full border border-black/20 hover:border-black text-[#1D1D1F] font-mono text-xs uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="h-12 px-8 rounded-full border border-black/20 hover:border-black text-[#0A0F1F] font-mono text-xs uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <span>See more work</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -1267,10 +1267,10 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 pointer-events-auto">
         <nav
           aria-label="Case study navigation dock"
-          className="flex items-center gap-1.5 p-1.5 rounded-full bg-[#1D1D1F]/92 backdrop-blur-2xl border border-white/20 text-white shadow-2xl"
+          className="flex items-center gap-1.5 p-1.5 rounded-full bg-[#0A0F1F]/92 backdrop-blur-2xl border border-white/20 text-white shadow-2xl"
         >
           {/* Monogram Badge */}
-          <div className="w-8 h-8 rounded-full bg-white text-[#1D1D1F] flex items-center justify-center font-black text-xs">
+          <div className="w-8 h-8 rounded-full bg-white text-[#0A0F1F] flex items-center justify-center font-black text-xs">
             W.
           </div>
 
@@ -1279,7 +1279,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             onClick={() => scrollToAnchor('overview')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               activeSection === 'overview'
-                ? 'bg-white text-[#1D1D1F] shadow-sm'
+                ? 'bg-white text-[#0A0F1F] shadow-sm'
                 : 'text-white/80 hover:text-white'
             }`}
           >
@@ -1290,7 +1290,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             onClick={() => scrollToAnchor('screens')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               activeSection === 'screens'
-                ? 'bg-white text-[#1D1D1F] shadow-sm'
+                ? 'bg-white text-[#0A0F1F] shadow-sm'
                 : 'text-white/80 hover:text-white'
             }`}
           >
@@ -1301,7 +1301,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             onClick={() => scrollToAnchor('design')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               activeSection === 'design'
-                ? 'bg-white text-[#1D1D1F] shadow-sm'
+                ? 'bg-white text-[#0A0F1F] shadow-sm'
                 : 'text-white/80 hover:text-white'
             }`}
           >
@@ -1314,7 +1314,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClick}
-              className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#FFC700] text-[#1D1D1F] hover:bg-yellow-400 transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#FFE14D] text-[#0A0F1F] hover:bg-yellow-400 transition-colors flex items-center gap-1 cursor-pointer"
             >
               <span>Live Demo</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -1326,7 +1326,7 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
         <Link
           href="/works"
           onClick={playClick}
-          className="w-11 h-11 rounded-full bg-[#1D1D1F]/92 backdrop-blur-2xl border border-white/20 text-white hover:bg-[#0859D4] transition-colors flex items-center justify-center cursor-pointer shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="w-11 h-11 rounded-full bg-[#0A0F1F]/92 backdrop-blur-2xl border border-white/20 text-white hover:bg-[#1F3FFF] transition-colors flex items-center justify-center cursor-pointer shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           title="Back to Works Gallery"
           aria-label="Back to Works Gallery"
         >

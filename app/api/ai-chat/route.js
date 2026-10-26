@@ -217,9 +217,9 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
       reply: `I'd love to lock in a sprint call with you${nameGreeting}! Sumit (our founder & design director) hosts 20-minute rapid discovery sessions to evaluate your scope, show relevant case studies, and lock in milestone delivery dates.\n\nYou can pick your preferred date and time slot right below, or jump directly onto WhatsApp:`,
       action: 'show_booking_modal',
       chips: [
-        { label: '📅 Choose Date & Time', action: 'open_booking_tab' },
-        { label: '💬 WhatsApp Sumit (+91 9315580036)', action: 'whatsapp' },
-        { label: '📩 Mail My Project Brief', action: 'open_mail_tab' },
+        { label: 'Choose Date & Time', action: 'open_booking_tab' },
+        { label: 'WhatsApp Sumit (+91 9315580036)', action: 'whatsapp' },
+        { label: 'Mail My Project Brief', action: 'open_mail_tab' },
       ],
       updatedProfile,
     };
@@ -258,10 +258,10 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
         `Would you like me to calculate a custom scope estimate, mail your brief, or schedule a sprint call?`,
       action: 'show_scope_calculator',
       chips: [
-        { label: '⚡ Interactive Scope Calculator', action: 'open_scope_tab' },
-        { label: '📅 Book 20-min Sprint Call', action: 'open_booking_tab' },
-        { label: '📩 Mail Project Brief', action: 'open_mail_tab' },
-        { label: '💬 Chat on WhatsApp', action: 'whatsapp' },
+        { label: 'Interactive Scope Calculator', action: 'open_scope_tab' },
+        { label: 'Book 20-min Sprint Call', action: 'open_booking_tab' },
+        { label: 'Mail Project Brief', action: 'open_mail_tab' },
+        { label: 'Chat on WhatsApp', action: 'whatsapp' },
       ],
       updatedProfile,
     };
@@ -283,9 +283,9 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
           : `Click below to confirm your contact details and project goals:`),
       action: 'open_mail_tab',
       chips: [
-        { label: '📩 Dispatch Project Brief', action: 'open_mail_tab' },
-        { label: '📋 Open Full Inquiry Drawer', action: 'open_inquiry_drawer' },
-        { label: '📅 Book Call Instead', action: 'open_booking_tab' },
+        { label: 'Dispatch Project Brief', action: 'open_mail_tab' },
+        { label: 'Open Full Inquiry Drawer', action: 'open_inquiry_drawer' },
+        { label: 'Book Call Instead', action: 'open_booking_tab' },
       ],
       updatedProfile,
     };
@@ -310,9 +310,9 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
         `• **Agency Ethos**: Every pixel has a job. We break from cookie-cutter templates to build work that is sharp, original, and made to convert.\n\n` +
         `Would you like to connect directly with Sumit on WhatsApp or schedule a discovery call?`,
       chips: [
-        { label: '💬 WhatsApp Sumit Directly', action: 'whatsapp' },
-        { label: '🔗 View Sumit on LinkedIn', action: 'linkedin' },
-        { label: '📅 Book Discovery Call', action: 'open_booking_tab' },
+        { label: 'WhatsApp Sumit Directly', action: 'whatsapp' },
+        { label: 'View Sumit on LinkedIn', action: 'linkedin' },
+        { label: 'Book Discovery Call', action: 'open_booking_tab' },
       ],
       updatedProfile,
     };
@@ -336,9 +336,9 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
         `• **Maison Aura**: Parisian luxury perfume house e-commerce.\n\n` +
         `You can explore the full archive on our Work page or let me calculate an estimate for a similar build:`,
       chips: [
-        { label: '💼 Browse All Projects (/works)', action: 'navigate_works' },
-        { label: '⚡ Calculate Project Scope', action: 'open_scope_tab' },
-        { label: '📅 Book Discovery Call', action: 'open_booking_tab' },
+        { label: 'Browse All Projects (/works)', action: 'navigate_works' },
+        { label: 'Calculate Project Scope', action: 'open_scope_tab' },
+        { label: 'Book Discovery Call', action: 'open_booking_tab' },
       ],
       updatedProfile,
     };
@@ -365,9 +365,9 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
         `• **Sprint Process**: Initial concepts in **48 hours**, weekly milestone builds, 2 revision rounds, 100% intellectual property transfer.\n\n` +
         `Have a specific tech requirement for your project?`,
       chips: [
-        { label: '⚡ Estimate My Tech Stack', action: 'open_scope_tab' },
-        { label: '📅 Schedule Tech Discovery Call', action: 'open_booking_tab' },
-        { label: '💬 Talk to Sumit on WhatsApp', action: 'whatsapp' },
+        { label: 'Estimate My Tech Stack', action: 'open_scope_tab' },
+        { label: 'Schedule Tech Discovery Call', action: 'open_booking_tab' },
+        { label: 'Talk to Sumit on WhatsApp', action: 'whatsapp' },
       ],
       updatedProfile,
     };
@@ -378,8 +378,8 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
     return {
       reply: `Our site automatically detects your country to show prices in **${isUSD ? 'USD ($)' : 'INR (₹)'}** seamlessly (${isUSD ? 'international visitors are quoted in USD' : 'Indian visitors are quoted in INR'}).`,
       chips: [
-        { label: '⚡ View Instant Scope (' + (isUSD ? '$ USD' : '₹ INR') + ')', action: 'open_scope_tab' },
-        { label: '💬 Talk to Sumit on WhatsApp', action: 'whatsapp' },
+        { label: 'View Instant Scope (' + (isUSD ? '$ USD' : '₹ INR') + ')', action: 'open_scope_tab' },
+        { label: 'Talk to Sumit on WhatsApp', action: 'whatsapp' },
       ],
       updatedProfile,
     };
@@ -395,11 +395,11 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
       `4. **Answer questions** about our 48-hour sprint process, past case studies, and tech stack\n\n` +
       `What would you like to explore first?`,
     chips: [
-      { label: '📅 Book a Discovery Call', action: 'open_booking_tab' },
-      { label: '⚡ Instant Price Estimate', action: 'open_scope_tab' },
-      { label: '📩 Mail Project Brief', action: 'open_mail_tab' },
-      { label: '💬 WhatsApp Sumit (+91 9315580036)', action: 'whatsapp' },
-      { label: '💼 Browse Portfolio', action: 'navigate_works' },
+      { label: 'Book a Discovery Call', action: 'open_booking_tab' },
+      { label: 'Instant Price Estimate', action: 'open_scope_tab' },
+      { label: 'Mail Project Brief', action: 'open_mail_tab' },
+      { label: 'WhatsApp Sumit (+91 9315580036)', action: 'whatsapp' },
+      { label: 'Browse Portfolio', action: 'navigate_works' },
     ],
     updatedProfile,
   };

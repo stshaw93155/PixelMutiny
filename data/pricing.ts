@@ -1,4 +1,4 @@
-export type Currency = 'INR' | 'USD';
+export type Currency = 'INR' | 'USD' | 'PK_USD' | 'PKR';
 
 export interface PriceTier {
   id: string;
@@ -6,6 +6,7 @@ export interface PriceTier {
   tagline: string;
   priceINR: number;
   priceUSD: number;
+  pricePKR?: number;
   period?: string; // e.g. "per month", "one-time"
   timeline: string;
   isPopular?: boolean;
@@ -23,10 +24,42 @@ export interface ServicePackage {
   code: string;
   tag: string;
   idealFor: string;
+  fromPriceINR: number;
+  fromPriceUSD: number;
   image: string;
   alt: string;
   deliverables: string[];
   tiers: PriceTier[];
+}
+
+export interface RetainerPlan {
+  id: string;
+  num: string;
+  name: string;
+  shortName: string;
+  tagline: string;
+  idealFor: string;
+  priceRangeINR: string;
+  priceRangeUSD: string;
+  startingPriceINR: number;
+  startingPriceUSD: number;
+  includes: string[];
+  terms: string;
+  limits: string[];
+}
+
+export interface GrowthBundle {
+  id: string;
+  name: string;
+  tagline: string;
+  monthlyFeeINR: number;
+  monthlyFeeUSD: number;
+  feeDisplayINR: string;
+  feeDisplayUSD: string;
+  bestFor: string;
+  isPopular?: boolean;
+  deliverables: string[];
+  terms: string;
 }
 
 export interface AddOn {
@@ -52,22 +85,22 @@ export const COMPANY_BRAND_NAME = 'PixelMutiny DigiMedia';
 export const COMPANY_SHORT_NAME = 'PixelMutiny';
 
 export const TAGLINE_OPTIONS = {
-  primary: 'Break the template.',
-  secondary: 'Design that breaks rank.',
-  tertiary: 'Built different. Designed to perform.',
+  primary: 'Break the template. Built different.',
+  secondary: 'One studio. Four ways to grow.',
+  tertiary: 'Fixed project packages & recurring monthly retainers.',
 };
 
 export const ONE_LINER =
-  'PixelMutiny DigiMedia is a creative and digital studio that builds websites, dashboards, brand identities, content, and ad campaigns for brands and individuals who want to stand out instead of blend in.';
+  'PixelMutiny is a digital growth agency building high-performance websites, distinctive brand identities, content production, and Meta Ads for brands that refuse to blend in.';
 
 export const SHORT_BIO =
-  'We design, build, and grow brands. Websites, landing pages, UI/UX, dashboards, logos, graphics, reels, and Meta Ads, all under one roof.';
+  'We separate one-time project sprints from predictable recurring retainers. Digital experiences, branding, video editing, and performance marketing—all under one roof.';
 
 export const WHO_WE_ARE = {
   summary:
-    'PixelMutiny DigiMedia is a full-service digital studio based in India. We bring design, development, and performance marketing together so clients don’t have to juggle five freelancers to launch one brand.',
+    'PixelMutiny DigiMedia is a four-pillar digital growth agency based in India. We combine engineering, brand design, video production, and performance media so founders never have to juggle fragmented freelancers.',
   ethos:
-    'The name says it: every pixel has a job, and we don’t follow the boring, templated look the internet is full of. We build work that is sharp, original, and made to get results.',
+    'Break the template. Built different. Every pixel has a job, and every dollar of advertising spend must be backed by conversion-engineered creative.',
   location: 'New Delhi, India (DLF Cyber Hub Design Lab)',
 };
 
@@ -79,52 +112,52 @@ export const ABOUT_NAME_MEANING = {
 };
 
 export const MISSION =
-  'To help brands and individuals build a strong digital presence through clean design, solid development, and marketing that actually converts.';
+  'To help brands and creators build high-conversion digital experiences, memorable visual identities, and scalable paid acquisition funnels.';
 
 export const VISION =
-  'To grow into a trusted creative agency that works with clients across India and globally, known for original work, fast delivery, and honest communication.';
+  'To become the premier design and growth partner for ambitious tech startups, global creators, and modern consumer brands worldwide.';
 
 export const CORE_VALUES = [
   {
     title: 'Originality first',
-    desc: 'No recycled templates or copy-paste designs. Everything is built around your specific brand and goals.',
+    desc: 'No recycled templates or cookie-cutter designs. Everything is bespoke to your business model.',
     icon: 'Sparkles',
   },
   {
     title: 'Clarity over clutter',
-    desc: 'Clean visuals, clear messaging, simple user journeys that guide visitors straight to conversion.',
+    desc: 'Clean aesthetics, unambiguous user flows, and clear pricing with zero hidden fees.',
     icon: 'Layers',
   },
   {
     title: 'Results matter',
-    desc: 'Pretty is not enough. It has to work, convert, and scale in the real market.',
+    desc: 'Pretty is table stakes. Our work converts traffic, captures qualified leads, and drives revenue.',
     icon: 'Zap',
   },
   {
     title: 'Speed with quality',
-    desc: 'Fast turnarounds without cutting corners, powered by disciplined sprint architectures.',
+    desc: 'Disciplined 2-week execution sprints with definite milestones and zero agency bloat.',
     icon: 'Clock',
   },
   {
     title: 'Honest partnership',
-    desc: 'Clear timelines, transparent pricing, no fluff, and direct partner access throughout.',
+    desc: 'Transparent scopes, defined revision caps, direct founder access, and zero corporate runaround.',
     icon: 'ShieldCheck',
   },
 ];
 
 export const WHO_WE_WORK_WITH = [
   {
-    category: 'Brands & Businesses',
-    tag: 'SCALE & ENTERPRISE',
-    audience: 'Startups, local businesses, education, real estate, fitness, e-commerce, and SaaS.',
-    desc: 'Companies launching new products, redesigning dated websites, or scaling customer acquisition with high-converting digital flagships and ad campaigns.',
+    category: 'Startups & Scaleups',
+    tag: 'PROJECTS & RETAINERS',
+    audience: 'Funded SaaS, D2C brands, and tech ventures launching new products or overhauling dated systems.',
+    desc: 'From initial branding and high-performance Next.js websites to ongoing Meta Ads acquisition retainers.',
     bullets: ['Funded Tech Startups', 'E-commerce & D2C Brands', 'Real Estate & Hospitality', 'Modern SaaS Products'],
   },
   {
-    category: 'Individuals & Creators',
-    tag: 'PERSONAL BRANDS',
-    audience: 'Creators, coaches, freelancers, consultants, and personal brands.',
-    desc: 'Ambitious professionals and content creators needing authoritative digital portfolios, landing pages, custom graphics, and reels that convert followers into clients.',
+    category: 'Creators & Personal Brands',
+    tag: 'CREATIVE SUBSCRIPTION',
+    audience: 'Founders, coaches, educators, and creators who need consistent monthly visual content and reels.',
+    desc: 'Authority-building websites, signature logos, and recurring short-form video editing that converts followers into clients.',
     bullets: ['Executive Coaches & Consultants', 'Content Creators & YouTubers', 'High-Ticket Freelancers', 'Specialist Founders'],
   },
 ];
@@ -132,28 +165,28 @@ export const WHO_WE_WORK_WITH = [
 export const WHY_CHOOSE_US = [
   {
     num: '01',
-    title: 'One Team For Everything',
-    desc: 'Design, development, content, and ads all under one roof — no juggling five freelancers or dealing with handoff friction.',
+    title: 'Four Core Pillars, One Partner',
+    desc: 'Web experiences, branding, video production, and performance ads work in sync—no misaligned vendors.',
   },
   {
     num: '02',
-    title: '100% Original Work',
-    desc: 'Built custom around your brand narrative and competitive edge, never from cheap templates or recycled boilerplates.',
+    title: 'Projects & Subscriptions Separated',
+    desc: 'Fixed-scope packages for new builds, and recurring monthly retainers for predictable, compounding growth.',
   },
   {
     num: '03',
-    title: 'Production-Ready Files',
-    desc: 'Clean, vector-ready files, Figma design tokens, and modular source code you can scale anywhere with total ownership.',
+    title: 'Defined Deliverables & No Fluff',
+    desc: 'Strict deliverable counts, clear revision rounds, and explicit scope boundaries so you always know what you get.',
   },
   {
     num: '04',
-    title: 'Clear Timelines & Communication',
-    desc: 'Definite delivery milestones, transparent weekly reporting, live Slack access, and zero corporate agency runaround.',
+    title: '100% Asset & IP Ownership',
+    desc: 'All Figma design tokens, vector source files, video edits, and production code belong entirely to you.',
   },
   {
     num: '05',
-    title: 'Creative + Performance Together',
-    desc: 'Creative flair and mathematical performance thinking combined, ensuring your brand looks stunning while generating measurable revenue.',
+    title: 'Performance-First Engineering',
+    desc: 'Sub-second page speeds, Core Web Vitals 95+, and tracking-verified Meta ad funnels engineered for ROI.',
   },
 ];
 
@@ -162,7 +195,7 @@ export const HOW_WE_WORK_STAGES = [
     step: '01',
     name: 'Discover',
     tagline: 'Deep Brand & Audience Discovery',
-    desc: 'Understand your brand, business goals, target audience, and market landscape to establish clear project benchmarks.',
+    desc: 'Understand your brand, audience, and market landscape to establish clear project benchmarks and positioning.',
     bullets: ['Brand Discovery Intake', 'Audience & Funnel Analysis', 'Competitor Differentiation', 'Sprint Milestone Scope'],
   },
   {
@@ -203,607 +236,507 @@ export const HOW_WE_WORK_STAGES = [
 ];
 
 // =========================================================================
-// 8 CORE SERVICE PACKAGES (WHAT WE DO)
+// 1. THE FOUR CORE SERVICE PILLARS (FIXED ONE-TIME PROJECT PACKAGES)
 // =========================================================================
 
-export const SERVICES_DATA: ServicePackage[] = [
+export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
   {
-    id: 'website',
-    slug: 'website',
-    num: '(01)',
-    name: 'Website Design & Development',
-    shortName: 'Websites',
-    headline: 'Business sites, portfolios, and e-commerce stores.',
-    code: 'WEB // DEV',
-    tag: 'Fast, Responsive & SEO-Ready',
-    idealFor: 'Businesses, founders, creators, and online stores wanting a fast, responsive, SEO-ready site built to be easy to manage.',
+    id: 'digital-experiences',
+    slug: 'digital-experiences',
+    num: '01',
+    name: 'Digital Experiences',
+    shortName: 'Digital Experiences',
+    headline: 'Websites · Landing Pages · UI/UX · Dashboards',
+    code: '01 // DIGITAL',
+    tag: 'Websites · Landing Pages · UI/UX · Dashboards',
+    idealFor: 'Startups, SaaS, businesses, and e-commerce brands wanting digital products that look premium, work smoothly, and turn visitors into customers.',
+    fromPriceINR: 35000,
+    fromPriceUSD: 425,
     image: '/projects/veyra-legal.png',
     alt: 'PixelMutiny editorial multi-page business website design with case studies and interactive layout',
     deliverables: [
-      'Multi-page responsive website design & development',
-      'Self-serve CMS setup for easy in-house content editing',
-      'Mobile, tablet & desktop optimization with fast load speeds',
-      'Core technical SEO, sitemaps & Schema markup',
-      'Contact forms, newsletter integration & lead routing',
+      'Multi-page websites, high-converting landing pages & web apps',
+      'Custom UI/UX architecture and responsive design systems in Figma',
+      'Mobile, tablet & desktop optimization with sub-second page loads',
+      'Self-serve CMS setup for seamless in-house content updates',
+      'Technical SEO, Schema markup, contact forms & analytics tracking',
     ],
     tiers: [
       {
-        id: 'web-starter',
-        name: 'Starter',
-        tagline: 'Clean 5-page business site with self-serve CMS.',
+        id: 'digital-launch',
+        name: 'Launch',
+        tagline: 'Up to 5 pages, responsive design, basic SEO and lead forms',
         priceINR: 35000,
-        priceUSD: 950,
+        priceUSD: 425,
         timeline: '2 to 3 weeks',
         features: [
           'Up to 5 custom responsive pages',
-          'Self-serve CMS for easy text & image updates',
-          'Mobile, tablet & desktop optimization',
-          'Technical SEO basics & sitemap setup',
+          'Clean, modern layout across mobile, tablet & desktop',
+          'Basic technical SEO, metadata & sitemap setup',
           'Lead capture & contact form integration',
-          '2 revision rounds included',
+          'Fast Next.js build with Core Web Vitals optimization',
+          '2 structured revision rounds included',
         ],
       },
       {
-        id: 'web-business',
-        name: 'Custom Business',
-        tagline: 'Up to 10 pages with custom UI design & blog.',
+        id: 'digital-growth',
+        name: 'Growth',
+        tagline: 'Up to 10 pages, custom UI, CMS, blog and analytics setup',
         priceINR: 75000,
-        priceUSD: 2100,
-        timeline: '4 to 5 weeks',
+        priceUSD: 900,
+        timeline: '3 to 4 weeks',
         isPopular: true,
-        inheritsText: 'Everything in Starter, plus:',
+        inheritsText: 'Everything in Launch, plus:',
         features: [
-          'Up to 10 custom designed & coded pages',
-          'Custom modular UI kit & Figma design files',
-          'Fluid micro-animations & scroll interactions',
-          'Dynamic blog or resources publishing section',
-          'Google Analytics & Meta Pixel tracking setup',
-          'Full source code & asset handover',
+          'Up to 10 custom pages or bespoke web app UI dashboard',
+          'Custom modular UI kit & interactive Figma prototype',
+          'Self-serve CMS integration for dynamic blog & case studies',
+          'Google Analytics 4 & conversion event tracking',
+          'Fluid micro-animations & responsive scroll interactions',
+          'Full source code handover & CMS walkthrough video',
         ],
       },
       {
-        id: 'web-flagship',
-        name: 'Flagship & E-commerce',
-        tagline: '15+ pages, e-commerce shop or complex interactive site.',
+        id: 'digital-scale',
+        name: 'Scale',
+        tagline: 'E-commerce or complex websites, advanced integrations and custom functionality',
         priceINR: 140000,
-        priceUSD: 3800,
-        timeline: '6 to 8 weeks',
-        inheritsText: 'Everything in Custom Business, plus:',
+        priceUSD: 1700,
+        timeline: '4 to 6 weeks',
+        inheritsText: 'Everything in Growth, plus:',
         features: [
-          '15+ custom pages or full online shopping store',
-          'Payment gateway (Stripe / Razorpay) & inventory setup',
-          'Interactive 3D / product showcase views',
+          'E-commerce store or complex web app interface',
+          'Payment gateway (Razorpay / Stripe) & third-party API sync',
+          'Interactive component states (calculators, demos, filter hubs)',
           'Advanced programmatic SEO architecture',
-          '30-day post-launch hypercare & team walkthrough',
+          '3 structured feedback rounds included',
+          '30-day post-launch hypercare & priority SLA support',
         ],
       },
     ],
   },
   {
-    id: 'landing',
-    slug: 'landing',
-    num: '(02)',
-    name: 'Landing Page Design & Development',
-    shortName: 'Landing Pages',
-    headline: 'High-converting single pages for campaigns, launches, and ad traffic.',
-    code: 'CRO // LANDING',
-    tag: 'Conversion-Engineered',
-    idealFor: 'SaaS products, marketing campaigns, launches, lead generation, and paid traffic.',
-    image: '/projects/flow-task.jpg',
-    alt: 'PixelMutiny modern high-converting SaaS landing page interface with conversion metrics',
+    id: 'brand-identity',
+    slug: 'brand-identity',
+    num: '02',
+    name: 'Brand Identity & Design',
+    shortName: 'Brand & Design',
+    headline: 'Logo Design · Brand Systems · Graphics · Print',
+    code: '02 // BRAND',
+    tag: 'Logo Design · Brand Systems · Graphics · Print',
+    idealFor: 'New businesses, educational institutions, creators, and established brands needing a distinctive, memorable visual presence.',
+    fromPriceINR: 8000,
+    fromPriceUSD: 100,
+    image: '/projects/maison-aura.png',
+    alt: 'PixelMutiny luxury brand identity design with typography guidelines and vector packaging',
     deliverables: [
-      'Conversion-centered layout architecture & persuasive wireframe',
-      'Compelling headline copywriting & narrative flow',
-      'Bespoke responsive design matching your brand aesthetic',
-      'Fast Next.js or Webflow build with sub-second load times',
-      'Analytics event tracking, Meta Pixel & lead capture setup',
+      'Primary, secondary, and sub-mark vector logo suite',
+      'Curated brand color palette (HEX, RGB, CMYK) & typography rules',
+      'Comprehensive brand guideline book (digital PDF & Figma)',
+      'Editable social media post & carousel templates',
+      'Corporate stationery, pitch deck styling & print-ready assets',
     ],
     tiers: [
       {
-        id: 'landing-essential',
+        id: 'brand-essential',
         name: 'Essential',
-        tagline: 'Clean 1-page launchpad with responsive form.',
-        priceINR: 20000,
-        priceUSD: 600,
+        tagline: 'Primary logo, colour palette and typography',
+        priceINR: 8000,
+        priceUSD: 100,
         timeline: '5 to 7 days',
         features: [
-          '1 custom responsive landing page',
-          'Responsive lead capture / inquiry form',
-          'Mobile & tablet optimization',
-          'Fast deployment on Vercel or Webflow',
+          '2 bespoke primary logo concept directions',
+          'Final vector logo kit (SVG, PNG, EPS, AI)',
+          'Curated brand color palette (HEX, RGB, CMYK)',
+          'Primary & secondary typography pairing guide',
+          'Favicon & avatar exports for social profiles',
           '2 revision rounds included',
         ],
       },
       {
-        id: 'landing-standard',
-        name: 'Standard',
-        tagline: 'Conversion-engineered launch page with copy & tracking.',
-        priceINR: 40000,
-        priceUSD: 1100,
+        id: 'brand-signature',
+        name: 'Signature',
+        tagline: 'Logo suite, brand guidelines and social templates',
+        priceINR: 18000,
+        priceUSD: 220,
         timeline: '10 to 14 days',
         isPopular: true,
         inheritsText: 'Everything in Essential, plus:',
         features: [
-          'Custom design crafted around your unique offer',
-          'Persuasive copy structure & section narrative',
-          'Subtle scroll animations & micro-interactions',
-          'Google Analytics & Meta Pixel tracking setup',
-          'Search engine optimization (SEO) basics & meta tags',
-        ],
-      },
-      {
-        id: 'landing-premium',
-        name: 'Premium',
-        tagline: 'Interactive powerhouse with A/B variant & CRM sync.',
-        priceINR: 70000,
-        priceUSD: 1900,
-        timeline: '3 weeks',
-        inheritsText: 'Everything in Standard, plus:',
-        features: [
-          'A/B testing variant layout for campaign experimentation',
-          'Interactive element (pricing calculator or visual demo)',
-          'In-depth conversion rate heuristic audit',
-          'Direct integration with your CRM or email provider',
-          '2 post-launch tweak & refinement rounds',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'ui-ux',
-    slug: 'ui-ux',
-    num: '(03)',
-    name: 'UI/UX Design',
-    shortName: 'UI/UX Design',
-    headline: 'User research, wireframes, and polished interface design for websites, apps, and SaaS.',
-    code: 'UI // RESEARCH',
-    tag: 'Websites, Apps & SaaS',
-    idealFor: 'Product founders, software companies, and mobile app teams needing intuitive user journeys.',
-    image: '/projects/veloce-ai.jpg',
-    alt: 'PixelMutiny UI/UX component library, user journeys, and Figma wireframes mockup',
-    deliverables: [
-      'User research, competitor benchmarking & journey maps',
-      'Low-fidelity wireframes exploring optimal UX flows',
-      'High-fidelity interactive prototype inside Figma',
-      'Scalable design token system (colors, typography, components)',
-      'Detailed developer handoff documentation & export assets',
-    ],
-    tiers: [
-      {
-        id: 'ui-audit',
-        name: 'Audit & Wireframes',
-        tagline: 'Heuristic review & UX wireframes for core flows.',
-        priceINR: 25000,
-        priceUSD: 700,
-        timeline: '1 to 2 weeks',
-        features: [
-          'Heuristic UX teardown of current product',
-          'User journey mapping & friction analysis',
-          'Low-fidelity wireframes (up to 8 core views)',
-          'Information architecture recommendations',
-          'Figma project file handoff',
-        ],
-      },
-      {
-        id: 'ui-complete',
-        name: 'Complete App UI',
-        tagline: 'Full high-fidelity Figma UI with interactive prototype.',
-        priceINR: 60000,
-        priceUSD: 1650,
-        timeline: '3 to 4 weeks',
-        isPopular: true,
-        inheritsText: 'Everything in Audit & Wireframes, plus:',
-        features: [
-          'Up to 15 high-fidelity polished screens',
-          'Clickable interactive Figma prototype',
-          'Modular UI component library & auto-layout tokens',
-          'Light & dark mode design system specs',
-          'Developer handoff call & asset exports',
-        ],
-      },
-      {
-        id: 'ui-enterprise',
-        name: 'Enterprise System',
-        tagline: 'End-to-end multi-platform design system & 30+ screens.',
-        priceINR: 120000,
-        priceUSD: 3200,
-        timeline: '5 to 6 weeks',
-        inheritsText: 'Everything in Complete App UI, plus:',
-        features: [
-          '30+ comprehensive application screens & edge states',
-          'Multi-platform component library (Web, iOS & Android)',
-          'Comprehensive design token repository for dev sync',
-          'User usability testing & feedback synthesis',
-          'Ongoing design sprint guidance during engineering',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'dashboard',
-    slug: 'dashboard',
-    num: '(04)',
-    name: 'Dashboard Design & Development',
-    shortName: 'Dashboards',
-    headline: 'Admin panels, analytics dashboards, and SaaS interfaces that are clean, usable, and scalable.',
-    code: 'DATA // SAAS',
-    tag: 'Clean, Usable & Scalable',
-    idealFor: 'SaaS platforms, enterprise tools, and analytics systems needing clean, dense data visualization.',
-    image: '/projects/krono-pay.jpg',
-    alt: 'PixelMutiny clean analytics dashboard and admin panel user interface',
-    deliverables: [
-      'Intuitive navigation hierarchy and responsive layout',
-      'Clean data visualization widgets, graphs & metrics cards',
-      'Filterable data tables, search states & modal actions',
-      'Scalable design tokens for charts, alerts & states',
-      'Ready-to-integrate frontend components or full Next.js build',
-    ],
-    tiers: [
-      {
-        id: 'dash-uikit',
-        name: 'Core UI Kit',
-        tagline: 'Figma design of core dashboard views & widgets.',
-        priceINR: 45000,
-        priceUSD: 1250,
-        timeline: '2 to 3 weeks',
-        features: [
-          'Core overview dashboard + 3 key module views',
-          'Modular metric cards, charts & widget kit in Figma',
-          'Responsive desktop & tablet states',
-          'Design tokens & color coding for statuses/KPIs',
-          'Clean Figma component architecture',
-        ],
-      },
-      {
-        id: 'dash-production',
-        name: 'Frontend Build',
-        tagline: 'Full Next.js/React dashboard code with interactive charts.',
-        priceINR: 95000,
-        priceUSD: 2600,
-        timeline: '4 to 5 weeks',
-        isPopular: true,
-        inheritsText: 'Everything in Core UI Kit, plus:',
-        features: [
-          'Full Next.js / Tailwind CSS frontend codebase',
-          'Interactive charts (Recharts / Chart.js integration)',
-          'Sortable, searchable data tables with pagination',
-          'Clean mock JSON data wiring ready for backend API',
-          'Dark & light mode toggle included',
-        ],
-      },
-      {
-        id: 'dash-suite',
-        name: 'Scalable SaaS Suite',
-        tagline: 'Multi-tenant admin architecture with export pipelines.',
-        priceINR: 175000,
-        priceUSD: 4800,
-        timeline: '6 to 8 weeks',
-        inheritsText: 'Everything in Frontend Build, plus:',
-        features: [
-          'Multi-role admin panel (Admin, Manager, Viewer views)',
-          'Complex real-time metrics & report export engine',
-          'Full state management & production backend integration sync',
-          '30-day technical support & architecture walkthrough',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'graphics',
-    slug: 'graphics',
-    num: '(05)',
-    name: 'Graphics Design',
-    shortName: 'Graphics',
-    headline: 'Social media creatives, posters, brochures, banners, pitch decks, and brand collateral.',
-    code: 'VISUAL // ART',
-    tag: 'Print & Digital Collateral',
-    idealFor: 'Brands, event organizers, educators, and startups needing stunning visual collateral.',
-    image: '/projects/maison-aura.jpg',
-    alt: 'PixelMutiny bold graphic design posters, brochures, and editorial collateral cards',
-    deliverables: [
-      'High-impact social media creatives & carousels',
-      'Investor pitch decks, sales presentations & brochures',
-      'Event banners, roll-up signage & print collateral',
-      'Clean, vector-ready files you can use anywhere',
-      'Full commercial usage rights & editable source files',
-    ],
-    tiers: [
-      {
-        id: 'graphics-starter',
-        name: 'Starter Pack',
-        tagline: '6 social media creatives or 1 promotional poster.',
-        priceINR: 12000,
-        priceUSD: 350,
-        timeline: '3 to 5 days',
-        features: [
-          '6 high-impact social media posts or 1 print banner',
-          'Formats for Instagram, LinkedIn & X',
-          'High-resolution PNG, JPG & PDF print-ready files',
+          'Complete logo suite (primary, secondary mark, monochrome)',
+          'Comprehensive brand guidelines stylebook (PDF)',
+          '6 editable social media post/carousel templates (Figma/Canva)',
+          'Custom brand patterns, textures & graphic elements',
+          'Visual dos and don’ts & brand usage rules',
           '2 revision rounds included',
-          'Clean vector source files included',
         ],
       },
       {
-        id: 'graphics-collateral',
-        name: 'Collateral Kit',
-        tagline: '15 social creatives + pitch deck + brochure.',
-        priceINR: 28000,
-        priceUSD: 800,
-        timeline: '1 to 2 weeks',
-        isPopular: true,
-        inheritsText: 'Everything in Starter Pack, plus:',
-        features: [
-          '15 custom social creatives or carousel sets',
-          'Pitch deck or sales presentation (up to 15 custom slides)',
-          'Tri-fold brochure or event promotional banner design',
-          'Editable Figma / Canva templates for your team',
-          'Print-ready CMYK files with bleed marks',
-        ],
-      },
-      {
-        id: 'graphics-retainer',
-        name: 'Monthly Retainer',
-        tagline: '30 monthly graphic assets with priority turnaround.',
-        priceINR: 55000,
-        priceUSD: 1500,
-        period: 'per month',
-        timeline: 'Ongoing monthly',
-        inheritsText: 'Everything in Collateral Kit, plus:',
-        features: [
-          '30 custom visual assets every month',
-          'Social posts, ad banners, presentation slides & flyers',
-          'Dedicated senior visual designer assigned to your brand',
-          'Priority 48-hour turnarounds on urgent requests',
-          'Shared Slack channel for instant briefs & iterations',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'video',
-    slug: 'video',
-    num: '(06)',
-    name: 'Reel & Video Editing',
-    shortName: 'Reels & Video',
-    headline: 'Short-form edits for Instagram, YouTube Shorts, and ads, with strong hooks, clean cuts, motion, and sound design.',
-    code: 'MOTION // REELS',
-    tag: 'Strong Hooks & Sound Design',
-    idealFor: 'Creators, personal brands, founders, e-commerce, and businesses scaling on Instagram, YouTube, and TikTok.',
-    image: '/projects/solaris-dex.jpg',
-    alt: 'PixelMutiny dynamic vertical video editing timeline with motion graphics and kinetic typography',
-    deliverables: [
-      'Engaging short-form vertical video (9:16) with viral hooks',
-      'Dynamic kinetic typography, captions & zoom cuts',
-      'Custom sound design, sound effects & trending audio pairing',
-      'Color grading, visual b-roll pacing & graphic callouts',
-      'Optimized export ready for Instagram Reels, Shorts & TikTok',
-    ],
-    tiers: [
-      {
-        id: 'video-sprint',
-        name: 'Reel Sprint',
-        tagline: '5 dynamic short-form reels with kinetic captions.',
-        priceINR: 6000,
-        priceUSD: 180,
-        timeline: '3 to 5 days',
-        features: [
-          '5 edited vertical videos (up to 60s each)',
-          'Kinetic subtitles & animated typography hooks',
-          'Pacing cuts, zoom-ins & seamless transitions',
-          'Sound design, SFX & background audio mixing',
-          '2 revision rounds per reel',
-        ],
-      },
-      {
-        id: 'video-creator',
-        name: 'Creator Pack',
-        tagline: '15 high-engagement reels with custom branded styling.',
-        priceINR: 18000,
-        priceUSD: 500,
-        timeline: '10 to 14 days',
-        isPopular: true,
-        inheritsText: 'Everything in Reel Sprint, plus:',
-        features: [
-          '15 dynamic short-form videos optimized for retention',
-          'Custom branded subtitle styles & visual emojis/stickers',
-          'Color grading & lighting enhancement',
-          'Strategic hook recommendations to increase watch time',
-          'B-roll and stock footage insertion where needed',
-        ],
-      },
-      {
-        id: 'video-engine',
-        name: 'Monthly Video Engine',
-        tagline: '30 edited reels per month with 48h turnaround.',
+        id: 'brand-complete',
+        name: 'Complete Identity',
+        tagline: 'Expanded identity system, stationery and campaign-ready brand assets',
         priceINR: 35000,
-        priceUSD: 980,
-        period: 'per month',
-        timeline: 'Ongoing monthly',
-        inheritsText: 'Everything in Creator Pack, plus:',
+        priceUSD: 425,
+        timeline: '2 to 3 weeks',
+        inheritsText: 'Everything in Signature, plus:',
         features: [
-          '30 polished reels/shorts delivered across the month',
-          'Priority 48-hour turnarounds on raw footage uploads',
-          'Monthly strategy sync on content formats and trending hooks',
-          'Full project file and high-bitrate master exports',
-          'Ideal for consistent daily social growth',
+          'Expanded multi-channel visual identity architecture',
+          'Corporate stationery kit (business cards, letterhead, email signature)',
+          'Master presentation / pitch deck template (10+ slides)',
+          'Packaging, merchandise, or print-ready collateral',
+          'Complete Figma design component library',
+          '100% intellectual property & commercial rights transfer',
         ],
       },
     ],
   },
   {
-    id: 'brand',
-    slug: 'brand',
-    num: '(07)',
-    name: 'Logo & Brand Identity Design',
-    shortName: 'Brand Identity',
-    headline: 'Original, scalable, vector-ready logos with colour palettes, typography, and usage guidelines.',
-    code: 'BRAND // IDENTITY',
-    tag: 'Original & Scalable',
-    idealFor: 'Startups, personal brands, local businesses, and rebrands wanting a distinctive identity that stands out instead of blending in.',
-    image: '/projects/avenor.png',
-    alt: 'PixelMutiny luxury architectural brand identity guidelines sheet with typography and stationery mockup',
+    id: 'content-production',
+    slug: 'content-production',
+    num: '03',
+    name: 'Content & Creative Production',
+    shortName: 'Content Production',
+    headline: 'Reels · Video Editing · Motion Graphics · Campaign Creatives',
+    code: '03 // CONTENT',
+    tag: 'Reels · Video Editing · Motion Graphics · Campaign Creatives',
+    idealFor: 'Creators, personal brands, coaches, and growing businesses that need scroll-stopping visual content and high-retention video.',
+    fromPriceINR: 6000,
+    fromPriceUSD: 75,
+    image: '/projects/krono-pay.png',
+    alt: 'PixelMutiny dynamic motion graphics and social video editing creative showcase',
     deliverables: [
-      'Original, scalable, vector-ready logo marks (primary & secondary)',
-      'Curated brand color palette & high-contrast typography hierarchy',
-      'Comprehensive brand guidelines manual (PDF & Figma)',
-      'Social media starter templates for Instagram, LinkedIn & X',
-      'Stationery suite with business cards & letterhead print files',
+      'High-retention short-form video edits (Reels, TikTok, YouTube Shorts)',
+      'Dynamic kinetic typography captions, emojis & sound design',
+      'Pacing cuts, zoom choreography, and engaging visual hooks',
+      'Custom motion graphics, animated lower thirds & transitions',
+      'Promotional social media statics, carousels & campaign banners',
     ],
     tiers: [
       {
-        id: 'brand-essentials',
-        name: 'Essentials',
-        tagline: 'Clean, professional brand foundations fast.',
-        priceINR: 12000,
-        priceUSD: 350,
+        id: 'content-starter',
+        name: 'Starter',
+        tagline: 'Up to 4 short-form video edits',
+        priceINR: 6000,
+        priceUSD: 75,
         timeline: '5 to 7 days',
         features: [
-          'Logo design (3 concepts, 1 refined final mark)',
-          'Color palette & typography pairing setup',
-          '1-page brand mini-guide (PDF)',
-          '2 revision rounds included',
-          'Full vector asset export (SVG, PNG, EPS)',
+          'Up to 4 short-form video edits (up to 60s each)',
+          'Dynamic kinetic captions & subtitles',
+          'Sound design, sound effects & background audio balancing',
+          'Color correction & vertical 9:16 exports',
+          'Client supplies raw footage',
+          '1 revision round per video included',
         ],
       },
       {
-        id: 'brand-standard',
-        name: 'Standard',
-        tagline: 'Comprehensive visual identity for growing brands.',
-        priceINR: 30000,
-        priceUSD: 900,
-        timeline: '2 to 3 weeks',
+        id: 'content-creator',
+        name: 'Creator',
+        tagline: 'Up to 8 video edits with captions and motion graphics',
+        priceINR: 15000,
+        priceUSD: 180,
+        timeline: '10 to 14 days',
         isPopular: true,
-        inheritsText: 'Everything in Essentials, plus:',
+        inheritsText: 'Everything in Starter, plus:',
         features: [
-          'Full comprehensive brand guidelines PDF & Figma file',
-          'Social media kit (10 editable Canva/Figma templates)',
-          'Stationery system & business card print-ready files',
-          'Custom vector iconography kit',
-          'Favicon, email signature & web asset pack',
+          'Up to 8 dynamic short-form video edits',
+          'Animated hook titles, zooms & visual sound effects',
+          'Custom branded lower thirds & emoji animations',
+          'Curated B-roll selection & seamless jump-cut pacing',
+          '2 revision rounds per video included',
+          'Fast 48-hour delivery per video batch',
         ],
       },
       {
-        id: 'brand-premium',
-        name: 'Premium',
-        tagline: 'Flagship brand universe with motion & strategy.',
-        priceINR: 65000,
-        priceUSD: 1800,
-        timeline: '4 weeks',
-        inheritsText: 'Everything in Standard, plus:',
+        id: 'content-studio',
+        name: 'Studio',
+        tagline: 'Up to 12 video edits, advanced motion graphics and campaign assets',
+        priceINR: 30000,
+        priceUSD: 360,
+        timeline: '2 to 3 weeks',
+        inheritsText: 'Everything in Creator, plus:',
         features: [
-          '1-on-1 brand strategy & positioning session',
-          'Animated kinetic logo reveal for web and video',
-          '30 custom social media templates across all formats',
-          'Ad creative starter set for paid campaigns',
-          'Brand collateral (pitch deck theme, merchandise specs)',
+          'Up to 12 high-production video edits',
+          'Advanced 2D/3D motion graphics & logo stingers',
+          'Multi-format delivery (9:16 Vertical + 16:9 Landscape)',
+          '4 static promotional banner / story creatives included',
+          'Dedicated senior video editor & audio engineer',
+          '2 revision rounds per video included',
         ],
       },
     ],
   },
   {
-    id: 'meta-ads',
-    slug: 'meta-ads',
-    num: '(08)',
-    name: 'Meta Ads (Facebook & Instagram)',
-    shortName: 'Meta Ads',
-    headline: 'Campaign setup, creatives, audience targeting, tracking, and optimization focused on leads and sales.',
-    code: 'ADS // PERFORMANCE',
-    tag: 'Leads & Sales Focus',
-    idealFor: 'E-commerce, education, real estate, fitness, local businesses, and SaaS looking to scale profitably.',
-    image: '/projects/meta-ads-grid.jpg',
-    alt: 'PixelMutiny high-converting creative design grid showcasing visual ad formats, hooks, and video frames',
+    id: 'performance-marketing',
+    slug: 'performance-marketing',
+    num: '04',
+    name: 'Performance Marketing',
+    shortName: 'Performance Marketing',
+    headline: 'Meta Ads · Lead Generation · Campaign Strategy · Tracking',
+    code: '04 // ADS',
+    tag: 'Meta Ads · Lead Generation · Campaign Strategy · Tracking',
+    idealFor: 'Real estate, education, fitness, e-commerce, and local businesses wanting measurable customer acquisition and qualified leads.',
+    fromPriceINR: 8000,
+    fromPriceUSD: 100,
+    image: '/projects/veloce-ai.png',
+    alt: 'PixelMutiny conversion tracking dashboard and Meta Ads campaign performance metrics',
     deliverables: [
-      'Thumb-stopping ad creatives in 1:1 Feed, 9:16 Story & Reel formats',
-      'Short-form video ads with clear kinetic typography and hooks',
-      'Campaign setup, custom audience targeting & Meta Pixel tracking',
-      'Weekly performance monitoring, creative refreshes & optimization',
-      'Transparent reporting focused on ROAS, CAC, and lead volume',
+      'Meta Ads account audit, campaign setup & tracking verification',
+      'Target audience research, lookalikes, and interest clustering',
+      'High-converting static & motion ad creative production',
+      'Conversion API (CAPI), Meta Pixel & Google Analytics setup',
+      'Continuous bid optimization, A/B testing & transparent reporting',
     ],
     tiers: [
       {
-        id: 'ads-pack',
-        name: 'Creative Pack',
-        tagline: 'High-converting asset bundle ready for your campaigns.',
-        priceINR: 15000,
-        priceUSD: 400,
-        period: 'one-time',
-        timeline: '7 days',
+        id: 'ads-launch',
+        name: 'Ad Launch',
+        tagline: 'Campaign setup, tracking checks and launch (One-time project)',
+        priceINR: 8000,
+        priceUSD: 100,
+        period: 'one-time project',
+        timeline: '3 to 5 days',
         features: [
-          '8 static performance ad creatives',
-          '2 short video ad creatives',
-          'Formats included: Feed (1:1), Story (9:16), and Reel',
-          'Tested copy hooks & conversion headlines',
-          'Full source Figma files included',
+          'Meta Ads account & Business Manager audit/setup',
+          'Pixel, CAPI & conversion event tracking verification',
+          'Audience research & 2 campaign funnel structures',
+          'Setup of initial 4 ad creatives with copy variations',
+          'Pre-flight quality assurance & launch execution',
+          'Client ad spend paid directly to Meta',
         ],
       },
       {
-        id: 'ads-management',
-        name: 'Management',
-        tagline: 'Full campaign setup with monthly creative refreshes.',
-        priceINR: 20000,
-        priceUSD: 550,
+        id: 'ads-leadgen',
+        name: 'Lead Generation',
+        tagline: 'Campaign management, optimisation and reporting',
+        priceINR: 15000,
+        priceUSD: 180,
         period: 'per month',
-        timeline: 'Ongoing monthly',
+        timeline: 'Monthly ongoing',
         isPopular: true,
-        inheritsText: 'Everything in Creative Pack, plus:',
+        inheritsText: 'Everything in Ad Launch, plus:',
         features: [
-          'Complete ad account & Meta Pixel setup',
-          '4 fresh new performance creatives each month',
-          'Weekly budget & audience optimization',
-          'Transparent monthly performance reports',
-          '3-month minimum partnership',
+          'Full-month active Meta Ads management & bid scaling',
+          'Continuous A/B testing of hooks, copy & audiences',
+          '4 fresh high-converting ad creatives refreshed monthly',
+          'Weekly lead quality reviews & negative audience pruning',
+          'Bi-weekly performance report & ROAS insights',
+          'Client ad spend paid directly to Meta',
         ],
       },
       {
         id: 'ads-growth',
-        name: 'Growth',
-        tagline: 'Aggressive scaling with 12 creatives/mo & CRO support.',
-        priceINR: 45000,
-        priceUSD: 1200,
+        name: 'Growth Performance',
+        tagline: 'Multiple campaigns, creative testing and deeper performance reporting',
+        priceINR: 30000,
+        priceUSD: 360,
         period: 'per month',
-        timeline: 'Ongoing monthly',
-        inheritsText: 'Everything in Management, plus:',
+        timeline: 'Monthly ongoing',
+        inheritsText: 'Everything in Lead Generation, plus:',
         features: [
-          '12 fresh high-converting creatives per month',
-          'Multiple simultaneous campaign architectures',
-          'Continuous landing page CRO guidance & advice',
-          'Weekly strategy call with senior lead',
-          '3-month minimum partnership',
+          'Multi-tier funnel architecture (TOF, MOF, Retargeting)',
+          'Aggressive creative testing (up to 8 ad creative variants/mo)',
+          'Landing page conversion rate optimization (CRO) reviews',
+          'Multi-channel attribution guidance',
+          'Bi-weekly 1-on-1 strategy calls with lead media buyer',
+          'Client ad spend paid directly to Meta',
         ],
       },
     ],
   },
 ];
 
+// Alias SERVICES_DATA to the 4 core pillars for the new architecture
+export const SERVICES_DATA: ServicePackage[] = FOUR_PILLARS_SERVICES;
+
+// Helper to look up services by either new pillar ID or legacy slug
+export function getServiceById(id: string): ServicePackage | undefined {
+  const match = SERVICES_DATA.find((s) => s.id === id || s.slug === id);
+  if (match) return match;
+  // Fallbacks for legacy links/queries
+  if (['website', 'landing', 'ui-ux', 'dashboard'].includes(id)) return SERVICES_DATA[0];
+  if (['graphics', 'brand'].includes(id)) return SERVICES_DATA[1];
+  if (['video'].includes(id)) return SERVICES_DATA[2];
+  if (['meta-ads'].includes(id)) return SERVICES_DATA[3];
+  return undefined;
+}
+
+// =========================================================================
+// 2. THE THREE MONTHLY RETAINER SERVICES (RECURRING SUBSCRIPTIONS)
+// =========================================================================
+
+export const MONTHLY_RETAINERS: RetainerPlan[] = [
+  {
+    id: 'social-media-retainer',
+    num: '01',
+    name: 'Social Media Creative Retainer',
+    shortName: 'Social Retainer',
+    tagline: 'For brands that need consistent visual content',
+    idealFor: 'D2C brands, local businesses, institutions, and founders wanting daily brand consistency.',
+    priceRangeINR: '₹12,000 – ₹25,000 / month',
+    priceRangeUSD: '$150 – $300 / month',
+    startingPriceINR: 12000,
+    startingPriceUSD: 150,
+    includes: [
+      '12 to 20 static posts and carousels per month (plan-defined)',
+      'Monthly strategic creative calendar aligned with your promos',
+      'Branded promotional and product announcement designs',
+      'Platform-specific adaptations (Instagram, LinkedIn, X, Facebook)',
+      'One monthly review and performance-informed creative improvements',
+    ],
+    terms: 'Billed monthly in advance • 3-month initial commitment',
+    limits: [
+      'Excludes daily community management & comments',
+      'Excludes on-site photography shoots',
+      'Up to 2 revision rounds per creative piece',
+    ],
+  },
+  {
+    id: 'reels-video-retainer',
+    num: '02',
+    name: 'Reels & Video Retainer',
+    shortName: 'Reels Retainer',
+    tagline: 'For creators, founders and businesses publishing regularly',
+    idealFor: 'Content creators, coaches, personal brands, and businesses producing regular video.',
+    priceRangeINR: '₹10,000 – ₹30,000 / month',
+    priceRangeUSD: '$120 – $360 / month',
+    startingPriceINR: 10000,
+    startingPriceUSD: 120,
+    includes: [
+      '8 to 16 short-form video edits per month (plan-defined)',
+      'Dynamic captions, transitions, pacing cuts, and kinetic sound design',
+      'Branded styling, intro hook graphics, and lower thirds',
+      'Vertical 9:16 exports optimized for Reels, Shorts, and TikTok',
+      '1 to 2 revision rounds per video defined by plan tier',
+    ],
+    terms: 'Billed monthly in advance • 3-month initial commitment',
+    limits: [
+      'Client supplies raw video footage & audio',
+      'Scripting & filming available as custom add-ons',
+      'Advanced 3D animation quoted separately',
+    ],
+  },
+  {
+    id: 'ads-management-retainer',
+    num: '03',
+    name: 'Ads Management Retainer',
+    shortName: 'Ads Retainer',
+    tagline: 'For businesses that need ongoing paid acquisition',
+    idealFor: 'Startups, e-commerce, real estate, and local businesses running active acquisition campaigns.',
+    priceRangeINR: '₹15,000 – ₹35,000+ / month',
+    priceRangeUSD: '$180 – $425+ / month',
+    startingPriceINR: 15000,
+    startingPriceUSD: 180,
+    includes: [
+      'End-to-end Meta Ads campaign management & daily optimization',
+      'Continuous audience testing, bid scaling, and negative keyword pruning',
+      'Defined monthly ad creative allowance (4–8 refreshed ad creatives/mo)',
+      'Pixel, CAPI, and conversion event tracking verification',
+      'Transparent monthly performance report, ROAS audit & strategy call',
+    ],
+    terms: 'Billed monthly in advance • 3-month initial commitment',
+    limits: [
+      'Advertising spend paid directly to Meta by client',
+      'Complex multi-brand or enterprise funnels quoted custom',
+      'No unrealistic viral or lead volume guarantees',
+    ],
+  },
+];
+
+// =========================================================================
+// 3. GROWTH PARTNER RETAINER BUNDLES (COMBINED MONTHLY PLANS)
+// =========================================================================
+
+export const GROWTH_PARTNER_BUNDLES: GrowthBundle[] = [
+  {
+    id: 'creative-partner',
+    name: 'Creative Partner',
+    tagline: 'Social creatives + a focused batch of video edits',
+    monthlyFeeINR: 20000,
+    monthlyFeeUSD: 240,
+    feeDisplayINR: '₹20,000 / month',
+    feeDisplayUSD: '$240 / month',
+    bestFor: 'Founders & personal brands needing social consistency and regular reel output.',
+    deliverables: [
+      '12 branded social media posts & carousels per month',
+      '4 short-form dynamic reel edits with kinetic captions',
+      'Monthly strategic creative calendar',
+      '1 monthly review & design iteration sprint',
+      'Dedicated creative Slack channel',
+    ],
+    terms: 'Billed monthly in advance • 3-month minimum commitment',
+  },
+  {
+    id: 'growth-partner',
+    name: 'Growth Partner',
+    tagline: 'Social creatives + reels + Meta Ads management',
+    monthlyFeeINR: 35000,
+    monthlyFeeUSD: 425,
+    feeDisplayINR: '₹35,000 / month',
+    feeDisplayUSD: '$425 / month',
+    bestFor: 'Growing businesses wanting both content production and active customer acquisition.',
+    isPopular: true,
+    deliverables: [
+      '16 branded social media posts & carousels per month',
+      '8 dynamic short-form video edits with motion graphics',
+      'Full-funnel Meta Ads campaign management & scaling',
+      '4 bespoke ad creatives refreshed each month',
+      'Bi-weekly performance reporting & ROAS strategy call',
+    ],
+    terms: 'Billed monthly in advance • Ad spend paid directly to Meta • 3-month commitment',
+  },
+  {
+    id: 'full-service-partner',
+    name: 'Full-Service Partner',
+    tagline: 'Higher content volume, video production and advertising management',
+    monthlyFeeINR: 50000,
+    monthlyFeeUSD: 600,
+    feeDisplayINR: '₹50,000 – ₹65,000+ / month',
+    feeDisplayUSD: '$600 – $800+ / month',
+    bestFor: 'Scaleups & active brands needing a complete external creative + performance team.',
+    deliverables: [
+      '24+ branded social creatives, carousels & banners per month',
+      '16 dynamic short-form video edits + custom motion graphics',
+      'Multi-campaign Meta Ads management & aggressive A/B testing',
+      'Continuous landing page conversion rate optimization (CRO) reviews',
+      'Weekly 1-on-1 strategy call with agency founder & priority turnaround',
+    ],
+    terms: 'Billed monthly in advance • Ad spend paid directly to Meta • 3-month commitment',
+  },
+];
+
+// =========================================================================
+// 4. BUNDLE: STARTUP LAUNCH KIT
+// =========================================================================
+
 export const STARTUP_LAUNCH_KIT = {
   id: 'startup-kit',
   name: 'Full-Service Brand & Growth Kit',
   subtitle: 'The complete digital foundation: branding, high-converting landing page, graphics, and Meta ads all under one roof.',
   priceINR: 75000,
-  priceUSD: 2100,
-  originalINR: 85000,
-  originalUSD: 2400,
-  savingsINR: 10000,
-  savingsUSD: 300,
+  priceUSD: 900,
+  originalINR: 95000,
+  originalUSD: 1150,
+  savingsINR: 20000,
+  savingsUSD: 250,
   timeline: '3 to 4 weeks',
   includes: [
     {
-      title: 'Logo & Brand Identity Standard',
-      desc: 'Logo suite, full brand guidelines, 10 social templates, and stationery.',
+      title: 'Brand Identity Standard',
+      desc: 'Complete logo suite, full brand guidelines, 6 social templates, and typography rules.',
       valueINR: 30000,
-      valueUSD: 900,
+      valueUSD: 360,
     },
     {
-      title: 'Landing Page Standard',
-      desc: 'Custom design, conversion copywriting structure, micro-animations, and tracking.',
-      valueINR: 40000,
-      valueUSD: 1100,
+      title: 'High-Converting Web Experience',
+      desc: 'Custom 5-page responsive website or flagship landing page with CMS and analytics.',
+      valueINR: 50000,
+      valueUSD: 600,
     },
     {
-      title: 'Meta Ads Creative Pack',
-      desc: '8 static ads + 2 video ads across Feed, Story, and Reel formats.',
+      title: 'Meta Ads & Content Launchpack',
+      desc: '4 ad creatives + 2 video edits + campaign architecture ready for paid acquisition.',
       valueINR: 15000,
-      valueUSD: 400,
+      valueUSD: 190,
     },
   ],
 };
@@ -813,7 +746,7 @@ export const ADD_ONS_DATA: AddOn[] = [
     id: 'extra-page',
     name: 'Extra Web Page',
     priceINR: 4000,
-    priceUSD: 100,
+    priceUSD: 50,
     unit: 'per page',
     description: 'Custom designed and developed responsive page added to any web package.',
   },
@@ -821,15 +754,15 @@ export const ADD_ONS_DATA: AddOn[] = [
     id: 'extra-revision',
     name: 'Extra Revision Round',
     priceINR: 2000,
-    priceUSD: 50,
+    priceUSD: 25,
     unit: 'per round',
     description: 'One additional structured round of design feedback and polish.',
   },
   {
     id: 'reel-editing',
     name: 'Single Reel / Video Edit',
-    priceINR: 1200,
-    priceUSD: 35,
+    priceINR: 1500,
+    priceUSD: 20,
     unit: 'per video',
     description: 'Dynamic kinetic captions, sound design, and viral pacing for short-form video.',
   },
@@ -837,17 +770,9 @@ export const ADD_ONS_DATA: AddOn[] = [
     id: 'pitch-deck-slide',
     name: 'Extra Pitch Deck Slides',
     priceINR: 1500,
-    priceUSD: 40,
+    priceUSD: 20,
     unit: 'per slide',
     description: 'Bespoke investor-ready presentation design in Figma or PowerPoint.',
-  },
-  {
-    id: 'social-management',
-    name: 'Social Media Management',
-    priceINR: 15000,
-    priceUSD: 420,
-    unit: 'per month',
-    description: '12 branded posts/carousels per month, copywriting, and scheduled publishing.',
   },
   {
     id: 'rush-delivery',
@@ -860,43 +785,39 @@ export const ADD_ONS_DATA: AddOn[] = [
 ];
 
 export const TERMS_CONDITIONS = [
-  '50% advance to start, 50% before final files.',
-  'Monthly work billed in advance, 3-month minimum.',
-  '2 revision rounds included with each deliverable.',
-  'Timelines start after the brief and advance are received.',
-  'Source files and usage rights transfer on final payment.',
-  'GST added where applicable.',
-  'Quote valid for 14 days from presentation.',
+  '50% advance deposit to start project sprints, 50% upon completion before source file delivery.',
+  'Monthly retainers billed in advance on the 1st of each month with a 3-month initial commitment.',
+  '2 structured revision rounds included with each deliverable.',
+  'Timelines start after completed onboarding brief and advance deposit are received.',
+  'Full source files, Figma design tokens, and intellectual property transfer on final payment.',
+  'Client pays advertising spend directly to Meta; ad budgets are not included in management fees.',
+  'Quotes are valid for 14 days from presentation.',
 ];
 
 export const FAQ_DATA: FAQItem[] = [
   {
-    q: 'Why choose PixelMutiny DigiMedia over multiple freelancers?',
-    a: 'We bring design, development, content, and performance marketing together under one roof. You get cohesive branding, clean code, and high-converting marketing without juggling five freelancers, managing conflicting schedules, or dealing with handoff blame.',
+    q: 'How does PixelMutiny’s four-pillar structure work?',
+    a: 'We organize our agency around four natural areas of growth: Digital Experiences (websites & apps), Brand Identity & Design (logos & systems), Content & Creative Production (reels & video), and Performance Marketing (Meta Ads). You can hire us for a one-time project sprint or on a recurring monthly retainer.',
   },
   {
-    q: 'How do payments and milestones work?',
-    a: 'A 50% advance deposit is required to lock in your sprint slot and kick off project execution. The remaining 50% is due upon completion before final source files and production assets are transferred. Monthly retainers and campaign management are billed in advance on the 1st of each month.',
+    q: 'What is the difference between one-time projects and monthly retainers?',
+    a: 'One-time projects build something new—such as a 10-page website, a new brand identity, or an initial ad campaign setup—with a fixed scope and delivery milestone. Monthly retainers help you keep growing with predictable creative output (12–20 posts, 8–16 reels, or active Meta Ads scaling) billed monthly.',
   },
   {
-    q: 'How many revisions are included?',
-    a: 'Every package includes 2 full rounds of structured revisions. We gather feedback collaboratively on interactive Figma prototypes or staging sites, ensuring alignment without chaotic back-and-forth. Additional revision rounds can be added anytime at ₹2,000 / $50 per round.',
-  },
-  {
-    q: 'When does the project timeline officially begin?',
-    a: 'Timelines officially start on Day 1 after we receive both your 50% advance deposit and your completed onboarding brief along with any necessary brand assets or copy inputs.',
+    q: 'Why do you have defined deliverable caps instead of "unlimited" work?',
+    a: 'Agencies offering "unlimited" designs inevitably compromise on turnaround time, quality, or assign your work to entry-level temps. PixelMutiny delivers bespoke, senior-crafted work with explicit deliverable counts, clear review rounds, and fast 48-hour turnarounds.',
   },
   {
     q: 'Is ad spend included in the Meta Ads pricing?',
-    a: 'No. Ad spend is paid directly by you to Meta via your own connected payment method inside Meta Ads Manager. Our pricing covers creative production, strategic setup, testing, continuous optimization, and reporting.',
+    a: 'No. Ad spend is paid directly by you to Meta via your connected billing method in Meta Ads Manager. Our pricing covers expert campaign architecture, audience targeting, ongoing optimization, reporting, and high-converting creative refreshes.',
   },
   {
-    q: 'Do I own the source files and intellectual property?',
+    q: 'How do payments, commitments, and milestone schedules work?',
+    a: 'For one-time project packages, a 50% deposit locks in your sprint, with the remaining 50% due upon final approval before asset handover. For monthly retainers and Growth Partner bundles, billing occurs monthly in advance with a recommended 3-month commitment to allow marketing campaigns to mature.',
+  },
+  {
+    q: 'Do I own the source files, intellectual property, and code?',
     a: 'Yes, 100%. Upon receipt of final payment, full intellectual property, commercial usage rights, editable Figma source files, code repositories, vector graphics, and production exports belong entirely to you.',
-  },
-  {
-    q: 'What is your refund policy?',
-    a: 'Because sprints require reserving dedicated senior creative capacity in advance, deposits are non-refundable once sprint work begins. If you need to postpone before kickoff, we are happy to pause or reschedule your slot with 7 days advance notice.',
   },
 ];
 
@@ -915,6 +836,20 @@ export const BUDGET_OPTIONS = {
     { label: '$4,000+', value: '4000-plus' },
     { label: 'Not sure yet', value: 'not-sure' },
   ],
+  PK_USD: [
+    { label: 'Under $100 Million', value: 'under-100m' },
+    { label: '$100M to $150M', value: '100m-150m' },
+    { label: '$150M to $250M', value: '150m-250m' },
+    { label: '$250 Million+', value: '250m-plus' },
+    { label: 'Not sure yet', value: 'not-sure' },
+  ],
+  PKR: [
+    { label: 'Under $100 Million', value: 'under-100m' },
+    { label: '$100M to $150M', value: '100m-150m' },
+    { label: '$150M to $250M', value: '150m-250m' },
+    { label: '$250 Million+', value: '250m-plus' },
+    { label: 'Not sure yet', value: 'not-sure' },
+  ],
 };
 
 export const TIMELINE_OPTIONS = [
@@ -924,6 +859,40 @@ export const TIMELINE_OPTIONS = [
   { label: 'Ongoing monthly', value: 'monthly' },
   { label: 'Flexible', value: 'flexible' },
 ];
+
+export function getTierPrice(tier: PriceTier, currency: Currency): number {
+  if (currency === 'PK_USD' || currency === 'PKR') {
+    if (typeof tier.pricePKR === 'number') return tier.pricePKR;
+    // For Pakistan visitors: strictly in millions of dollars (>= $100M)
+    if (tier.priceUSD <= 150) return 105000000;
+    if (tier.priceUSD <= 500) return 180000000;
+    return 250000000;
+  }
+  if (currency === 'INR') {
+    return tier.priceINR;
+  }
+  return tier.priceUSD;
+}
+
+export function getAddonPrice(addon: AddOn, currency: Currency): number {
+  if (currency === 'PK_USD' || currency === 'PKR') {
+    return (addon.priceUSD || 100) * 100000;
+  }
+  if (currency === 'INR') {
+    return addon.priceINR;
+  }
+  return addon.priceUSD;
+}
+
+export function getLaunchKitPrice(currency: Currency): { price: number; savings: number } {
+  if (currency === 'PK_USD' || currency === 'PKR') {
+    return { price: 150000000, savings: 35000000 };
+  }
+  if (currency === 'INR') {
+    return { price: STARTUP_LAUNCH_KIT.priceINR, savings: STARTUP_LAUNCH_KIT.savingsINR };
+  }
+  return { price: STARTUP_LAUNCH_KIT.priceUSD, savings: STARTUP_LAUNCH_KIT.savingsUSD };
+}
 
 export function formatPrice(amount: number, currency: Currency): string {
   if (currency === 'INR') {

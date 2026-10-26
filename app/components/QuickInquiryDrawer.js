@@ -155,11 +155,18 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                         onClick={() => toggleDiscipline(disc)}
                         className={`text-xs px-4 py-2.5 rounded-full border transition-all ${
                           active
-                            ? 'bg-[#0859D4] text-white border-[#0859D4] font-semibold shadow-sm'
-                            : 'bg-[#F5F5F7] border-[rgba(18,18,19,0.08)] text-[#424242] hover:border-[#0859D4]'
+                            ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] font-semibold shadow-sm'
+                            : 'bg-[#F5F6F8] border-[#E4E6EB] text-[#5B6275] hover:border-[#1F3FFF]'
                         }`}
                       >
-                        {active ? `✓ ${disc}` : disc}
+                        {active ? (
+                          <span className="inline-flex items-center gap-1.5">
+                            <Check className="w-3.5 h-3.5" />
+                            <span>{disc}</span>
+                          </span>
+                        ) : (
+                          disc
+                        )}
                       </button>
                     );
                   })}
@@ -168,7 +175,7 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
 
               {/* Step 2: Budget */}
               <div>
-                <label className="block text-xs text-[#424242] mb-3 font-semibold uppercase tracking-wider">
+                <label className="block text-xs text-[#5B6275] mb-3 font-semibold uppercase tracking-wider">
                   STEP 02 // ESTIMATED INVESTMENT ({currency})
                 </label>
                 <div className="grid grid-cols-2 gap-2.5">
@@ -184,8 +191,8 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                         }}
                         className={`text-xs p-3 rounded-xl border text-left transition-all ${
                           active
-                            ? 'bg-[#0859D4] border-[#0859D4] text-white font-semibold shadow-sm'
-                            : 'bg-white border-[rgba(18,18,19,0.1)] text-[#424242] hover:border-[#0859D4]'
+                            ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white font-semibold shadow-sm'
+                            : 'bg-white border-[#E4E6EB] text-[#5B6275] hover:border-[#1F3FFF]'
                         }`}
                       >
                         <span>{active ? '● ' : '○ '}</span>
@@ -198,7 +205,7 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
 
               {/* Step 3: Timeline */}
               <div>
-                <label className="block text-xs text-[#424242] mb-3 font-semibold uppercase tracking-wider">
+                <label className="block text-xs text-[#5B6275] mb-3 font-semibold uppercase tracking-wider">
                   STEP 03 // TARGET TIMELINE
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -215,8 +222,8 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                           }}
                           className={`text-xs p-2.5 rounded-xl border text-center transition-all ${
                             active
-                              ? 'bg-[#0859D4] border-[#0859D4] text-white font-semibold shadow-sm'
-                              : 'bg-white border-[rgba(18,18,19,0.1)] text-[#424242] hover:border-[#0859D4]'
+                              ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white font-semibold shadow-sm'
+                              : 'bg-white border-[#E4E6EB] text-[#5B6275] hover:border-[#1F3FFF]'
                           }`}
                         >
                           {time}
@@ -228,9 +235,9 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
               </div>
 
               {/* Step 4: Contact details */}
-              <div className="space-y-4 pt-4 border-t border-[rgba(18,18,19,0.08)]">
+              <div className="space-y-4 pt-4 border-t border-[#E4E6EB]">
                 <div>
-                  <label className="block text-xs text-[#1D1D1F] mb-1 font-semibold uppercase tracking-wider">
+                  <label className="block text-xs text-[#0A0F1F] mb-1 font-semibold uppercase tracking-wider">
                     Your Name *
                   </label>
                   <input
@@ -239,12 +246,12 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.1)] rounded-xl p-3 text-sm text-[#1D1D1F] focus:outline-none focus:border-[#0859D4] shadow-sm"
+                    className="w-full bg-[#F5F6F8] border border-[#E4E6EB] rounded-xl p-3 text-sm text-[#0A0F1F] focus:outline-none focus:border-[#1F3FFF] shadow-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#1D1D1F] mb-1 font-semibold uppercase tracking-wider">
+                  <label className="block text-xs text-[#0A0F1F] mb-1 font-semibold uppercase tracking-wider">
                     Work Email *
                   </label>
                   <input
@@ -253,12 +260,12 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                     placeholder="john@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.1)] rounded-xl p-3 text-sm text-[#1D1D1F] focus:outline-none focus:border-[#0859D4] shadow-sm"
+                    className="w-full bg-[#F5F6F8] border border-[#E4E6EB] rounded-xl p-3 text-sm text-[#0A0F1F] focus:outline-none focus:border-[#1F3FFF] shadow-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#424242] mb-1 font-semibold uppercase tracking-wider">
+                  <label className="block text-xs text-[#5B6275] mb-1 font-semibold uppercase tracking-wider">
                     Company or Website URL
                   </label>
                   <input
@@ -266,12 +273,12 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                     placeholder="https://company.com"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.1)] rounded-xl p-3 text-sm text-[#1D1D1F] focus:outline-none focus:border-[#0859D4] shadow-sm"
+                    className="w-full bg-[#F5F6F8] border border-[#E4E6EB] rounded-xl p-3 text-sm text-[#0A0F1F] focus:outline-none focus:border-[#1F3FFF] shadow-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#1D1D1F] mb-1 font-semibold uppercase tracking-wider">
+                  <label className="block text-xs text-[#0A0F1F] mb-1 font-semibold uppercase tracking-wider">
                     Brief Notes
                   </label>
                   <textarea
@@ -279,7 +286,7 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                     placeholder="Tell us what you are building and when you want to launch..."
                     value={formData.brief}
                     onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
-                    className="w-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.1)] rounded-xl p-3 text-sm text-[#1D1D1F] focus:outline-none focus:border-[#0859D4] shadow-sm"
+                    className="w-full bg-[#F5F6F8] border border-[#E4E6EB] rounded-xl p-3 text-sm text-[#0A0F1F] focus:outline-none focus:border-[#1F3FFF] shadow-sm"
                   />
                 </div>
 
@@ -290,7 +297,7 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-full bg-[#0859D4] text-white hover:bg-[#1A59F9] font-medium text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
+                  className="w-full py-3.5 rounded-full bg-[#1F3FFF] text-white hover:bg-[#1632D6] font-medium text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
@@ -308,13 +315,13 @@ export default function QuickInquiryDrawer({ isOpen, onClose }) {
             </form>
           ) : (
             <div className="py-20 text-center space-y-6">
-              <div className="w-16 h-16 rounded-full bg-[#0859D4] text-white flex items-center justify-center mx-auto shadow-xl">
+              <div className="w-16 h-16 rounded-full bg-[#1F3FFF] text-white flex items-center justify-center mx-auto shadow-xl">
                 <Check className="w-8 h-8" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-[#1D1D1F]">
+              <h3 className="font-display text-2xl font-bold text-[#0A0F1F]">
                 Inquiry Received
               </h3>
-              <p className="text-sm text-[#424242] leading-relaxed max-w-sm mx-auto">
+              <p className="text-sm text-[#5B6275] leading-relaxed max-w-sm mx-auto">
                 Thank you, {formData.name}. We have received your brief and will review your project requirements within 24 hours.
               </p>
               <button

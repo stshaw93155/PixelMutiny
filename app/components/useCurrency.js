@@ -1,15 +1,16 @@
 'use client';
 
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
 
 export function detectCountryCurrency() {
   if (typeof window === 'undefined') return 'INR';
   try {
-    const saved = localStorage.getItem('pixelmutiny_currency');
-    if (saved === 'INR' || saved === 'USD') return saved;
-
-    // Detect if visitor is in India via timeZone, locale, or browser languages
     const timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+    const isPakistaniTz =
+      timeZone.includes('karachi') ||
+      timeZone.includes('pakistan') ||
+      timeZone === 'asia/karachi';
+
     const isIndianTz =
       timeZone.includes('calcutta') ||
       timeZone.includes('kolkata') ||
@@ -19,6 +20,13 @@ export function detectCountryCurrency() {
 
     const lang = (navigator.language || '').toLowerCase();
     const languages = (navigator.languages || []).map((l) => l.toLowerCase());
+
+    const isPakistaniLocale =
+      lang === 'ur' ||
+      lang.startsWith('ur-') ||
+      lang.endsWith('-pk') ||
+      languages.some((l) => l.endsWith('-pk') || l.startsWith('ur-') || l === 'ur');
+
     const isIndianLocale =
       lang === 'en-in' ||
       lang === 'hi' ||
@@ -26,7 +34,16 @@ export function detectCountryCurrency() {
       lang.endsWith('-in') ||
       languages.some((l) => l === 'en-in' || l.endsWith('-in') || l.startsWith('hi-'));
 
-    const detected = (isIndianTz || isIndianLocale) ? 'INR' : 'USD';
+    // Timezone offset check: India is UTC+5:30 (-330 mins), Pakistan is UTC+5:00 (-300 mins)
+    const tzOffset = new Date().getTimezoneOffset();
+
+    let detected = 'USD';
+    if (isPakistaniTz || isPakistaniLocale || (tzOffset === -300 && timeZone.includes('karachi'))) {
+      detected = 'PK_USD';
+    } else if (isIndianTz || isIndianLocale || tzOffset === -330) {
+      detected = 'INR';
+    }
+
     try {
       localStorage.setItem('pixelmutiny_currency', detected);
     } catch {}
@@ -65,13 +82,44 @@ export function useCurrency() {
     getServerCurrencySnapshot
   );
 
+  // Background IP geo lookup to automatically detect location
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    let isMounted = true;
+    fetch('/api/geo')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!isMounted || !data || !data.currency) return;
+        const currentSaved = localStorage.getItem('pixelmutiny_currency');
+        if (currentSaved !== data.currency) {
+          try {
+            localStorage.setItem('pixelmutiny_currency', data.currency);
+            window.dispatchEvent(new Event('pixelmutiny_currency_change'));
+          } catch {}
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const setCurrency = useCallback((newCurrency) => {
-    if (newCurrency !== 'INR' && newCurrency !== 'USD') return;
+    if (!['INR', 'USD', 'PK_USD', 'PKR'].includes(newCurrency)) return;
     try {
       localStorage.setItem('pixelmutiny_currency', newCurrency);
       window.dispatchEvent(new Event('pixelmutiny_currency_change'));
     } catch {}
   }, []);
 
-  return { currency, setCurrency, isLoaded: true };
+  return {
+    currency,
+    setCurrency,
+    isUSD: currency === 'USD' || currency === 'PK_USD' || currency === 'PKR',
+    isPakistan: currency === 'PK_USD' || currency === 'PKR',
+    isINR: currency === 'INR',
+    isLoaded: true,
+  };
 }

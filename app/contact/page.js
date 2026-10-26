@@ -8,11 +8,17 @@ import { useReducedMotion } from '@/lib/motion';
 import Marquee from '../components/Marquee';
 import {
   SERVICES_DATA,
+  MONTHLY_RETAINERS,
+  GROWTH_PARTNER_BUNDLES,
   STARTUP_LAUNCH_KIT,
   ADD_ONS_DATA,
   BUDGET_OPTIONS,
   TIMELINE_OPTIONS,
   formatPrice,
+  getTierPrice,
+  getAddonPrice,
+  getLaunchKitPrice,
+  getServiceById,
 } from '../../data/pricing';
 import {
   Copy,
@@ -28,6 +34,7 @@ import {
   AlertCircle,
   Loader2,
   Zap,
+  Lock,
   Sparkles,
   MapPin,
   CheckCircle2,
@@ -47,10 +54,12 @@ function ContactFormContent() {
   const [selectedServices, setSelectedServices] = useState(() => {
     if (serviceParam === 'startup-kit') return ['Startup Launch Kit'];
     if (serviceParam) {
-      const match = SERVICES_DATA.find(
-        (s) => s.id === serviceParam || s.slug === serviceParam
-      );
+      const match = getServiceById(serviceParam);
       if (match) return [match.name];
+      const retainerMatch = MONTHLY_RETAINERS.find((r) => r.id === serviceParam || r.slug === serviceParam);
+      if (retainerMatch) return [retainerMatch.name];
+      const bundleMatch = GROWTH_PARTNER_BUNDLES.find((b) => b.id === serviceParam);
+      if (bundleMatch) return [bundleMatch.name];
     }
     return [];
   });
@@ -70,12 +79,17 @@ function ContactFormContent() {
       for (const serv of SERVICES_DATA) {
         const t = serv.tiers.find((x) => x.id === tierParam);
         if (t) {
-          const p = currency === 'INR' ? t.priceINR : t.priceUSD;
+          const p = getTierPrice(t, currency);
           if (currency === 'INR') {
             if (p < 25000) return 'under-25k';
             if (p <= 60000) return '25k-60k';
             if (p <= 150000) return '60k-150k';
             return '150k-plus';
+          } else if (currency === 'PK_USD' || currency === 'PKR') {
+            if (p < 100000000) return 'under-100m';
+            if (p <= 150000000) return '100m-150m';
+            if (p <= 250000000) return '150m-250m';
+            return '250m-plus';
           } else {
             if (p < 700) return 'under-700';
             if (p <= 1700) return '700-1700';
@@ -187,7 +201,7 @@ function ContactFormContent() {
 
     // Check if Startup Launch Kit selected
     if (selectedServices.includes('Startup Launch Kit')) {
-      minTotal += currency === 'INR' ? STARTUP_LAUNCH_KIT.priceINR : STARTUP_LAUNCH_KIT.priceUSD;
+      minTotal += getLaunchKitPrice(currency).price;
       timelines.push('3 to 4 weeks');
     }
 
@@ -202,11 +216,22 @@ function ContactFormContent() {
           ? servObj.tiers.find((t) => t.id === selectedTier)
           : null;
         if (matchedTier) {
-          minTotal += currency === 'INR' ? matchedTier.priceINR : matchedTier.priceUSD;
+          minTotal += getTierPrice(matchedTier, currency);
           timelines.push(matchedTier.timeline);
         } else {
-          minTotal += currency === 'INR' ? servObj.tiers[0].priceINR : servObj.tiers[0].priceUSD;
+          minTotal += getTierPrice(servObj.tiers[0], currency);
           timelines.push(servObj.tiers[0].timeline);
+        }
+      } else {
+        const retObj = MONTHLY_RETAINERS.find((r) => r.name === serviceName);
+        if (retObj) {
+          minTotal += currency === 'INR' ? retObj.startingPriceINR : retObj.startingPriceUSD;
+          timelines.push('Monthly Retainer');
+        }
+        const bunObj = GROWTH_PARTNER_BUNDLES.find((b) => b.name === serviceName);
+        if (bunObj) {
+          minTotal += currency === 'INR' ? bunObj.monthlyFeeINR : bunObj.monthlyFeeUSD;
+          timelines.push('Monthly Partner');
         }
       }
     }
@@ -215,7 +240,7 @@ function ContactFormContent() {
     for (const addName of selectedAddons) {
       const addObj = ADD_ONS_DATA.find((a) => a.name === addName);
       if (addObj && addObj.id !== 'rush-delivery') {
-        minTotal += currency === 'INR' ? addObj.priceINR : addObj.priceUSD;
+        minTotal += getAddonPrice(addObj, currency);
       }
     }
 
@@ -312,18 +337,18 @@ function ContactFormContent() {
   };
 
   return (
-    <div className="w-full bg-white text-[#1D1D1F] min-h-screen selection:bg-[#0859D4] selection:text-white">
+    <div className="w-full bg-white text-[#0A0F1F] min-h-screen selection:bg-[#1F3FFF] selection:text-white">
       {/* Top Telemetry Line */}
-      <div className="w-full px-4 sm:px-8 md:px-12 pt-28 pb-3 border-b border-[rgba(18,18,19,0.08)] flex flex-wrap items-center justify-between text-xs text-[#6B7280] bg-[#F5F5F7]">
+      <div className="w-full px-4 sm:px-8 md:px-12 pt-28 pb-3 border-b border-[#E4E6EB] flex flex-wrap items-center justify-between text-xs text-[#5B6275] bg-[#F5F6F8]">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
-          <span className="text-[#1D1D1F] font-bold uppercase tracking-wider">
+          <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
+          <span className="text-[#0A0F1F] font-bold uppercase tracking-wider">
             PIXELMUTINY DIRECT INTAKE
           </span>
-          <span className="text-[rgba(18,18,19,0.2)]">|</span>
+          <span className="text-[#E4E6EB]">|</span>
           <span className="uppercase tracking-wider">NEW DELHI, INDIA</span>
         </div>
-        <div className="text-[#0859D4] font-bold flex items-center gap-1.5 uppercase tracking-wider">
+        <div className="text-[#1F3FFF] font-bold flex items-center gap-1.5 uppercase tracking-wider">
           <span>RESPONSE TARGET: WITHIN 24 HOURS</span>
         </div>
       </div>
@@ -335,7 +360,7 @@ function ContactFormContent() {
             ========================================================================= */}
         <div
           onMouseMove={handleMouseMove}
-          className="lg:col-span-5 p-6 sm:p-10 md:p-14 border-b lg:border-b-0 lg:border-r border-[rgba(18,18,19,0.08)] bg-white patron-puntos relative lg:sticky lg:top-24 h-fit space-y-8"
+          className="lg:col-span-5 p-6 sm:p-10 md:p-14 border-b lg:border-b-0 lg:border-r border-[#E4E6EB] bg-white patron-puntos relative lg:sticky lg:top-24 h-fit space-y-8"
           style={{
             '--dot-x': dotPos.x,
             '--dot-y': dotPos.y,
@@ -346,42 +371,42 @@ function ContactFormContent() {
 
           <div className="space-y-6 relative z-10">
             <div className="flex items-center gap-2 text-xs">
-              <span className="w-2 h-2 rounded-full bg-[#0859D4]" />
-              <span className="text-xs text-[#0859D4] font-bold uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
+              <span className="text-xs text-[#1F3FFF] font-bold uppercase tracking-wider">
                 01 // INITIATE PROJECT
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] border border-[rgba(18,18,19,0.08)] text-[#1D1D1F] font-semibold">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] border border-[#E4E6EB] text-[#0A0F1F] font-semibold">
                 Direct Studio Intake
               </span>
             </div>
 
             <h1
-              className="font-display font-bold tracking-tight text-[#1D1D1F] pb-1"
+              className="font-display font-bold tracking-tight text-[#0A0F1F] pb-1"
               style={{
                 fontSize: 'clamp(32px, 5vw, 60px)',
                 lineHeight: 1.12,
               }}
             >
-              <span className="dotted-baseline">Let&apos;s build a project together.</span>
+              <span className="dotted-baseline">Let&apos;s build a <span className="brand-highlight">project together.</span></span>
             </h1>
 
-            <p className="text-sm text-[#424242] leading-relaxed max-w-md font-normal">
+            <p className="text-sm text-[#5B6275] leading-relaxed max-w-md font-normal">
               Whether you need a full brand identity, high-converting landing page, custom website, or Meta performance ads, we reply with a clear scope and transparent pricing within 24 hours.
             </p>
 
             {/* Direct Contact Cards */}
             <div className="space-y-3 pt-2">
-              <span className="text-[11px] text-[#6B7280] block font-bold uppercase tracking-wider">
+              <span className="text-[11px] text-[#5B6275] block font-bold uppercase tracking-wider">
                 DIRECT INTAKE CHANNELS
               </span>
 
               {/* Email Box with Copy */}
-              <div className="p-4 rounded-2xl border border-[rgba(18,18,19,0.08)] bg-white flex items-center justify-between gap-4 shadow-sm hover:border-[#0859D4] transition-colors">
+              <div className="p-4 rounded-2xl border border-[#E4E6EB] bg-white flex items-center justify-between gap-4 shadow-sm hover:border-[#1F3FFF] transition-colors">
                 <div>
-                  <span className="text-[10px] text-[#6B7280] uppercase tracking-wider block font-semibold">DIRECT INBOX</span>
+                  <span className="text-[10px] text-[#5B6275] uppercase tracking-wider block font-semibold">DIRECT INBOX</span>
                   <a
                     href="mailto:hello@pixelmutiny.com"
-                    className="text-sm sm:text-base font-bold text-[#1D1D1F] hover:text-[#0859D4] transition-colors truncate block"
+                    className="text-sm sm:text-base font-bold text-[#0A0F1F] hover:text-[#1F3FFF] transition-colors truncate block"
                   >
                     hello@pixelmutiny.com
                   </a>
@@ -389,17 +414,17 @@ function ContactFormContent() {
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="py-1.5 px-3.5 rounded-full border border-[rgba(18,18,19,0.12)] bg-[#F5F5F7] hover:bg-white hover:border-[#0859D4] text-xs font-bold text-[#1D1D1F] flex items-center gap-1.5 flex-shrink-0 cursor-pointer transition-all shadow-sm"
+                  className="py-1.5 px-3.5 rounded-full border border-[#E4E6EB] bg-[#F5F6F8] hover:bg-white hover:border-[#1F3FFF] text-xs font-bold text-[#0A0F1F] flex items-center gap-1.5 flex-shrink-0 cursor-pointer transition-all shadow-sm"
                   data-cursor="COPY"
                 >
                   {copiedEmail ? (
-                    <div className="flex items-center gap-1.5 text-[#0859D4] font-bold">
+                    <div className="flex items-center gap-1.5 text-[#1F3FFF] font-bold">
                       <Check className="w-3.5 h-3.5" />
                       <span>COPIED!</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-1.5">
-                      <Copy className="w-3.5 h-3.5 text-[#6B7280]" />
+                      <Copy className="w-3.5 h-3.5 text-[#5B6275]" />
                       <span>COPY EMAIL</span>
                     </div>
                   )}
@@ -413,10 +438,10 @@ function ContactFormContent() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={playClick}
-                  className="p-3.5 rounded-2xl border border-[rgba(18,18,19,0.08)] bg-white hover:border-[#1BC47D] text-xs font-bold text-[#1D1D1F] flex items-center justify-center gap-2 shadow-sm transition-all group"
+                  className="p-3.5 rounded-2xl border border-[#E4E6EB] bg-white hover:border-[#12B76A] text-xs font-bold text-[#0A0F1F] flex items-center justify-center gap-2 shadow-sm transition-all group"
                   aria-label="Chat with Sumit on WhatsApp"
                 >
-                  <MessageSquare className="w-4 h-4 text-[#1BC47D] group-hover:scale-110 transition-transform" />
+                  <MessageSquare className="w-4 h-4 text-[#12B76A] group-hover:scale-110 transition-transform" />
                   <span>CHAT ON WHATSAPP</span>
                 </a>
 
@@ -425,10 +450,10 @@ function ContactFormContent() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={playClick}
-                  className="p-3.5 rounded-2xl border border-[rgba(18,18,19,0.08)] bg-white hover:border-[#0859D4] text-xs font-bold text-[#1D1D1F] flex items-center justify-center gap-2 shadow-sm transition-all group"
+                  className="p-3.5 rounded-2xl border border-[#E4E6EB] bg-white hover:border-[#1F3FFF] text-xs font-bold text-[#0A0F1F] flex items-center justify-center gap-2 shadow-sm transition-all group"
                   aria-label="Connect with Sumit on LinkedIn"
                 >
-                  <svg className="w-4 h-4 text-[#0859D4] group-hover:scale-110 transition-transform fill-current" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#1F3FFF] group-hover:scale-110 transition-transform fill-current" viewBox="0 0 24 24">
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.67 1.67 0 1 0 0-3.34 1.67 1.67 0 0 0 0 3.34M7.86 18.5V10.13H5.07V18.5h2.79z" />
                   </svg>
                   <span>CONNECT ON LINKEDIN</span>
@@ -437,53 +462,59 @@ function ContactFormContent() {
             </div>
 
             {/* NEW DELHI // STUDIO HUB CARD */}
-            <div className="p-6 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-[#F5F5F7] shadow-sm space-y-3 text-xs">
-              <div className="flex items-center justify-between pb-3 border-b border-[rgba(18,18,19,0.08)]">
+            <div className="p-6 rounded-3xl border border-[#E4E6EB] bg-[#F5F6F8] shadow-sm space-y-3 text-xs">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E4E6EB]">
                 <div>
-                  <span className="font-display font-extrabold text-sm sm:text-base text-[#1D1D1F] block tracking-tight">
+                  <span className="font-display font-extrabold text-sm sm:text-base text-[#0A0F1F] block tracking-tight">
                     NEW DELHI // STUDIO HUB
                   </span>
-                  <span className="text-[#6B7280] text-[11px] uppercase tracking-wider">
+                  <span className="text-[#5B6275] text-[11px] uppercase tracking-wider">
                     Primary Operations &amp; Design Lab
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold text-[#0859D4] block">
+                  <span className="text-xs font-bold text-[#1F3FFF] block">
                     {istTime || '10:00:00 AM'}
                   </span>
-                  <span className="text-[10px] text-[#6B7280] uppercase tracking-wider font-semibold">
+                  <span className="text-[10px] text-[#5B6275] uppercase tracking-wider font-semibold">
                     India Standard (IST)
                   </span>
                 </div>
               </div>
 
-              <div className="space-y-2 text-[#424242]">
+              <div className="space-y-2 text-[#5B6275]">
                 <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-[#0859D4] flex-shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                   <span>DLF Cyber Hub Design Lab, Phase 2, Gurugram, New Delhi NCR, 122002</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-[#0859D4] flex-shrink-0" />
+                  <Clock className="w-4 h-4 text-[#1F3FFF] flex-shrink-0" />
                   <span>Working Hours: Mon – Sat, 10:00 AM – 7:00 PM IST</span>
                 </div>
               </div>
             </div>
 
             {/* RESPONSE TIME & GUARANTEE CARD */}
-            <div className="p-5 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white shadow-sm space-y-3 text-xs">
-              <div className="flex items-center justify-between font-bold text-[#1D1D1F] uppercase tracking-wider border-b border-[rgba(18,18,19,0.08)] pb-2">
-                <span className="flex items-center gap-1.5 text-[#0859D4]">
+            <div className="p-5 rounded-3xl border border-[#E4E6EB] bg-white shadow-sm space-y-3 text-xs">
+              <div className="flex items-center justify-between font-bold text-[#0A0F1F] uppercase tracking-wider border-b border-[#E4E6EB] pb-2">
+                <span className="flex items-center gap-1.5 text-[#1F3FFF]">
                   <ShieldCheck className="w-4 h-4" />
                   <span>PIXELMUTINY COMMITMENT</span>
                 </span>
-                <span className="text-[#1BC47D]">GUARANTEED</span>
+                <span className="text-[#12B76A]">GUARANTEED</span>
               </div>
-              <div className="space-y-2 text-[#424242]">
-                <p>
-                  <strong className="text-[#1D1D1F]">⚡ Replies within 24 business hours:</strong> Every brief is analyzed directly by a senior craft lead with a transparent quote.
+              <div className="space-y-2 text-[#5B6275]">
+                <p className="flex items-start gap-2">
+                  <Zap className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
+                  <span>
+                    <strong className="text-[#0A0F1F]">Replies within 24 business hours:</strong> Every brief is analyzed directly by a senior craft lead with a transparent quote.
+                  </span>
                 </p>
-                <p>
-                  <strong className="text-[#1D1D1F]">🔒 Direct &amp; Confidential:</strong> 100% private. No spam, no marketing email blasts, no junior account manager runaround.
+                <p className="flex items-start gap-2">
+                  <Lock className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
+                  <span>
+                    <strong className="text-[#0A0F1F]">Direct &amp; Confidential:</strong> 100% private. No spam, no marketing email blasts, no junior account manager runaround.
+                  </span>
                 </p>
               </div>
             </div>
@@ -493,14 +524,14 @@ function ContactFormContent() {
         {/* =========================================================================
             RIGHT COLUMN: NUMBERED FORM STEPS + LIVE ESTIMATE SUMMARY
             ========================================================================= */}
-        <div className="lg:col-span-7 p-6 sm:p-10 md:p-14 bg-[#F5F5F7] flex flex-col justify-between">
+        <div className="lg:col-span-7 p-6 sm:p-10 md:p-14 bg-[#F5F6F8] flex flex-col justify-between">
           <div>
             {/* Form Top Header */}
-            <div className="flex items-center justify-between text-xs pb-6 border-b border-[rgba(18,18,19,0.08)]">
-              <span className="text-[#1D1D1F] font-bold tracking-wider uppercase">
+            <div className="flex items-center justify-between text-xs pb-6 border-b border-[#E4E6EB]">
+              <span className="text-[#0A0F1F] font-bold tracking-wider uppercase">
                 PROJECT INTAKE FORM
               </span>
-              <span className="text-xs font-mono font-medium text-[#6B7280]">
+              <span className="text-xs font-mono font-medium text-[#5B6275]">
                 Auto-Detected: {currency === 'INR' ? '₹ INR (India)' : '$ USD (International)'}
               </span>
             </div>
@@ -520,15 +551,15 @@ function ContactFormContent() {
 
                 {/* STEP 01: WHAT DO YOU NEED? */}
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#6B7280]">
-                    <h2 className="font-bold text-[#1D1D1F] uppercase tracking-wider text-sm">
+                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       01 What do you need?
                     </h2>
                     <span className="uppercase tracking-wider font-semibold text-[11px]">MULTI-SELECT</span>
                   </div>
 
-                  {/* 8 Core Services Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                  {/* 4 Core Agency Pillars */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {SERVICES_DATA.map((service) => {
                       const isSelected = selectedServices.includes(service.name);
                       return (
@@ -538,28 +569,28 @@ function ContactFormContent() {
                           onClick={() => toggleService(service.name)}
                           className={`text-xs p-4 rounded-2xl border text-left transition-all flex items-start justify-between gap-3 cursor-pointer ${
                             isSelected
-                              ? 'bg-[#0859D4]/10 text-[#1D1D1F] border-2 border-[#0859D4] font-bold shadow-sm'
-                              : 'border-[rgba(18,18,19,0.12)] bg-white text-[#424242] hover:border-[#0859D4]'
+                              ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
+                              : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
                           }`}
                           data-cursor="SELECT"
                         >
                           <div>
-                            <span className="block text-sm font-display font-bold mb-1 text-[#1D1D1F]">
+                            <span className="block text-sm font-display font-bold mb-1 text-[#0A0F1F]">
                               {service.name}
                             </span>
                             <span
                               className={`text-[11px] block font-semibold ${
-                                isSelected ? 'text-[#0859D4]' : 'text-[#6B7280]'
+                                isSelected ? 'text-[#1F3FFF]' : 'text-[#5B6275]'
                               }`}
                             >
-                              Starting at {formatPrice(currency === 'INR' ? service.tiers[0].priceINR : service.tiers[0].priceUSD, currency)}
+                              Starting at {formatPrice(getTierPrice(service.tiers[0], currency), currency)}
                             </span>
                           </div>
                           <div
                             className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
                               isSelected
-                                ? 'bg-[#0859D4] border-[#0859D4] text-white font-extrabold'
-                                : 'border-[#C8C7C2] bg-white'
+                                ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white font-extrabold'
+                                : 'border-[#E4E6EB] bg-white'
                             }`}
                           >
                             {isSelected && <Check className="w-3.5 h-3.5" />}
@@ -569,6 +600,48 @@ function ContactFormContent() {
                     })}
                   </div>
 
+                  {/* Monthly Retainers */}
+                  <div className="mb-4">
+                    <span className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider block mb-2">
+                      Monthly Retainers &amp; Partnerships:
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      {MONTHLY_RETAINERS.map((ret) => {
+                        const isSelected = selectedServices.includes(ret.name);
+                        return (
+                          <button
+                            key={ret.id}
+                            type="button"
+                            onClick={() => toggleService(ret.name)}
+                            className={`text-xs p-3 rounded-xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
+                                : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
+                            }`}
+                          >
+                            <div>
+                              <span className="block text-xs font-display font-bold text-[#0A0F1F] mb-0.5">
+                                {ret.shortName}
+                              </span>
+                              <span className="text-[10px] text-[#1F3FFF] font-semibold block">
+                                {currency === 'INR' ? ret.priceRangeINR : ret.priceRangeUSD}
+                              </span>
+                            </div>
+                            <div
+                              className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                                isSelected
+                                  ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white'
+                                  : 'border-[#E4E6EB] bg-white'
+                              }`}
+                            >
+                              {isSelected && <Check className="w-3 h-3" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
                   {/* Startup Launch Kit Option */}
                   <div>
                     <button
@@ -576,18 +649,18 @@ function ContactFormContent() {
                       onClick={() => toggleService('Startup Launch Kit')}
                       className={`w-full text-xs p-4 rounded-2xl border text-left transition-all flex items-center justify-between gap-3 cursor-pointer ${
                         selectedServices.includes('Startup Launch Kit')
-                          ? 'bg-[#0859D4]/10 text-[#1D1D1F] border-2 border-[#0859D4] font-bold shadow-sm'
-                          : 'border-[rgba(18,18,19,0.12)] bg-white text-[#424242] hover:border-[#0859D4]'
+                          ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
+                          : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-[#0859D4]" />
-                        <span className="font-display font-bold text-sm text-[#1D1D1F]">
+                        <Zap className="w-4 h-4 text-[#1F3FFF]" />
+                        <span className="font-display font-bold text-sm text-[#0A0F1F]">
                           Startup Launch Kit (Brand + Landing + Meta Ads)
                         </span>
                       </div>
-                      <span className="text-xs font-bold text-[#0859D4]">
-                        {formatPrice(currency === 'INR' ? STARTUP_LAUNCH_KIT.priceINR : STARTUP_LAUNCH_KIT.priceUSD, currency)}
+                      <span className="text-xs font-bold text-[#1F3FFF]">
+                        {formatPrice(getLaunchKitPrice(currency).price, currency)}
                       </span>
                     </button>
                   </div>
@@ -595,8 +668,8 @@ function ContactFormContent() {
 
                 {/* STEP 02: ADD-ONS */}
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#6B7280]">
-                    <h2 className="font-bold text-[#1D1D1F] uppercase tracking-wider text-sm">
+                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       02 Add-ons
                     </h2>
                     <span className="uppercase tracking-wider font-semibold text-[11px]">OPTIONAL BOOSTS</span>
@@ -611,11 +684,18 @@ function ContactFormContent() {
                           onClick={() => toggleAddon(addon.name)}
                           className={`text-xs px-4 py-2.5 rounded-full border transition-all cursor-pointer font-bold ${
                             isSelected
-                              ? 'bg-[#0859D4] text-white border-[#0859D4] shadow-sm'
-                              : 'bg-white border-[rgba(18,18,19,0.12)] text-[#1D1D1F] hover:border-[#0859D4]'
+                              ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-sm'
+                              : 'bg-white border-[#E4E6EB] text-[#0A0F1F] hover:border-[#1F3FFF]'
                           }`}
                         >
-                          <span>{isSelected ? `✓ ${addon.name}` : `+ ${addon.name}`}</span>
+                          <span className="inline-flex items-center gap-1.5">
+                            {isSelected ? (
+                              <Check className="w-3.5 h-3.5 flex-shrink-0" />
+                            ) : (
+                              <span className="text-sm leading-none font-normal">+</span>
+                            )}
+                            <span>{addon.name}</span>
+                          </span>
                         </button>
                       );
                     })}
@@ -624,8 +704,8 @@ function ContactFormContent() {
 
                 {/* STEP 03: BUDGET */}
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#6B7280]">
-                    <h2 className="font-bold text-[#1D1D1F] uppercase tracking-wider text-sm">
+                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       03 Budget ({currency})
                     </h2>
                     <span className="uppercase tracking-wider font-semibold text-[11px]">ESTIMATED RANGE</span>
@@ -643,8 +723,8 @@ function ContactFormContent() {
                           }}
                           className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${
                             isSelected
-                              ? 'bg-[#0859D4] text-white border-[#0859D4] shadow-md'
-                              : 'border-[rgba(18,18,19,0.12)] bg-white text-[#1D1D1F] hover:border-[#0859D4]'
+                              ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-md'
+                              : 'border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF]'
                           }`}
                         >
                           {b.label}
@@ -656,8 +736,8 @@ function ContactFormContent() {
 
                 {/* STEP 04: TIMELINE */}
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#6B7280]">
-                    <h2 className="font-bold text-[#1D1D1F] uppercase tracking-wider text-sm">
+                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       04 Timeline
                     </h2>
                     <span className="uppercase tracking-wider font-semibold text-[11px]">TARGET LAUNCH</span>
@@ -675,8 +755,8 @@ function ContactFormContent() {
                           }}
                           className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${
                             isSelected
-                              ? 'bg-[#0859D4] text-white border-[#0859D4] shadow-md'
-                              : 'border-[rgba(18,18,19,0.12)] bg-white text-[#1D1D1F] hover:border-[#0859D4]'
+                              ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-md'
+                              : 'border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF]'
                           }`}
                         >
                           {t.label}
@@ -687,50 +767,50 @@ function ContactFormContent() {
                 </div>
 
                 {/* LIVE ESTIMATE SUMMARY CARD */}
-                <div className="p-6 rounded-3xl border-2 border-[#0859D4] bg-white shadow-lg space-y-3 text-xs">
-                  <div className="flex items-center justify-between pb-3 border-b border-[rgba(18,18,19,0.08)]">
-                    <span className="font-bold text-[#1D1D1F] uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-[#0859D4]" />
+                <div className="p-6 rounded-3xl border-2 border-[#1F3FFF] bg-white shadow-lg space-y-3 text-xs">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#E4E6EB]">
+                    <span className="font-bold text-[#0A0F1F] uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-[#1F3FFF]" />
                       <span>YOUR LIVE SCOPE ESTIMATE</span>
                     </span>
-                    <span className="text-[11px] text-[#6B7280] uppercase tracking-wider font-semibold">Real-time Calculation</span>
+                    <span className="text-[11px] text-[#5B6275] uppercase tracking-wider font-semibold">Real-time Calculation</span>
                   </div>
 
                   {estimate ? (
                     <div className="space-y-3">
                       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                         <div>
-                          <span className="text-[#6B7280] block text-[11px] uppercase tracking-wider font-semibold">Selected Services:</span>
-                          <span className="font-bold text-[#1D1D1F] text-sm">
+                          <span className="text-[#5B6275] block text-[11px] uppercase tracking-wider font-semibold">Selected Services:</span>
+                          <span className="font-bold text-[#0A0F1F] text-sm">
                             {[...selectedServices, ...selectedAddons].join(' + ')}
                           </span>
                         </div>
                         <div className="sm:text-right">
-                          <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#0859D4] block">
+                          <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#1F3FFF] block">
                             {estimate.priceString}
                           </span>
-                          <span className="text-[11px] text-[#6B7280] font-semibold">
+                          <span className="text-[11px] text-[#5B6275] font-semibold">
                             Est. Timeline: {estimate.timeline}
                           </span>
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded-2xl bg-[#F5F5F7] text-[#424242] text-[11px] flex items-center gap-2 border border-[rgba(18,18,19,0.08)]">
-                        <span className="text-[#0859D4]">●</span>
+                      <div className="p-3.5 rounded-2xl bg-[#F5F6F8] text-[#5B6275] text-xs flex items-center gap-2 border border-[#E4E6EB]">
+                        <span className="text-[#1F3FFF]">●</span>
                         <span>Final quote is locked in writing after brief review. All scopes depend on custom deliverables.</span>
                       </div>
                     </div>
                   ) : (
-                    <div className="py-2 text-[#6B7280] text-center font-medium">
+                    <div className="py-2 text-[#5B6275] text-center font-medium">
                       Select one or more services or add-ons above to see an instant starting price and delivery timeline.
                     </div>
                   )}
                 </div>
 
                 {/* STEP 05: YOUR DETAILS */}
-                <div className="space-y-4 pt-6 border-t border-[rgba(18,18,19,0.08)]">
-                  <div className="flex items-center justify-between text-xs text-[#6B7280]">
-                    <h2 className="font-bold text-[#1D1D1F] uppercase tracking-wider text-sm">
+                <div className="space-y-4 pt-6 border-t border-[#E4E6EB]">
+                  <div className="flex items-center justify-between text-xs text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       05 Your details
                     </h2>
                     <span className="text-[#EF5533] font-semibold uppercase tracking-wider text-[11px]">* REQUIRED FIELDS</span>
@@ -739,7 +819,7 @@ function ContactFormContent() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Name Field */}
                     <div>
-                      <label className="block text-xs text-[#1D1D1F] mb-1.5 font-bold uppercase tracking-wider">
+                      <label className="block text-xs text-[#0A0F1F] mb-1.5 font-bold uppercase tracking-wider">
                         Your Name *
                       </label>
                       <input
@@ -753,10 +833,10 @@ function ContactFormContent() {
                           setFormData({ ...formData, name: e.target.value });
                           if (errors.name) setErrors({ ...errors, name: '' });
                         }}
-                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#111111] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
+                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
                           errors.name
                             ? 'border-[#EF5533] ring-1 ring-[#EF5533]'
-                            : 'border-[rgba(18,18,19,0.12)] focus:border-[#0859D4] focus:ring-2 focus:ring-[#0859D4]/20'
+                            : 'border-[#E4E6EB] focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20'
                         }`}
                         aria-invalid={errors.name ? 'true' : 'false'}
                         aria-describedby={errors.name ? 'name-error' : undefined}
@@ -770,7 +850,7 @@ function ContactFormContent() {
 
                     {/* Email Field */}
                     <div>
-                      <label className="block text-xs text-[#1D1D1F] mb-1.5 font-bold uppercase tracking-wider">
+                      <label className="block text-xs text-[#0A0F1F] mb-1.5 font-bold uppercase tracking-wider">
                         Work Email *
                       </label>
                       <input
@@ -784,10 +864,10 @@ function ContactFormContent() {
                           setFormData({ ...formData, email: e.target.value });
                           if (errors.email) setErrors({ ...errors, email: '' });
                         }}
-                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#111111] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
+                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
                           errors.email
                             ? 'border-[#EF5533] ring-1 ring-[#EF5533]'
-                            : 'border-[rgba(18,18,19,0.12)] focus:border-[#0859D4] focus:ring-2 focus:ring-[#0859D4]/20'
+                            : 'border-[#E4E6EB] focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20'
                         }`}
                         aria-invalid={errors.email ? 'true' : 'false'}
                         aria-describedby={errors.email ? 'email-error' : undefined}
@@ -803,7 +883,7 @@ function ContactFormContent() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Phone / WhatsApp */}
                     <div>
-                      <label className="block text-xs text-[#424242] mb-1.5 font-bold uppercase tracking-wider">
+                      <label className="block text-xs text-[#5B6275] mb-1.5 font-bold uppercase tracking-wider">
                         Phone or WhatsApp (Optional)
                       </label>
                       <input
@@ -812,13 +892,13 @@ function ContactFormContent() {
                         placeholder="+91 98765 43210"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full h-12 bg-white border border-[rgba(18,18,19,0.12)] rounded-2xl px-4 text-sm text-[#111111] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#0859D4] focus:ring-2 focus:ring-[#0859D4]/20 shadow-sm"
+                        className="w-full h-12 bg-white border border-[#E4E6EB] rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20 shadow-sm"
                       />
                     </div>
 
                     {/* Company URL */}
                     <div>
-                      <label className="block text-xs text-[#424242] mb-1.5 font-bold uppercase tracking-wider">
+                      <label className="block text-xs text-[#5B6275] mb-1.5 font-bold uppercase tracking-wider">
                         Company or Website URL (Optional)
                       </label>
                       <input
@@ -827,23 +907,23 @@ function ContactFormContent() {
                         placeholder="https://yourcompany.com"
                         value={formData.companyUrl}
                         onChange={(e) => setFormData({ ...formData, companyUrl: e.target.value })}
-                        className="w-full h-12 bg-white border border-[rgba(18,18,19,0.12)] rounded-2xl px-4 text-sm text-[#111111] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#0859D4] focus:ring-2 focus:ring-[#0859D4]/20 shadow-sm"
+                        className="w-full h-12 bg-white border border-[#E4E6EB] rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20 shadow-sm"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* STEP 06: PROJECT NOTES */}
-                <div className="space-y-3 pt-6 border-t border-[rgba(18,18,19,0.08)]">
-                  <div className="flex items-center justify-between text-xs text-[#6B7280]">
-                    <h2 className="font-bold text-[#1D1D1F] uppercase tracking-wider text-sm">
+                <div className="space-y-3 pt-6 border-t border-[#E4E6EB]">
+                  <div className="flex items-center justify-between text-xs text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       06 Project notes
                     </h2>
                     <span className="uppercase tracking-wider font-semibold text-[11px]">SCOPE DETAILS</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs text-[#1D1D1F] mb-1.5 font-bold uppercase tracking-wider">
+                    <label className="block text-xs text-[#0A0F1F] mb-1.5 font-bold uppercase tracking-wider">
                       Tell us about your project
                     </label>
                     <textarea
@@ -853,7 +933,7 @@ function ContactFormContent() {
                       placeholder="Share your goals, current challenges, launch date, or reference links..."
                       value={formData.brief}
                       onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
-                      className="w-full bg-white border border-[rgba(18,18,19,0.12)] rounded-2xl p-4 text-sm text-[#111111] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#0859D4] focus:ring-2 focus:ring-[#0859D4]/20 shadow-sm"
+                      className="w-full bg-white border border-[#E4E6EB] rounded-2xl p-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20 shadow-sm"
                     ></textarea>
                   </div>
 
@@ -895,9 +975,10 @@ function ContactFormContent() {
                   </button>
 
                   {/* Reassurance text with lightning icon - no orphan icon! */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#6B7280] pt-2 gap-2 font-medium">
-                    <span className="flex items-center gap-1.5 text-[#1D1D1F] font-semibold">
-                      <span>⚡ We reply within 24 hours. No spam.</span>
+                  <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#5B6275] pt-2 gap-2 font-medium">
+                    <span className="flex items-center gap-1.5 text-[#0A0F1F] font-semibold">
+                      <Zap className="w-3.5 h-3.5 text-[#1F3FFF]" />
+                      <span>We reply within 24 hours. No spam.</span>
                     </span>
                     <span className="uppercase tracking-wider text-[11px] font-bold">100% PRIVATE &amp; CONFIDENTIAL</span>
                   </div>
@@ -906,41 +987,41 @@ function ContactFormContent() {
             ) : (
               /* SUCCESS STATE */
               <div className="py-16 text-center space-y-6">
-                <div className="w-20 h-20 rounded-full bg-[#0859D4] text-white flex items-center justify-center mx-auto shadow-2xl">
+                <div className="w-20 h-20 rounded-full bg-[#1F3FFF] text-white flex items-center justify-center mx-auto shadow-2xl">
                   <Check className="w-10 h-10" />
                 </div>
 
                 <h3
-                  className="font-display text-3xl sm:text-4xl font-extrabold text-[#1D1D1F]"
+                  className="font-display text-3xl sm:text-4xl font-extrabold text-[#0A0F1F]"
                 >
                   Got it. We&apos;ll reply within 24 hours.
                 </h3>
 
-                <p className="text-sm text-[#424242] max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong className="text-[#1D1D1F]">{formData.name}</strong>. Your project brief has been received and routed directly to our lead designer.
+                <p className="text-sm text-[#5B6275] max-w-md mx-auto leading-relaxed">
+                  Thank you, <strong className="text-[#0A0F1F]">{formData.name}</strong>. Your project brief has been received and routed directly to our lead designer.
                 </p>
 
                 {/* Summary Box */}
                 {submittedLeadSummary && (
-                  <div className="p-6 rounded-3xl border border-[rgba(18,18,19,0.08)] bg-white max-w-md mx-auto text-xs space-y-3 text-left shadow-sm">
-                    <span className="font-bold text-[#1D1D1F] block pb-2 border-b border-[rgba(18,18,19,0.08)] uppercase tracking-wider">
+                  <div className="p-6 rounded-3xl border border-[#E4E6EB] bg-white max-w-md mx-auto text-xs space-y-3 text-left shadow-sm">
+                    <span className="font-bold text-[#0A0F1F] block pb-2 border-b border-[#E4E6EB] uppercase tracking-wider">
                       BRIEF SUMMARY
                     </span>
-                    <div className="space-y-1.5 text-[#424242]">
+                    <div className="space-y-1.5 text-[#5B6275]">
                       <p>
-                        <strong className="text-[#1D1D1F]">Services:</strong>{' '}
+                        <strong className="text-[#0A0F1F]">Services:</strong>{' '}
                         {submittedLeadSummary.services.join(', ') || 'Custom'}
                       </p>
                       <p>
-                        <strong className="text-[#1D1D1F]">Estimated Total:</strong>{' '}
+                        <strong className="text-[#0A0F1F]">Estimated Total:</strong>{' '}
                         {submittedLeadSummary.estimatedTotal}
                       </p>
                       <p>
-                        <strong className="text-[#1D1D1F]">Target Timeline:</strong>{' '}
+                        <strong className="text-[#0A0F1F]">Target Timeline:</strong>{' '}
                         {submittedLeadSummary.timeline}
                       </p>
                       <p>
-                        <strong className="text-[#1D1D1F]">Contact:</strong> {submittedLeadSummary.email}
+                        <strong className="text-[#0A0F1F]">Contact:</strong> {submittedLeadSummary.email}
                       </p>
                     </div>
                   </div>
@@ -970,7 +1051,7 @@ function ContactFormContent() {
                         website_hp: '',
                       });
                     }}
-                    className="py-3.5 px-6 rounded-full border border-[#111] text-[#111] bg-white hover:bg-[#111] hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                    className="py-3.5 px-6 rounded-full border border-[#0A0F1F] text-[#0A0F1F] bg-white hover:bg-[#0A0F1F] hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                   >
                     <span>SUBMIT ANOTHER BRIEF</span>
                   </button>

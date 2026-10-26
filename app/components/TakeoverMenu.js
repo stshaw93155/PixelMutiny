@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSound } from './SoundManager';
-import { ArrowUpRight, Copy, Check } from 'lucide-react';
+import { ArrowUpRight, Copy, Check, X } from 'lucide-react';
 
 const MENU_ITEMS = [
   {
@@ -151,10 +151,11 @@ export default function TakeoverMenu({ isOpen, onClose }) {
               playClick();
               onClose();
             }}
-            className="flex items-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-full bg-[#1D1D1F] text-white hover:bg-[#0859D4] font-mono font-semibold text-xs transition-all shadow-sm active:scale-95 focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-full bg-[#0A0F1F] text-white hover:bg-[#1F3FFF] font-mono font-semibold text-xs transition-all shadow-sm active:scale-95 focus-visible:ring-2 focus-visible:ring-[#1F3FFF] focus-visible:outline-none cursor-pointer"
             data-cursor="CLOSE"
           >
-            <span>CLOSE ✕</span>
+            <span>CLOSE</span>
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
@@ -162,7 +163,7 @@ export default function TakeoverMenu({ isOpen, onClose }) {
       {/* Main Split Grid */}
       <div className="flex-1 max-w-[1920px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-0">
         {/* Left 7 Columns: Giant Navigation Items with Light Background */}
-        <div className="lg:col-span-7 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-[rgba(18,18,19,0.08)] bg-[#F5F5F7]">
+        <div className="lg:col-span-7 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-[#E4E6EB] bg-[#F5F6F8]">
           {MENU_ITEMS.map((item) => {
             const isActive = activeItem.title === item.title;
             return (
@@ -177,34 +178,34 @@ export default function TakeoverMenu({ isOpen, onClose }) {
                   setActiveItem(item);
                   playHover();
                 }}
-                className={`group relative px-6 md:px-12 py-7 md:py-9 border-b border-[rgba(18,18,19,0.08)] flex flex-col transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#0859D4] focus-visible:outline-none ${
+                className={`group relative px-6 md:px-12 py-7 md:py-9 border-b border-[#E4E6EB] flex flex-col transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#1F3FFF] focus-visible:outline-none ${
                   isActive ? 'bg-[#FFFFFF] shadow-sm' : 'hover:bg-white/80'
                 }`}
                 data-cursor="NAVIGATE"
               >
                 <div className="flex items-baseline justify-between mb-2">
                   <div className="flex items-baseline gap-4 md:gap-8">
-                    <span className="font-mono text-xs md:text-sm text-[#5A5A5E] group-hover:text-[#0859D4] transition-colors font-medium">
+                    <span className="font-mono text-xs md:text-sm text-[#5B6275] group-hover:text-[#1F3FFF] transition-colors font-medium">
                       {item.num}
                     </span>
-                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#1D1D1F] group-hover:text-[#0859D4] group-hover:translate-x-2 transition-all duration-300 flex items-center gap-3">
+                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#0A0F1F] group-hover:text-[#1F3FFF] group-hover:translate-x-2 transition-all duration-300 flex items-center gap-3">
                       <span>{item.title}</span>
                       {isActive && (
-                        <span className="text-[#0859D4] text-2xl md:text-3xl">⤷</span>
+                        <span className="text-[#1F3FFF] text-2xl md:text-3xl">⤷</span>
                       )}
                     </h2>
                   </div>
 
                   <span className={`font-mono text-[11px] px-3 py-1 rounded-full border transition-all ${
                     isActive
-                      ? 'border-[#0859D4] bg-[#0859D4] text-white font-semibold'
-                      : 'border-[rgba(18,18,19,0.12)] bg-white text-[#424242]'
+                      ? 'border-[#1F3FFF] bg-[#1F3FFF] text-white font-semibold'
+                      : 'border-[#E4E6EB] bg-white text-[#5B6275]'
                   }`}>
                     {item.pill}
                   </span>
                 </div>
 
-                <p className="font-mono text-xs text-[#5A5A5E] pl-8 md:pl-12">
+                <p className="font-mono text-xs text-[#5B6275] pl-8 md:pl-12">
                   {item.desc}
                 </p>
               </Link>
