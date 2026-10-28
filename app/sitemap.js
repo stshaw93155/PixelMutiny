@@ -1,7 +1,7 @@
 import { PROJECTS } from './data/projects.js';
 
 export default function sitemap() {
-  const baseUrl = 'https://pixelmutiny.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pixelmutiny.com';
 
   const staticRoutes = ['', '/works', '/services', '/about', '/contact'].map((route) => ({
     url: `${baseUrl}${route}`,

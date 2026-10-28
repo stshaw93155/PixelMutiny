@@ -2,11 +2,14 @@ export const metadata = {
   title: 'Selected Works (08) — PixelMutiny DigiMedia Portfolio',
   description:
     'Curated benchmark portfolio of high-converting landing pages, custom WebGL websites, 3D brand graphics, and scalable UI/UX systems engineered for high-growth tech brands.',
+  alternates: {
+    canonical: '/works',
+  },
   openGraph: {
     title: 'Selected Works (08) — PixelMutiny DigiMedia Portfolio',
     description:
       'Curated benchmark portfolio of high-converting landing pages, custom WebGL websites, 3D brand graphics, and scalable UI/UX systems.',
-    url: 'https://pixelmutiny.com/works',
+    url: '/works',
     siteName: 'PixelMutiny DigiMedia',
     images: [
       {

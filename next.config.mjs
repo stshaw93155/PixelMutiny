@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
+  productionBrowserSourceMaps: false,
+  compress: true,
   async redirects() {
     return [
       {
@@ -19,6 +22,10 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
           {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',

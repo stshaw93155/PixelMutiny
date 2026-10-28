@@ -1,10 +1,12 @@
 export default function robots() {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pixelmutiny.com';
+
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://pixelmutiny.com/sitemap.xml',
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

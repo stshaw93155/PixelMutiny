@@ -3,10 +3,16 @@ import './globals.css';
 import './onlines-theme.css';
 import GlobalShell from './components/GlobalShell';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://pixelmutiny.com';
+
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'PixelMutiny DigiMedia — Break the Template. Built Different.',
   description:
     'PixelMutiny DigiMedia LLP is a creative and digital studio that builds websites, dashboards, brand identities, content, and ad campaigns for brands and individuals who want to stand out instead of blend in.',
+  alternates: {
+    canonical: '/',
+  },
   keywords: [
     'PixelMutiny',
     'PixelMutiny DigiMedia',
@@ -21,12 +27,11 @@ export const metadata = {
     'Meta Ads',
   ],
   authors: [{ name: 'PixelMutiny DigiMedia LLP' }],
-  metadataBase: new URL('https://pixelmutiny.com'),
   openGraph: {
     title: 'PixelMutiny DigiMedia — Break the Template. Built Different.',
     description:
       'PixelMutiny DigiMedia LLP is a creative and digital studio that builds websites, dashboards, brand identities, content, and ad campaigns for brands and individuals who want to stand out instead of blend in.',
-    url: 'https://pixelmutiny.com',
+    url: '/',
     siteName: 'PixelMutiny DigiMedia',
     images: [
       {
