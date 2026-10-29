@@ -140,12 +140,13 @@ function ShellInner({ children }) {
                   Connect
                 </span>
                 <a href="https://twitter.com" target="_blank" rel="noreferrer"
-                  className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">
+                  style={{ color: '#FFFFFF' }}
+                  className="text-[13px] text-white hover:opacity-80 transition-opacity font-medium">
                   X (Twitter)
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noreferrer"
-                  style={{ color: '#E4405F' }}
-                  className="text-[13px] text-[#E4405F] hover:opacity-80 transition-opacity font-medium">
+                  style={{ color: '#FFFFFF' }}
+                  className="text-[13px] text-white hover:opacity-80 transition-opacity font-medium">
                   Instagram
                 </a>
                 <a href="https://wa.me/919315580036" target="_blank" rel="noreferrer"
@@ -154,8 +155,8 @@ function ShellInner({ children }) {
                   WhatsApp
                 </a>
                 <a href="https://www.linkedin.com/in/gfxsumit/" target="_blank" rel="noreferrer"
-                  style={{ color: '#38BDF8' }}
-                  className="text-[13px] text-[#38BDF8] hover:opacity-80 transition-opacity font-medium">
+                  style={{ color: '#FFFFFF' }}
+                  className="text-[13px] text-white hover:opacity-80 transition-opacity font-medium">
                   LinkedIn
                 </a>
               </div>
