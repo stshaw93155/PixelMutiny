@@ -92,7 +92,7 @@ export default function HeaderHUD({ onOpenMenu, onOpenInquiry }) {
             href="/"
             className="flex items-center gap-2 group"
             onClick={playClick}
-            aria-label="PixelMutiny DigiMedia LLP"
+            aria-label="PixelMutiny DigiMedia Private Limited"
           >
             {/* Dot-and-bar glyph like onlines.com.ar */}
             <span className="inline-flex items-center gap-1 text-[#1D1D1F] transition-transform duration-300 group-hover:scale-110">

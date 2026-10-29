@@ -253,7 +253,7 @@ export default function Home() {
           <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#5B6275] gap-4 z-20">
             <div className="flex items-center gap-3">
               <span className="inline-block w-2 h-2 rounded-full bg-[#12B76A] animate-ping" />
-              <span className="text-[#0A0F1F] font-semibold">PixelMutiny DigiMedia LLP</span>
+              <span className="text-[#0A0F1F] font-semibold">PixelMutiny DigiMedia Private Limited</span>
               <span className="hidden sm:inline text-[#E4E6EB]">|</span>
               <span className="hidden sm:inline">New Delhi, India (HQ)</span>
             </div>
@@ -527,7 +527,7 @@ export default function Home() {
                 <div className="w-12 h-12 mx-auto rounded-full bg-[#1F3FFF] flex items-center justify-center shadow-lg">
                   <Code className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-lg font-bold font-display">PixelMutiny DigiMedia LLP</div>
+                <div className="text-lg font-bold font-display">PixelMutiny DigiMedia Private Limited</div>
                 <div className="text-xs text-white/70 max-w-xs mx-auto">
                   Next.js 16.4 • React 19 • Tailwind • Supabase • Vercel Edge
                 </div>
@@ -541,7 +541,7 @@ export default function Home() {
           </div>
 
           <div className="mt-6 text-center text-xs font-mono text-[#5B6275]">
-            PixelMutiny DigiMedia LLP is a hybrid digital studio based in India, delivering globally for brands across North America, Europe, UAE, and APAC.
+            PixelMutiny DigiMedia Private Limited is a strategy-led digital agency based in India, delivering globally for brands across North America, Europe, UAE, and APAC.
           </div>
         </div>
       </section>

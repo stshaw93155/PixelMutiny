@@ -10,6 +10,7 @@ export interface PriceTier {
   period?: string; // e.g. "per month", "one-time"
   timeline: string;
   isPopular?: boolean;
+  isHeroOffer?: boolean;
   inheritsText?: string;
   features: string[];
 }
@@ -62,12 +63,27 @@ export interface GrowthBundle {
   terms: string;
 }
 
+export interface ProjectBundle {
+  id: string;
+  num: string;
+  name: string;
+  tagline: string;
+  priceINR: number;
+  priceUSD: number;
+  bestFor: string;
+  timeline: string;
+  isHeroOffer?: boolean;
+  deliverables: string[];
+  terms: string;
+}
+
 export interface AddOn {
   id: string;
   name: string;
   priceINR: number;
   priceUSD: number;
   unit: string;
+  category: 'Branding' | 'Website' | 'Video' | 'Automation' | 'General';
   description: string;
 }
 
@@ -77,31 +93,34 @@ export interface FAQItem {
 }
 
 // =========================================================================
-// BRAND METADATA & NARRATIVE (PIXELMUTINY DIGIMEDIA LLP)
+// BRAND METADATA & POSITIONING (PIXELMUTINY DIGIMEDIA PRIVATE LIMITED)
 // =========================================================================
 
-export const COMPANY_LEGAL_NAME = 'PixelMutiny DigiMedia LLP';
+export const COMPANY_LEGAL_NAME = 'PixelMutiny DigiMedia Private Limited';
 export const COMPANY_BRAND_NAME = 'PixelMutiny DigiMedia';
 export const COMPANY_SHORT_NAME = 'PixelMutiny';
 
+export const POSITIONING =
+  'Strategy-led digital experiences, branding, creative production and business automation.';
+
 export const TAGLINE_OPTIONS = {
   primary: 'Break the template. Built different.',
-  secondary: 'One studio. Four ways to grow.',
+  secondary: 'Strategy-led digital experiences & business automation.',
   tertiary: 'Fixed project packages & recurring monthly retainers.',
 };
 
 export const ONE_LINER =
-  'PixelMutiny is a digital growth agency building high-performance websites, distinctive brand identities, content production, and Meta Ads for brands that refuse to blend in.';
+  'PixelMutiny DigiMedia Private Limited is a premium digital agency delivering strategy-led digital experiences, branding, creative production, and business automation.';
 
 export const SHORT_BIO =
-  'We separate one-time project sprints from predictable recurring retainers. Digital experiences, branding, video editing, and performance marketing—all under one roof.';
+  'We separate one-time project sprints from predictable recurring retainers. Digital experiences, branding, creative production, and business automation—all under one roof.';
 
 export const WHO_WE_ARE = {
   summary:
-    'PixelMutiny DigiMedia is a four-pillar digital growth agency based in India. We combine engineering, brand design, video production, and performance media so founders never have to juggle fragmented freelancers.',
+    'PixelMutiny DigiMedia Private Limited is a premium digital agency. We combine engineering, brand design, video production, performance media, and business automation so founders never have to juggle fragmented freelancers.',
   ethos:
     'Break the template. Built different. Every pixel has a job, and every dollar of advertising spend must be backed by conversion-engineered creative.',
-  location: 'New Delhi, India (DLF Cyber Hub Design Lab)',
+  location: 'DLF Cyber Hub Design Lab, New Delhi, India',
 };
 
 export const ABOUT_NAME_MEANING = {
@@ -112,10 +131,10 @@ export const ABOUT_NAME_MEANING = {
 };
 
 export const MISSION =
-  'To help brands and creators build high-conversion digital experiences, memorable visual identities, and scalable paid acquisition funnels.';
+  'To help ambitious businesses build a stronger digital presence through strategic branding, high-performance websites, compelling creative production and connected lead-management workflows.';
 
 export const VISION =
-  'To become the premier design and growth partner for ambitious tech startups, global creators, and modern consumer brands worldwide.';
+  'To become the premier design, technology, and growth partner for ambitious tech startups, global creators, and modern consumer brands worldwide.';
 
 export const CORE_VALUES = [
   {
@@ -150,15 +169,15 @@ export const WHO_WE_WORK_WITH = [
     category: 'Startups & Scaleups',
     tag: 'PROJECTS & RETAINERS',
     audience: 'Funded SaaS, D2C brands, and tech ventures launching new products or overhauling dated systems.',
-    desc: 'From initial branding and high-performance Next.js websites to ongoing Meta Ads acquisition retainers.',
-    bullets: ['Funded Tech Startups', 'E-commerce & D2C Brands', 'Real Estate & Hospitality', 'Modern SaaS Products'],
+    desc: 'From initial branding and high-performance Next.js websites to connected CRM automation and Meta Ads acquisition.',
+    bullets: ['Funded Tech Startups', 'E-commerce & D2C Brands', 'Real Estate & Healthcare', 'Modern SaaS Products'],
   },
   {
     category: 'Creators & Personal Brands',
     tag: 'CREATIVE SUBSCRIPTION',
-    audience: 'Founders, coaches, educators, and creators who need consistent monthly visual content and reels.',
+    audience: 'Founders, coaches, educators, and creators who need consistent monthly visual content and video.',
     desc: 'Authority-building websites, signature logos, and recurring short-form video editing that converts followers into clients.',
-    bullets: ['Executive Coaches & Consultants', 'Content Creators & YouTubers', 'High-Ticket Freelancers', 'Specialist Founders'],
+    bullets: ['Executive Coaches & Consultants', 'Content Creators & YouTubers', 'High-Ticket Agencies', 'Specialist Founders'],
   },
 ];
 
@@ -210,7 +229,7 @@ export const HOW_WE_WORK_STAGES = [
     name: 'Design',
     tagline: 'High-Impact Concepts & Iteration',
     desc: 'Concepts, interactive Figma prototypes, typography hierarchy, and structured feedback rounds until it is flawless.',
-    bullets: ['Bespoke Visual Direction', 'Interactive Prototypes', 'Responsive Layout Polish', '2 Feedback & Revision Rounds'],
+    bullets: ['Bespoke Visual Direction', 'Interactive Prototypes', 'Responsive Layout Polish', 'Consolidated Revision Rounds'],
   },
   {
     step: '04',
@@ -237,6 +256,7 @@ export const HOW_WE_WORK_STAGES = [
 
 // =========================================================================
 // 1. THE FOUR CORE SERVICE PILLARS (FIXED ONE-TIME PROJECT PACKAGES)
+// Aligned with the official Services & Pricing Catalogue
 // =========================================================================
 
 export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
@@ -244,14 +264,15 @@ export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
     id: 'digital-experiences',
     slug: 'digital-experiences',
     num: '01',
-    name: 'Digital Experiences',
+    name: 'Website Design & Development',
     shortName: 'Digital Experiences',
-    headline: 'Websites · Landing Pages · UI/UX · Dashboards',
+    headline: 'Websites · Landing Pages · UI/UX · E-Commerce',
     code: '01 // DIGITAL',
-    tag: 'Websites · Landing Pages · UI/UX · Dashboards',
-    idealFor: 'Startups, SaaS, businesses, and e-commerce brands wanting digital products that look premium, work smoothly, and turn visitors into customers.',
-    fromPriceINR: 35000,
-    fromPriceUSD: 425,
+    tag: 'Websites · Landing Pages · UI/UX · E-Commerce',
+    idealFor:
+      'Startups, SaaS, businesses and e-commerce brands wanting digital products that look premium, work smoothly and turn visitors into customers.',
+    fromPriceINR: 24999,
+    fromPriceUSD: 300,
     image: '/projects/veyra-legal.png',
     alt: 'PixelMutiny editorial multi-page business website design with case studies and interactive layout',
     deliverables: [
@@ -263,54 +284,80 @@ export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
     ],
     tiers: [
       {
-        id: 'digital-launch',
-        name: 'Launch',
-        tagline: 'Up to 5 pages, responsive design, basic SEO and lead forms',
-        priceINR: 35000,
-        priceUSD: 425,
-        timeline: '2 to 3 weeks',
+        id: 'web-landing-launch',
+        name: 'Landing Page Launch',
+        tagline: 'Focused page engineered to generate inquiries and capture leads',
+        priceINR: 24999,
+        priceUSD: 300,
+        timeline: '7 to 12 business days',
         features: [
-          'Up to 5 custom responsive pages',
-          'Clean, modern layout across mobile, tablet & desktop',
-          'Basic technical SEO, metadata & sitemap setup',
-          'Lead capture & contact form integration',
-          'Fast Next.js build with Core Web Vitals optimization',
-          '2 structured revision rounds included',
+          'One responsive high-converting landing page',
+          'Up to six content sections custom-designed in Figma',
+          'Custom UI design tailored to your industry positioning',
+          'Contact form and direct WhatsApp CTA integration',
+          'Mobile, tablet and desktop performance optimization',
+          'Basic on-page SEO setup & metadata configuration',
+          'Analytics integration (Google Analytics 4 & Meta Pixel)',
+          'Two consolidated revision rounds included',
         ],
       },
       {
-        id: 'digital-growth',
-        name: 'Growth',
-        tagline: 'Up to 10 pages, custom UI, CMS, blog and analytics setup',
-        priceINR: 75000,
-        priceUSD: 900,
-        timeline: '3 to 4 weeks',
+        id: 'web-business-pro',
+        name: 'Business Website Pro',
+        tagline: 'Complete, professional web presence for growing brands',
+        priceINR: 49999,
+        priceUSD: 600,
+        timeline: '12 to 20 business days',
         isPopular: true,
-        inheritsText: 'Everything in Launch, plus:',
+        isHeroOffer: true,
+        inheritsText: 'Everything in Landing Page Launch, plus:',
         features: [
-          'Up to 10 custom pages or bespoke web app UI dashboard',
-          'Custom modular UI kit & interactive Figma prototype',
-          'Self-serve CMS integration for dynamic blog & case studies',
-          'Google Analytics 4 & conversion event tracking',
-          'Fluid micro-animations & responsive scroll interactions',
-          'Full source code handover & CMS walkthrough video',
+          'Up to five custom responsive pages (Home, About, Services, Contact + 1)',
+          'Custom responsive design & typography system',
+          'Contact form and WhatsApp integration',
+          'Basic technical and on-page SEO optimization',
+          'Analytics and Google Search Console setup',
+          'Social media integrations & OG social cards',
+          'Basic security and performance configuration',
+          'Two revision rounds + website handover and admin training',
         ],
       },
       {
-        id: 'digital-scale',
-        name: 'Scale',
-        tagline: 'E-commerce or complex websites, advanced integrations and custom functionality',
-        priceINR: 140000,
-        priceUSD: 1700,
-        timeline: '4 to 6 weeks',
-        inheritsText: 'Everything in Growth, plus:',
+        id: 'web-experience-premium',
+        name: 'Digital Experience Premium',
+        tagline: 'Differentiated website with editable CMS content and advanced UI',
+        priceINR: 89999,
+        priceUSD: 1100,
+        timeline: '20 to 30 business days',
+        inheritsText: 'Everything in Business Website Pro, plus:',
         features: [
-          'E-commerce store or complex web app interface',
-          'Payment gateway (Razorpay / Stripe) & third-party API sync',
-          'Interactive component states (calculators, demos, filter hubs)',
-          'Advanced programmatic SEO architecture',
-          '3 structured feedback rounds included',
-          '30-day post-launch hypercare & priority SLA support',
+          'Up to eight custom pages or bespoke web application UI',
+          'Custom UI/UX design and development in Next.js',
+          'CMS integration for agreed content types (Blog / Case Studies)',
+          'Blog or resource section with filtering architecture',
+          'Custom forms, inquiry flows & basic CRM integration',
+          'Technical SEO foundations & conversion-event setup',
+          'Performance, responsive testing & basic accessibility checks',
+          'Three revision rounds + handover documentation & walkthrough',
+        ],
+      },
+      {
+        id: 'web-ecommerce-experience',
+        name: 'E-commerce Experience',
+        tagline: 'Complete store setup, catalog, cart, checkout & payment gateways',
+        priceINR: 99999,
+        priceUSD: 1200,
+        timeline: '25 to 40 business days',
+        inheritsText: 'Everything in Premium, plus:',
+        features: [
+          'Store setup using an agreed platform (Shopify / Next.js Commerce)',
+          'Up to 25 initial products uploaded with client-supplied content',
+          'Homepage, collections, product and policy pages setup',
+          'Cart, checkout & secure payment gateway integration',
+          'Shipping configuration using supported integrations',
+          'Order notification configuration, admin training & handover',
+          'Basic analytics, conversion tracking & e-commerce SEO setup',
+          'Two revision rounds included',
         ],
       },
     ],
@@ -324,68 +371,75 @@ export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
     headline: 'Logo Design · Brand Systems · Graphics · Print',
     code: '02 // BRAND',
     tag: 'Logo Design · Brand Systems · Graphics · Print',
-    idealFor: 'New businesses, educational institutions, creators, and established brands needing a distinctive, memorable visual presence.',
-    fromPriceINR: 8000,
-    fromPriceUSD: 100,
+    idealFor:
+      'New businesses, educational institutions, creators, and established brands needing a distinctive, consistent visual identity across digital and physical touchpoints.',
+    fromPriceINR: 19999,
+    fromPriceUSD: 240,
     image: '/projects/maison-aura.png',
     alt: 'PixelMutiny luxury brand identity design with typography guidelines and vector packaging',
     deliverables: [
       'Primary, secondary, and sub-mark vector logo suite',
-      'Curated brand color palette (HEX, RGB, CMYK) & typography rules',
-      'Comprehensive brand guideline book (digital PDF & Figma)',
-      'Editable social media post & carousel templates',
-      'Corporate stationery, pitch deck styling & print-ready assets',
+      'Curated brand colour palette & typography system',
+      'Comprehensive brand guideline book (PDF & Figma)',
+      'Branded social media templates (Figma/Canva)',
+      'Business cards, letterhead, stationery & vector source files',
     ],
     tiers: [
       {
-        id: 'brand-essential',
-        name: 'Essential',
-        tagline: 'Primary logo, colour palette and typography',
-        priceINR: 8000,
-        priceUSD: 100,
-        timeline: '5 to 7 days',
+        id: 'brand-essentials',
+        name: 'Brand Essentials',
+        tagline: 'For new businesses that need a credible, consistent identity',
+        priceINR: 19999,
+        priceUSD: 240,
+        timeline: '7 to 10 business days',
         features: [
-          '2 bespoke primary logo concept directions',
-          'Final vector logo kit (SVG, PNG, EPS, AI)',
-          'Curated brand color palette (HEX, RGB, CMYK)',
-          'Primary & secondary typography pairing guide',
-          'Favicon & avatar exports for social profiles',
-          '2 revision rounds included',
+          'Primary logo and two logo variations',
+          'Brand colour palette and typography system',
+          'Basic brand usage guidelines sheet',
+          'Business card design',
+          'Social media profile and cover graphics',
+          'Five branded social media templates',
+          'Final files in PNG, JPG, PDF and vector formats (SVG, AI)',
+          'Two revision rounds included',
         ],
       },
       {
-        id: 'brand-signature',
-        name: 'Signature',
-        tagline: 'Logo suite, brand guidelines and social templates',
-        priceINR: 18000,
-        priceUSD: 220,
-        timeline: '10 to 14 days',
+        id: 'brand-identity-pro',
+        name: 'Brand Identity Pro',
+        tagline: 'For growing businesses that need a more distinctive, professional brand',
+        priceINR: 39999,
+        priceUSD: 480,
+        timeline: '10 to 15 business days',
         isPopular: true,
-        inheritsText: 'Everything in Essential, plus:',
+        inheritsText: 'Everything in Brand Essentials, plus:',
         features: [
-          'Complete logo suite (primary, secondary mark, monochrome)',
-          'Comprehensive brand guidelines stylebook (PDF)',
-          '6 editable social media post/carousel templates (Figma/Canva)',
-          'Custom brand patterns, textures & graphic elements',
-          'Visual dos and don’ts & brand usage rules',
-          '2 revision rounds included',
+          'Brand discovery questionnaire and competitor review',
+          'Two initial creative directions',
+          'Expanded visual identity system',
+          'Supporting graphic elements and custom icon style',
+          'Letterhead and email signature design',
+          'Ten branded social media templates',
+          'Brand presentation PDF & basic brand messaging direction',
+          'Three revision rounds included',
         ],
       },
       {
-        id: 'brand-complete',
-        name: 'Complete Identity',
-        tagline: 'Expanded identity system, stationery and campaign-ready brand assets',
-        priceINR: 35000,
-        priceUSD: 425,
-        timeline: '2 to 3 weeks',
-        inheritsText: 'Everything in Signature, plus:',
+        id: 'brand-complete-system',
+        name: 'Complete Brand System',
+        tagline: 'For established businesses, premium service providers and ambitious startups',
+        priceINR: 74999,
+        priceUSD: 900,
+        timeline: '15 to 25 business days',
+        inheritsText: 'Everything in Brand Identity Pro, plus:',
         features: [
-          'Expanded multi-channel visual identity architecture',
-          'Corporate stationery kit (business cards, letterhead, email signature)',
-          'Master presentation / pitch deck template (10+ slides)',
-          'Packaging, merchandise, or print-ready collateral',
-          'Complete Figma design component library',
-          '100% intellectual property & commercial rights transfer',
+          'Brand strategy workshop & audience definition',
+          'Competitor and visual-market review',
+          'Logo system, extended identity, imagery & graphic language',
+          'Comprehensive brand guidelines document',
+          'Stationery and essential business collateral',
+          'Fifteen branded social templates & master presentation template',
+          'Brand messaging framework & launch creative direction',
+          'Three revision rounds + 100% IP rights transfer',
         ],
       },
     ],
@@ -399,9 +453,10 @@ export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
     headline: 'Reels · Video Editing · Motion Graphics · Campaign Creatives',
     code: '03 // CONTENT',
     tag: 'Reels · Video Editing · Motion Graphics · Campaign Creatives',
-    idealFor: 'Creators, personal brands, coaches, and growing businesses that need scroll-stopping visual content and high-retention video.',
-    fromPriceINR: 6000,
-    fromPriceUSD: 75,
+    idealFor:
+      'Creators, personal brands, coaches, and growing businesses needing scroll-stopping visual content for social platforms, ad campaigns, and brand communication.',
+    fromPriceINR: 17999,
+    fromPriceUSD: 220,
     image: '/projects/krono-pay.png',
     alt: 'PixelMutiny dynamic motion graphics and social video editing creative showcase',
     deliverables: [
@@ -413,54 +468,55 @@ export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
     ],
     tiers: [
       {
-        id: 'content-starter',
-        name: 'Starter',
-        tagline: 'Up to 4 short-form video edits',
-        priceINR: 6000,
-        priceUSD: 75,
-        timeline: '5 to 7 days',
+        id: 'content-starter-batch',
+        name: 'Starter Video Batch',
+        tagline: 'Monthly batch of 8 short-form video edits with kinetic captions',
+        priceINR: 17999,
+        priceUSD: 220,
+        timeline: '5 to 7 business days',
         features: [
-          'Up to 4 short-form video edits (up to 60s each)',
+          'Up to 8 short-form video edits (up to 30–60s each)',
           'Dynamic kinetic captions & subtitles',
           'Sound design, sound effects & background audio balancing',
-          'Color correction & vertical 9:16 exports',
+          'Color correction & vertical 9:16 exports for Reels and Shorts',
           'Client supplies raw footage',
-          '1 revision round per video included',
+          'One consolidated revision round per batch',
         ],
       },
       {
-        id: 'content-creator',
-        name: 'Creator',
-        tagline: 'Up to 8 video edits with captions and motion graphics',
-        priceINR: 15000,
-        priceUSD: 180,
-        timeline: '10 to 14 days',
+        id: 'content-creator-batch',
+        name: 'Creator Batch',
+        tagline: 'Monthly batch of 12 standard reel edits with motion graphics',
+        priceINR: 35999,
+        priceUSD: 440,
+        timeline: '10 to 14 business days',
         isPopular: true,
         inheritsText: 'Everything in Starter, plus:',
         features: [
-          'Up to 8 dynamic short-form video edits',
+          'Up to 12 dynamic short-form video edits (up to 60s)',
           'Animated hook titles, zooms & visual sound effects',
           'Custom branded lower thirds & emoji animations',
           'Curated B-roll selection & seamless jump-cut pacing',
-          '2 revision rounds per video included',
+          'Two revision rounds per video batch included',
           'Fast 48-hour delivery per video batch',
         ],
       },
       {
-        id: 'content-studio',
-        name: 'Studio',
-        tagline: 'Up to 12 video edits, advanced motion graphics and campaign assets',
-        priceINR: 30000,
-        priceUSD: 360,
-        timeline: '2 to 3 weeks',
+        id: 'content-studio-plus',
+        name: 'Creative Studio Plus',
+        tagline: '20 static creatives, 4 carousels, and 8 short-form video edits',
+        priceINR: 54999,
+        priceUSD: 670,
+        timeline: 'Monthly ongoing',
         inheritsText: 'Everything in Creator, plus:',
         features: [
-          'Up to 12 high-production video edits',
-          'Advanced 2D/3D motion graphics & logo stingers',
-          'Multi-format delivery (9:16 Vertical + 16:9 Landscape)',
-          '4 static promotional banner / story creatives included',
-          'Dedicated senior video editor & audio engineer',
-          '2 revision rounds per video included',
+          '20 static creatives + 4 carousels (up to 8 slides each)',
+          '8 short-form video edits (up to 45 seconds each)',
+          'Monthly content themes & campaign creative direction',
+          'Platform-specific design adaptations (IG, LinkedIn, X)',
+          'Creative testing recommendations',
+          'Two consolidated revision rounds per batch',
+          'Monthly review meeting and performance report',
         ],
       },
     ],
@@ -471,97 +527,186 @@ export const FOUR_PILLARS_SERVICES: ServicePackage[] = [
     num: '04',
     name: 'Performance Marketing',
     shortName: 'Performance Marketing',
-    headline: 'Meta Ads · Lead Generation · Campaign Strategy · Tracking',
+    headline: 'Meta Ads · Google Ads · Lead Gen · Tracking',
     code: '04 // ADS',
-    tag: 'Meta Ads · Lead Generation · Campaign Strategy · Tracking',
-    idealFor: 'Real estate, education, fitness, e-commerce, and local businesses wanting measurable customer acquisition and qualified leads.',
-    fromPriceINR: 8000,
-    fromPriceUSD: 100,
+    tag: 'Meta Ads · Google Ads · Lead Gen · Tracking',
+    idealFor:
+      'Real estate, education, fitness, e-commerce, and local businesses wanting structured advertising campaigns focused on measurable leads, conversions, and business growth.',
+    fromPriceINR: 14999,
+    fromPriceUSD: 180,
     image: '/projects/veloce-ai.png',
     alt: 'PixelMutiny conversion tracking dashboard and Meta Ads campaign performance metrics',
     deliverables: [
-      'Meta Ads account audit, campaign setup & tracking verification',
-      'Target audience research, lookalikes, and interest clustering',
+      'Meta Ads & Google Ads campaign setup & tracking verification',
+      'Target audience research, keyword grouping, and testing roadmap',
       'High-converting static & motion ad creative production',
       'Conversion API (CAPI), Meta Pixel & Google Analytics setup',
-      'Continuous bid optimization, A/B testing & transparent reporting',
+      'Weekly optimization, bid adjustments & monthly performance review',
     ],
     tiers: [
       {
         id: 'ads-launch',
-        name: 'Ad Launch',
-        tagline: 'Campaign setup, tracking checks and launch (One-time project)',
-        priceINR: 8000,
-        priceUSD: 100,
-        period: 'one-time project',
-        timeline: '3 to 5 days',
-        features: [
-          'Meta Ads account & Business Manager audit/setup',
-          'Pixel, CAPI & conversion event tracking verification',
-          'Audience research & 2 campaign funnel structures',
-          'Setup of initial 4 ad creatives with copy variations',
-          'Pre-flight quality assurance & launch execution',
-          'Client ad spend paid directly to Meta',
-        ],
-      },
-      {
-        id: 'ads-leadgen',
-        name: 'Lead Generation',
-        tagline: 'Campaign management, optimisation and reporting',
-        priceINR: 15000,
+        name: 'Ads Launch',
+        tagline: 'One advertising platform: Meta or Google with audit & setup',
+        priceINR: 14999,
         priceUSD: 180,
         period: 'per month',
         timeline: 'Monthly ongoing',
-        isPopular: true,
-        inheritsText: 'Everything in Ad Launch, plus:',
         features: [
-          'Full-month active Meta Ads management & bid scaling',
-          'Continuous A/B testing of hooks, copy & audiences',
-          '4 fresh high-converting ad creatives refreshed monthly',
-          'Weekly lead quality reviews & negative audience pruning',
-          'Bi-weekly performance report & ROAS insights',
-          'Client ad spend paid directly to Meta',
+          'One advertising platform: Meta or Google Ads',
+          'Campaign and account audit',
+          'Campaign setup and configuration',
+          'Up to two active campaigns',
+          'Basic conversion tracking setup (Pixel / CAPI verification)',
+          'Weekly optimisation and bid adjustments',
+          'Monthly performance report (Ad spend paid directly by client)',
         ],
       },
       {
         id: 'ads-growth',
-        name: 'Growth Performance',
-        tagline: 'Multiple campaigns, creative testing and deeper performance reporting',
-        priceINR: 30000,
-        priceUSD: 360,
+        name: 'Performance Growth',
+        tagline: 'Up to 4 active campaigns with creative testing and tracking review',
+        priceINR: 24999,
+        priceUSD: 300,
         period: 'per month',
         timeline: 'Monthly ongoing',
-        inheritsText: 'Everything in Lead Generation, plus:',
+        isPopular: true,
+        inheritsText: 'Everything in Ads Launch, plus:',
         features: [
-          'Multi-tier funnel architecture (TOF, MOF, Retargeting)',
-          'Aggressive creative testing (up to 8 ad creative variants/mo)',
-          'Landing page conversion rate optimization (CRO) reviews',
-          'Multi-channel attribution guidance',
-          'Bi-weekly 1-on-1 strategy calls with lead media buyer',
-          'Client ad spend paid directly to Meta',
+          'One primary advertising platform',
+          'Up to four active campaigns',
+          'Audience and keyword research as relevant',
+          'Campaign structure and testing plan',
+          'Up to four ad creative variations per month',
+          'Conversion tracking review & lead quality checks',
+          'Weekly optimisation + monthly reporting and review call',
+        ],
+      },
+      {
+        id: 'ads-partner',
+        name: 'Performance Partner',
+        tagline: 'Meta Ads + Google Ads, up to 6 campaigns and 8 creatives/mo',
+        priceINR: 39999,
+        priceUSD: 480,
+        period: 'per month',
+        timeline: 'Monthly ongoing',
+        inheritsText: 'Everything in Performance Growth, plus:',
+        features: [
+          'Meta Ads and Google Ads management simultaneously',
+          'Up to six active campaigns across agreed platforms',
+          'Campaign strategy and testing roadmap',
+          'Up to eight ad creative variations per month',
+          'Landing-page conversion recommendations',
+          'Conversion tracking and lead-quality review',
+          'Weekly optimisation + monthly strategy and review call',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'crm-automation',
+    slug: 'crm-automation',
+    num: '05',
+    name: 'CRM Implementation & Business Automation',
+    shortName: 'CRM & Automation',
+    headline: 'Lead Workflows · CRM Setup · WhatsApp · Auto-Followups',
+    code: '05 // AUTOMATION',
+    tag: 'Lead Workflows · CRM Setup · WhatsApp · Auto-Followups',
+    idealFor:
+      'Businesses receiving inquiries from multiple channels that need automated lead capture, instant notifications, and organized CRM pipelines.',
+    fromPriceINR: 14999,
+    fromPriceUSD: 180,
+    image: '/projects/krono-pay.png',
+    alt: 'PixelMutiny CRM pipeline automation and lead notification workflows',
+    deliverables: [
+      'Website contact or inquiry form to CRM integration',
+      'Meta Lead Ads to CRM instant sync with notifications',
+      'Automated email notification workflows & follow-up sequences',
+      'Lead status pipeline & assignment rules',
+      'Testing, staff training, documentation, and handover',
+    ],
+    tiers: [
+      {
+        id: 'automation-starter',
+        name: 'Automation Starter',
+        tagline: 'For businesses that need a simple, more organized lead workflow',
+        priceINR: 14999,
+        priceUSD: 180,
+        timeline: '5 to 7 business days',
+        features: [
+          'Website contact or inquiry form integration',
+          'Lead capture into one agreed CRM or spreadsheet',
+          'Basic lead fields and source tracking',
+          'One automated notification workflow (Email / Telegram)',
+          'Basic lead status pipeline',
+          'Testing and handover + one training session',
+          'Two revision rounds included',
+        ],
+      },
+      {
+        id: 'automation-lead-pro',
+        name: 'Lead Automation Pro',
+        tagline: 'For businesses receiving leads from multiple channels',
+        priceINR: 34999,
+        priceUSD: 425,
+        timeline: '10 to 14 business days',
+        isPopular: true,
+        isHeroOffer: true,
+        inheritsText: 'Everything in Starter, plus:',
+        features: [
+          'CRM pipeline configuration for up to two agreed lead sources',
+          'Website form integration + Meta Lead Ads integration',
+          'Lead assignment rules and escalation triggers',
+          'Up to three workflow automations',
+          'Automated email notifications and customer follow-ups',
+          'Basic reporting dashboard for lead volume and status',
+          'Testing, staff training, documentation, and handover',
+        ],
+      },
+      {
+        id: 'automation-business-premium',
+        name: 'Business Automation Premium',
+        tagline: 'Connected sales and operations workflow with AI assistance',
+        priceINR: 69999,
+        priceUSD: 850,
+        timeline: '15 to 20 business days',
+        inheritsText: 'Everything in Lead Automation Pro, plus:',
+        features: [
+          'CRM configuration and custom fields for up to three data sources',
+          'Up to five workflow automations and lead assignment rules',
+          'Multi-step email follow-up sequences',
+          'Sales pipeline and conversion reporting configuration',
+          'Approved AI FAQ or internal-assistance workflow (where suitable)',
+          'Integration testing, error handling, and security checks',
+          'Full documentation, training, and two revision rounds',
         ],
       },
     ],
   },
 ];
 
-// Alias SERVICES_DATA to the 4 core pillars for the new architecture
-export const SERVICES_DATA: ServicePackage[] = FOUR_PILLARS_SERVICES;
+// Alias SERVICES_DATA to the 4 core pillars for backward compatibility with 4-pillar tests and UI
+export const SERVICES_DATA: ServicePackage[] = FOUR_PILLARS_SERVICES.slice(0, 4);
 
-// Helper to look up services by either new pillar ID or legacy slug
+// All 5 services catalogue including CRM & Automation
+export const ALL_SERVICES_CATALOGUE: ServicePackage[] = FOUR_PILLARS_SERVICES;
+
+// Helper to look up services by ID or legacy slug
 export function getServiceById(id: string): ServicePackage | undefined {
-  const match = SERVICES_DATA.find((s) => s.id === id || s.slug === id);
+  const match = ALL_SERVICES_CATALOGUE.find((s) => s.id === id || s.slug === id);
   if (match) return match;
-  // Fallbacks for legacy links/queries
-  if (['website', 'landing', 'ui-ux', 'dashboard'].includes(id)) return SERVICES_DATA[0];
-  if (['graphics', 'brand'].includes(id)) return SERVICES_DATA[1];
-  if (['video'].includes(id)) return SERVICES_DATA[2];
-  if (['meta-ads'].includes(id)) return SERVICES_DATA[3];
+  // Fallbacks for legacy queries
+  if (['website', 'landing', 'ui-ux', 'dashboard', 'ecommerce'].includes(id)) return FOUR_PILLARS_SERVICES[0];
+  if (['graphics', 'brand'].includes(id)) return FOUR_PILLARS_SERVICES[1];
+  if (['video'].includes(id)) return FOUR_PILLARS_SERVICES[2];
+  if (['meta-ads', 'google-ads'].includes(id)) return FOUR_PILLARS_SERVICES[3];
+  if (['automation', 'crm'].includes(id)) return FOUR_PILLARS_SERVICES[4];
   return undefined;
 }
 
 // =========================================================================
 // 2. THE THREE MONTHLY RETAINER SERVICES (RECURRING SUBSCRIPTIONS)
+// Aligned with Section 3, 4, 6 & 7 of the catalogue
 // =========================================================================
 
 export const MONTHLY_RETAINERS: RetainerPlan[] = [
@@ -569,255 +714,526 @@ export const MONTHLY_RETAINERS: RetainerPlan[] = [
     id: 'social-media-retainer',
     num: '01',
     name: 'Social Media Creative Retainer',
-    shortName: 'Social Retainer',
-    tagline: 'For brands that need consistent visual content',
-    idealFor: 'D2C brands, local businesses, institutions, and founders wanting daily brand consistency.',
-    priceRangeINR: '₹12,000 – ₹25,000 / month',
-    priceRangeUSD: '$150 – $300 / month',
-    startingPriceINR: 12000,
-    startingPriceUSD: 150,
+    shortName: 'Creative Retainer',
+    tagline: 'For brands that need consistent, high-impact visual content',
+    idealFor: 'D2C brands, institutions, founders, and businesses requiring regular social presence.',
+    priceRangeINR: '₹19,999 – ₹54,999 / month',
+    priceRangeUSD: '$240 – $670 / month',
+    startingPriceINR: 19999,
+    startingPriceUSD: 240,
     includes: [
-      '12 to 20 static posts and carousels per month (plan-defined)',
-      'Monthly strategic creative calendar aligned with your promos',
-      'Branded promotional and product announcement designs',
-      'Platform-specific adaptations (Instagram, LinkedIn, X, Facebook)',
+      '12 to 20 static creatives and multi-slide carousels per month',
+      'Monthly content calendar aligned with product launches & campaigns',
+      'Caption and CTA suggestions crafted for high engagement',
+      'Brand-consistent design system and platform-specific adaptations',
       'One monthly review and performance-informed creative improvements',
     ],
-    terms: 'Billed monthly in advance • 3-month initial commitment',
+    terms: 'Billed monthly in advance • 3-month recommended initial commitment',
     limits: [
-      'Excludes daily community management & comments',
-      'Excludes on-site photography shoots',
-      'Up to 2 revision rounds per creative piece',
+      'Excludes daily community management & comments unless contracted',
+      'Client supplies footage, product assets, and approved claims',
+      'Two consolidated revision rounds per creative batch',
     ],
   },
   {
     id: 'reels-video-retainer',
     num: '02',
-    name: 'Reels & Video Retainer',
+    name: 'Reels & Video Content Retainer',
     shortName: 'Reels Retainer',
     tagline: 'For creators, founders and businesses publishing regularly',
     idealFor: 'Content creators, coaches, personal brands, and businesses producing regular video.',
-    priceRangeINR: '₹10,000 – ₹30,000 / month',
-    priceRangeUSD: '$120 – $360 / month',
-    startingPriceINR: 10000,
-    startingPriceUSD: 120,
+    priceRangeINR: '₹17,999 – ₹35,999 / month',
+    priceRangeUSD: '$220 – $440 / month',
+    startingPriceINR: 17999,
+    startingPriceUSD: 220,
     includes: [
-      '8 to 16 short-form video edits per month (plan-defined)',
+      '8 to 12 short-form video edits per month (up to 60s each)',
       'Dynamic captions, transitions, pacing cuts, and kinetic sound design',
       'Branded styling, intro hook graphics, and lower thirds',
       'Vertical 9:16 exports optimized for Reels, Shorts, and TikTok',
-      '1 to 2 revision rounds per video defined by plan tier',
+      'One to two revision rounds per video defined by plan tier',
     ],
-    terms: 'Billed monthly in advance • 3-month initial commitment',
+    terms: 'Billed monthly in advance • 3-month recommended initial commitment',
     limits: [
-      'Client supplies raw video footage & audio',
-      'Scripting & filming available as custom add-ons',
+      'Client supplies raw video footage & audio assets',
+      'On-location filming available starting at ₹14,999 per half-day',
       'Advanced 3D animation quoted separately',
     ],
   },
   {
     id: 'ads-management-retainer',
     num: '03',
-    name: 'Ads Management Retainer',
+    name: 'Performance Marketing Retainer',
     shortName: 'Ads Retainer',
-    tagline: 'For businesses that need ongoing paid acquisition',
+    tagline: 'For businesses that need ongoing paid acquisition and lead generation',
     idealFor: 'Startups, e-commerce, real estate, and local businesses running active acquisition campaigns.',
-    priceRangeINR: '₹15,000 – ₹35,000+ / month',
-    priceRangeUSD: '$180 – $425+ / month',
-    startingPriceINR: 15000,
+    priceRangeINR: '₹14,999 – ₹39,999 / month',
+    priceRangeUSD: '$180 – $480 / month',
+    startingPriceINR: 14999,
     startingPriceUSD: 180,
     includes: [
-      'End-to-end Meta Ads campaign management & daily optimization',
-      'Continuous audience testing, bid scaling, and negative keyword pruning',
+      'Meta Ads & Google Ads campaign management & weekly optimization',
+      'Audience and keyword research with continuous A/B testing',
       'Defined monthly ad creative allowance (4–8 refreshed ad creatives/mo)',
       'Pixel, CAPI, and conversion event tracking verification',
       'Transparent monthly performance report, ROAS audit & strategy call',
     ],
-    terms: 'Billed monthly in advance • 3-month initial commitment',
+    terms: 'Billed monthly in advance • 3-month recommended initial commitment',
     limits: [
-      'Advertising spend paid directly to Meta by client',
-      'Complex multi-brand or enterprise funnels quoted custom',
-      'No unrealistic viral or lead volume guarantees',
+      'Advertising spend paid directly by client to Meta or Google',
+      'Covers professional management service, not guaranteed sales/leads',
+      'Initial setup fees may apply for accounts needing extensive remediation',
+    ],
+  },
+];
+
+// Additional Retainers for SMM & SEO
+export const EXTENDED_RETAINERS = [
+  {
+    id: 'social-media-management',
+    name: 'Social Media Management',
+    priceRangeINR: '₹29,999 – ₹69,999 / month',
+    priceRangeUSD: '$360 – $850 / month',
+    startingPriceINR: 29999,
+    startingPriceUSD: 360,
+    tiers: [
+      { name: 'Social Presence', priceINR: 29999, priceUSD: 360, scope: '1 platform, 12 feed posts, 4 video edits, calendar, business-day monitoring.' },
+      { name: 'Social Growth', priceINR: 44999, priceUSD: 550, scope: 'Up to 2 platforms, 16 feed posts, 8 video edits, stories, strategy review.' },
+      { name: 'Social Media Partner', priceINR: 69999, priceUSD: 850, scope: 'Up to 3 platforms, 20 feed posts, 12 video edits, full community management.' },
+    ],
+  },
+  {
+    id: 'seo-organic-growth',
+    name: 'SEO & Organic Growth',
+    priceRangeINR: '₹14,999 – ₹49,999 / month',
+    priceRangeUSD: '$180 – $600 / month',
+    startingPriceINR: 14999,
+    startingPriceUSD: 180,
+    tiers: [
+      { name: 'SEO Foundation', priceINR: 14999, priceUSD: 180, scope: 'Technical audit, keyword research, on-page for 5 pages, monthly report.' },
+      { name: 'SEO Growth', priceINR: 29999, priceUSD: 360, scope: 'Up to 10 pages, technical fixes, internal linking, 4 content briefs/month.' },
+      { name: 'SEO Authority', priceINR: 49999, priceUSD: 600, scope: 'Up to 15 pages, 4 content deliverables/mo, link-earning roadmap, full reporting.' },
     ],
   },
 ];
 
 // =========================================================================
-// 3. GROWTH PARTNER RETAINER BUNDLES (COMBINED MONTHLY PLANS)
+// 3. MONTHLY RETAINER PACKAGES (SECTION 10 OF CATALOGUE)
+// Bundled recurring partnerships for ongoing growth
 // =========================================================================
 
 export const GROWTH_PARTNER_BUNDLES: GrowthBundle[] = [
   {
     id: 'creative-partner',
-    name: 'Creative Partner',
-    tagline: 'Social creatives + a focused batch of video edits',
-    monthlyFeeINR: 20000,
-    monthlyFeeUSD: 240,
-    feeDisplayINR: '₹20,000 / month',
-    feeDisplayUSD: '$240 / month',
-    bestFor: 'Founders & personal brands needing social consistency and regular reel output.',
+    name: 'Digital Support',
+    tagline: 'Up to 12 static creatives, website updates & monthly reporting',
+    monthlyFeeINR: 24999,
+    monthlyFeeUSD: 300,
+    feeDisplayINR: '₹24,999 / month',
+    feeDisplayUSD: '$300 / month',
+    bestFor: 'Established businesses wanting ongoing design maintenance and consistent visual content.',
     deliverables: [
-      '12 branded social media posts & carousels per month',
-      '4 short-form dynamic reel edits with kinetic captions',
-      'Monthly strategic creative calendar',
-      '1 monthly review & design iteration sprint',
-      'Dedicated creative Slack channel',
+      'Up to 12 static social creatives per month',
+      'Website content updates up to two hours monthly',
+      'Basic technical maintenance and security checks',
+      'Monthly performance reporting',
+      'One monthly strategy review meeting',
     ],
-    terms: 'Billed monthly in advance • 3-month minimum commitment',
+    terms: 'Billed monthly in advance • 3-month recommended initial commitment',
   },
   {
     id: 'growth-partner',
-    name: 'Growth Partner',
-    tagline: 'Social creatives + reels + Meta Ads management',
-    monthlyFeeINR: 35000,
-    monthlyFeeUSD: 425,
-    feeDisplayINR: '₹35,000 / month',
-    feeDisplayUSD: '$425 / month',
-    bestFor: 'Growing businesses wanting both content production and active customer acquisition.',
+    name: 'Digital Growth Partner',
+    tagline: '16 creatives + 4 video edits + website updates + 1 marketing channel',
+    monthlyFeeINR: 44999,
+    monthlyFeeUSD: 550,
+    feeDisplayINR: '₹44,999 / month',
+    feeDisplayUSD: '$550 / month',
+    bestFor: 'Growing businesses wanting both continuous content production and active customer acquisition.',
     isPopular: true,
     deliverables: [
-      '16 branded social media posts & carousels per month',
-      '8 dynamic short-form video edits with motion graphics',
-      'Full-funnel Meta Ads campaign management & scaling',
-      '4 bespoke ad creatives refreshed each month',
-      'Bi-weekly performance reporting & ROAS strategy call',
+      'Up to 16 static social creatives per month',
+      'Four short-form video edits per month (up to 30s each)',
+      'Website updates up to four hours monthly',
+      'One agreed marketing channel for ongoing support',
+      'Monthly performance review & basic lead-funnel recommendations',
     ],
-    terms: 'Billed monthly in advance • Ad spend paid directly to Meta • 3-month commitment',
+    terms: 'Billed monthly in advance • Ad spend paid directly to platform • 3-month commitment',
   },
   {
     id: 'full-service-partner',
-    name: 'Full-Service Partner',
-    tagline: 'Higher content volume, video production and advertising management',
-    monthlyFeeINR: 50000,
-    monthlyFeeUSD: 600,
-    feeDisplayINR: '₹50,000 – ₹65,000+ / month',
-    feeDisplayUSD: '$600 – $800+ / month',
-    bestFor: 'Scaleups & active brands needing a complete external creative + performance team.',
+    name: 'Digital Experience Partner',
+    tagline: '20 creatives + 8 video edits + 6 hrs website updates + CRM monitoring',
+    monthlyFeeINR: 74999,
+    monthlyFeeUSD: 900,
+    feeDisplayINR: '₹74,999 / month',
+    feeDisplayUSD: '$900 / month',
+    bestFor: 'Scaleups & active brands needing an end-to-end creative, engineering & conversion team.',
     deliverables: [
-      '24+ branded social creatives, carousels & banners per month',
-      '16 dynamic short-form video edits + custom motion graphics',
-      'Multi-campaign Meta Ads management & aggressive A/B testing',
-      'Continuous landing page conversion rate optimization (CRO) reviews',
-      'Weekly 1-on-1 strategy call with agency founder & priority turnaround',
+      'Up to 20 static creatives per month',
+      'Eight short-form video edits per month',
+      'Website updates up to six hours monthly',
+      'CRM and automation monitoring for agreed workflows',
+      'Monthly marketing and conversion review',
+      'Priority support during agreed business hours',
     ],
-    terms: 'Billed monthly in advance • Ad spend paid directly to Meta • 3-month commitment',
+    terms: 'Billed monthly in advance • Ad spend paid directly to platform • 3-month commitment',
   },
 ];
 
 // =========================================================================
-// 4. BUNDLE: STARTUP LAUNCH KIT
+// 4. WEBSITE + BRANDING + AUTOMATION BUNDLES (SECTION 9 OF CATALOGUE)
+// One-time project packages for full digital transformation
 // =========================================================================
 
+export const WEBSITE_BRAND_AUTOMATION_BUNDLES: ProjectBundle[] = [
+  {
+    id: 'bundle-business-launch',
+    num: '01',
+    name: 'Business Launch',
+    tagline: 'Brand Essentials + 5-page website + WhatsApp integration + 5 creatives',
+    priceINR: 59999,
+    priceUSD: 725,
+    bestFor: 'New service businesses establishing their credible digital presence.',
+    timeline: '2 to 3 weeks',
+    deliverables: [
+      'Brand Essentials (Logo, colour palette & typography)',
+      'Business website up to five pages (Next.js responsive)',
+      'WhatsApp contact and lead inquiry form integration',
+      'Basic on-page SEO and Google Analytics setup',
+      'Five branded launch social media creatives',
+      'Handover and admin training session',
+    ],
+    terms: '50% advance, 30% milestone, 20% before final deployment',
+  },
+  {
+    id: 'bundle-brand-growth',
+    num: '02',
+    name: 'Brand & Growth Kit',
+    tagline: 'Brand Identity Pro + 5-page site + 10 creatives + 4 reels + CRM lead capture',
+    priceINR: 99999,
+    priceUSD: 1200,
+    bestFor: 'Businesses ready to improve their brand presentation and inquiry workflow.',
+    timeline: '3 to 4 weeks',
+    isHeroOffer: true,
+    deliverables: [
+      'Brand Identity Pro (Discovery, 2 directions, stylebook & stationery)',
+      'Business website up to five pages with CMS capabilities',
+      'Ten launch social creatives + four short-form video edits',
+      'Lead capture form with one basic CRM / email notification workflow',
+      'Analytics and conversion-event setup (GA4 & Meta Pixel)',
+      'Full launch support and admin handover',
+    ],
+    terms: '50% advance, 30% design approval, 20% before deployment',
+  },
+  {
+    id: 'bundle-digital-premium',
+    num: '03',
+    name: 'Digital Business Premium',
+    tagline: 'Complete Brand System + 8-page CMS site + multi-channel CRM automation',
+    priceINR: 149999,
+    priceUSD: 1800,
+    bestFor: 'Established businesses wanting a coordinated brand, website and lead-management system.',
+    timeline: '4 to 6 weeks',
+    deliverables: [
+      'Complete Brand System (Workshop, guidelines, stationery & 15 templates)',
+      'Website up to eight pages with agreed CMS integration',
+      'CRM pipeline configuration for up to three lead sources',
+      'Up to three workflow automations with email follow-up sequences',
+      'Twelve social creatives + six short-form video edits',
+      'Analytics, conversion telemetry & reporting setup',
+      'Launch strategy and staff handover training',
+    ],
+    terms: '50% advance, 30% milestone, 20% before final transfer',
+  },
+];
+
+// Startup Launch Kit mapped to the Brand & Growth Bundle (Section 9)
 export const STARTUP_LAUNCH_KIT = {
   id: 'startup-kit',
-  name: 'Full-Service Brand & Growth Kit',
-  subtitle: 'The complete digital foundation: branding, high-converting landing page, graphics, and Meta ads all under one roof.',
-  priceINR: 75000,
-  priceUSD: 900,
-  originalINR: 95000,
-  originalUSD: 1150,
-  savingsINR: 20000,
-  savingsUSD: 250,
+  name: 'Brand & Growth Kit',
+  subtitle: 'The coordinated digital launchpack: Brand Identity Pro, 5-page custom website, 10 launch creatives, 4 video edits, and CRM lead capture.',
+  priceINR: 99999,
+  priceUSD: 1200,
+  originalINR: 125000,
+  originalUSD: 1500,
+  savingsINR: 25000,
+  savingsUSD: 300,
   timeline: '3 to 4 weeks',
   includes: [
     {
-      title: 'Brand Identity Standard',
-      desc: 'Complete logo suite, full brand guidelines, 6 social templates, and typography rules.',
-      valueINR: 30000,
-      valueUSD: 360,
+      title: 'Brand Identity Pro',
+      desc: 'Discovery, competitor review, 2 directions, expanded visual identity, stylebook & letterhead.',
+      valueINR: 39999,
+      valueUSD: 480,
     },
     {
-      title: 'High-Converting Web Experience',
-      desc: 'Custom 5-page responsive website or flagship landing page with CMS and analytics.',
-      valueINR: 50000,
+      title: 'Business Website Pro',
+      desc: 'Up to 5 custom responsive pages, WhatsApp integration, basic SEO, and analytics setup.',
+      valueINR: 49999,
       valueUSD: 600,
     },
     {
-      title: 'Meta Ads & Content Launchpack',
-      desc: '4 ad creatives + 2 video edits + campaign architecture ready for paid acquisition.',
-      valueINR: 15000,
-      valueUSD: 190,
+      title: 'Creative Launchpack & CRM Sync',
+      desc: '10 launch creatives, 4 short-form video edits, lead capture form, and 1 automated CRM workflow.',
+      valueINR: 35000,
+      valueUSD: 420,
     },
   ],
 };
 
-export const ADD_ONS_DATA: AddOn[] = [
+// =========================================================================
+// 5. RECOMMENDED HERO SALES OFFERS (SECTION 14 OF CATALOGUE)
+// "Lead with three offers, not the entire catalogue."
+// =========================================================================
+
+export const PRIMARY_HERO_OFFERS = [
   {
-    id: 'extra-page',
-    name: 'Extra Web Page',
-    priceINR: 4000,
-    priceUSD: 50,
-    unit: 'per page',
-    description: 'Custom designed and developed responsive page added to any web package.',
+    num: '01',
+    name: 'Business Website Pro',
+    priceINR: 49999,
+    priceUSD: 600,
+    tagline: 'The primary offer for businesses with weak or outdated websites.',
+    badge: 'CORE OFFER #1',
+    scope: 'Up to 5 custom responsive pages, custom UI in Figma, WhatsApp & contact forms, basic SEO, analytics, and admin training.',
+    timeline: '12 to 20 business days',
+    ctaLink: '/contact?service=digital-experiences&tier=web-business-pro',
   },
   {
-    id: 'extra-revision',
-    name: 'Extra Revision Round',
-    priceINR: 2000,
-    priceUSD: 25,
-    unit: 'per round',
-    description: 'One additional structured round of design feedback and polish.',
+    num: '02',
+    name: 'Brand & Growth Bundle',
+    priceINR: 99999,
+    priceUSD: 1200,
+    tagline: 'The bundled offer for businesses needing both a stronger identity and a website.',
+    badge: 'HERO BUNDLE #2',
+    isPopular: true,
+    scope: 'Brand Identity Pro + 5-page business site + 10 creatives + 4 video edits + CRM lead capture + conversion analytics.',
+    timeline: '3 to 4 weeks',
+    ctaLink: '/contact?service=startup-kit',
   },
   {
-    id: 'reel-editing',
-    name: 'Single Reel / Video Edit',
-    priceINR: 1500,
-    priceUSD: 20,
-    unit: 'per video',
-    description: 'Dynamic kinetic captions, sound design, and viral pacing for short-form video.',
-  },
-  {
-    id: 'pitch-deck-slide',
-    name: 'Extra Pitch Deck Slides',
-    priceINR: 1500,
-    priceUSD: 20,
-    unit: 'per slide',
-    description: 'Bespoke investor-ready presentation design in Figma or PowerPoint.',
-  },
-  {
-    id: 'rush-delivery',
-    name: 'Rush Delivery',
-    priceINR: 0,
-    priceUSD: 0,
-    unit: '+30% of total',
-    description: 'Expedited sprint timeline with priority queue and weekend execution.',
+    num: '03',
+    name: 'Lead Automation Pro',
+    priceINR: 34999,
+    priceUSD: 425,
+    tagline: 'The upsell for businesses that already receive inquiries but struggle to organize or follow up.',
+    badge: 'AUTOMATION OFFER #3',
+    scope: 'CRM pipeline configuration, up to 2 lead sources, Meta Lead Ads integration, 3 workflow automations & reporting dashboard.',
+    timeline: '10 to 14 business days',
+    ctaLink: '/contact?service=crm-automation&tier=automation-lead-pro',
   },
 ];
 
+// =========================================================================
+// 6. COMPREHENSIVE ADD-ONS DATA
+// =========================================================================
+
+export const ADD_ONS_DATA: AddOn[] = [
+  // Website Add-ons
+  {
+    id: 'extra-page',
+    name: 'Additional Standard Web Page',
+    priceINR: 5000,
+    priceUSD: 60,
+    unit: 'per page',
+    category: 'Website',
+    description: 'Custom designed and developed responsive page added to any web package.',
+  },
+  {
+    id: 'advanced-landing-page',
+    name: 'Advanced Landing Page',
+    priceINR: 14999,
+    priceUSD: 180,
+    unit: 'one-time',
+    category: 'Website',
+    description: 'Bespoke high-converting landing page with custom micro-animations.',
+  },
+  {
+    id: 'cms-setup',
+    name: 'CMS / Blog Setup',
+    priceINR: 12999,
+    priceUSD: 160,
+    unit: 'one-time',
+    category: 'Website',
+    description: 'Self-serve headless CMS configuration for blog or resource directories.',
+  },
+  {
+    id: 'booking-integration',
+    name: 'Booking / Appointment Integration',
+    priceINR: 9999,
+    priceUSD: 120,
+    unit: 'one-time',
+    category: 'Website',
+    description: 'Calendar scheduling and automatic appointment booking flows.',
+  },
+  {
+    id: 'website-copywriting',
+    name: 'Website Copywriting',
+    priceINR: 2500,
+    priceUSD: 30,
+    unit: 'per page',
+    category: 'Website',
+    description: 'Conversion-engineered copywriting aligned with your brand voice.',
+  },
+  {
+    id: 'website-maintenance',
+    name: 'Website Maintenance & Support',
+    priceINR: 7999,
+    priceUSD: 95,
+    unit: 'per month',
+    category: 'Website',
+    description: 'Routine updates, security checks, and minor content adjustments.',
+  },
+  // Branding Add-ons
+  {
+    id: 'extra-logo-concept',
+    name: 'Additional Logo Concept',
+    priceINR: 5000,
+    priceUSD: 60,
+    unit: 'per concept',
+    category: 'Branding',
+    description: 'One additional distinct creative logo direction explored.',
+  },
+  {
+    id: 'company-profile',
+    name: 'Company Profile Design',
+    priceINR: 14999,
+    priceUSD: 180,
+    unit: 'one-time',
+    category: 'Branding',
+    description: 'Professional multi-page company profile brochure in print & digital PDF.',
+  },
+  {
+    id: 'pitch-deck',
+    name: 'Pitch Deck Design',
+    priceINR: 19999,
+    priceUSD: 240,
+    unit: 'one-time',
+    category: 'Branding',
+    description: '10–15 slide bespoke investor-ready pitch presentation in Figma / PDF.',
+  },
+  {
+    id: 'packaging-design',
+    name: 'Packaging Design',
+    priceINR: 14999,
+    priceUSD: 180,
+    unit: 'per SKU',
+    category: 'Branding',
+    description: 'Print-ready structural packaging, label, or box artwork.',
+  },
+  // Automation Add-ons
+  {
+    id: 'whatsapp-click-chat',
+    name: 'WhatsApp Click-to-Chat Setup',
+    priceINR: 3999,
+    priceUSD: 50,
+    unit: 'one-time',
+    category: 'Automation',
+    description: 'Direct interactive WhatsApp chat button with pre-filled messaging.',
+  },
+  {
+    id: 'crm-form-integration',
+    name: 'Website Form to CRM Sync',
+    priceINR: 9999,
+    priceUSD: 120,
+    unit: 'one-time',
+    category: 'Automation',
+    description: 'Direct API webhook sync from lead forms into your CRM pipeline.',
+  },
+  {
+    id: 'official-whatsapp-api',
+    name: 'Official WhatsApp Business Platform',
+    priceINR: 19999,
+    priceUSD: 240,
+    unit: 'one-time',
+    category: 'Automation',
+    description: 'Meta Cloud API / Business Platform setup for automated message templates.',
+  },
+  {
+    id: 'ai-faq-assistant',
+    name: 'AI FAQ Assistant Workflow',
+    priceINR: 24999,
+    priceUSD: 300,
+    unit: 'one-time',
+    category: 'Automation',
+    description: 'Custom AI conversational agent trained on your business documentation.',
+  },
+  {
+    id: 'extra-revision',
+    name: 'Additional Revision Round',
+    priceINR: 3000,
+    priceUSD: 40,
+    unit: 'per round',
+    category: 'General',
+    description: 'One additional consolidated feedback and refinement round.',
+  },
+];
+
+// =========================================================================
+// 7. STANDALONE SERVICE PRICE LIST (SECTION 11 OF CATALOGUE)
+// =========================================================================
+
+export const STANDALONE_PRICES_TABLE = [
+  { service: 'Logo Design', startingPriceINR: '₹7,999', startingPriceUSD: '$95' },
+  { service: 'Brand Identity System', startingPriceINR: '₹19,999', startingPriceUSD: '$240' },
+  { service: 'Company Profile', startingPriceINR: '₹14,999', startingPriceUSD: '$180' },
+  { service: 'Pitch Deck Design', startingPriceINR: '₹19,999', startingPriceUSD: '$240' },
+  { service: 'Social Media Static Creative', startingPriceINR: '₹1,499', startingPriceUSD: '$20' },
+  { service: 'Carousel Design (up to 5 slides)', startingPriceINR: '₹3,499', startingPriceUSD: '$45' },
+  { service: 'YouTube Thumbnail', startingPriceINR: '₹1,999', startingPriceUSD: '$25' },
+  { service: 'Short-Form Video Edit', startingPriceINR: '₹2,499', startingPriceUSD: '$30' },
+  { service: 'Landing Page Launch', startingPriceINR: '₹24,999', startingPriceUSD: '$300' },
+  { service: 'Five-Page Business Website', startingPriceINR: '₹49,999', startingPriceUSD: '$600' },
+  { service: 'Premium CMS Website', startingPriceINR: '₹89,999', startingPriceUSD: '$1,100' },
+  { service: 'E-Commerce Website', startingPriceINR: '₹99,999', startingPriceUSD: '$1,200' },
+  { service: 'Website Maintenance', startingPriceINR: '₹7,999/month', startingPriceUSD: '$95/mo' },
+  { service: 'Social Creative Retainer', startingPriceINR: '₹19,999/month', startingPriceUSD: '$240/mo' },
+  { service: 'Social Media Management', startingPriceINR: '₹29,999/month', startingPriceUSD: '$360/mo' },
+  { service: 'Ads Management', startingPriceINR: '₹14,999/month', startingPriceUSD: '$180/mo' },
+  { service: 'SEO Services', startingPriceINR: '₹14,999/month', startingPriceUSD: '$180/mo' },
+  { service: 'CRM Implementation', startingPriceINR: '₹14,999', startingPriceUSD: '$180' },
+  { service: 'Business Automation Project', startingPriceINR: '₹14,999', startingPriceUSD: '$180' },
+  { service: 'Custom CRM Development', startingPriceINR: '₹99,999+', startingPriceUSD: '$1,200+' },
+];
+
+// =========================================================================
+// 8. COMMERCIAL TERMS & PROFIT PROTECTION (SECTION 12 OF CATALOGUE)
+// =========================================================================
+
 export const TERMS_CONDITIONS = [
-  '50% advance deposit to start project sprints, 50% upon completion before source file delivery.',
-  'Monthly retainers billed in advance on the 1st of each month with a 3-month initial commitment.',
-  '2 structured revision rounds included with each deliverable.',
-  'Timelines start after completed onboarding brief and advance deposit are received.',
-  'Full source files, Figma design tokens, and intellectual property transfer on final payment.',
-  'Client pays advertising spend directly to Meta; ad budgets are not included in management fees.',
-  'Quotes are valid for 14 days from presentation.',
+  'One-Time Projects: 50% advance to reserve project, 30% after design approval/milestone, 20% before final deployment and file handover.',
+  'Monthly Retainers: Billed monthly in advance on the 1st of each month with a recommended initial commitment of 3 months.',
+  'Revision Policy: Each package includes the stated number of consolidated revision rounds to refine approved directions.',
+  'Client Responsibilities: Client supplies business info, brand assets, raw footage, approvals, and legally usable content in a timely manner.',
+  'Third-Party Charges: Domains, hosting, CRM subscriptions, ad spend, WhatsApp Platform fees, and paid software are billed separately.',
+  '100% Asset & IP Ownership: Final approved deliverables and production code transfer to the client upon receipt of full payment.',
+  'Taxes & Legal: Prices exclude applicable GST (18%) and statutory charges unless explicitly stated.',
 ];
 
 export const FAQ_DATA: FAQItem[] = [
   {
-    q: 'How does PixelMutiny’s four-pillar structure work?',
-    a: 'We organize our agency around four natural areas of growth: Digital Experiences (websites & apps), Brand Identity & Design (logos & systems), Content & Creative Production (reels & video), and Performance Marketing (Meta Ads). You can hire us for a one-time project sprint or on a recurring monthly retainer.',
+    q: 'How does PixelMutiny’s service structure work?',
+    a: 'We organize our agency around core pillars of digital growth: Digital Experiences (websites & e-commerce), Brand Identity & Design, Content & Video Production, Performance Marketing, and CRM Business Automation. You can hire us for a fixed-scope project sprint or on a recurring monthly retainer.',
   },
   {
-    q: 'What is the difference between one-time projects and monthly retainers?',
-    a: 'One-time projects build something new—such as a 10-page website, a new brand identity, or an initial ad campaign setup—with a fixed scope and delivery milestone. Monthly retainers help you keep growing with predictable creative output (12–20 posts, 8–16 reels, or active Meta Ads scaling) billed monthly.',
+    q: 'What are the three primary recommended lead offers?',
+    a: 'Our three hero offers are: (1) Business Website Pro (₹49,999) for businesses needing a professional 5-page web presence, (2) Brand & Growth Bundle (₹99,999) for companies needing both branding and a website, and (3) Lead Automation Pro (₹34,999) for businesses receiving inquiries that need organized CRM workflows.',
   },
   {
-    q: 'Why do you have defined deliverable caps instead of "unlimited" work?',
-    a: 'Agencies offering "unlimited" designs inevitably compromise on turnaround time, quality, or assign your work to entry-level temps. PixelMutiny delivers bespoke, senior-crafted work with explicit deliverable counts, clear review rounds, and fast 48-hour turnarounds.',
+    q: 'What is the payment milestone breakdown for one-time projects?',
+    a: 'Standard projects follow a 50/30/20 milestone schedule: 50% advance deposit to reserve the sprint, 30% upon design approval milestone, and 20% prior to final production handover and domain deployment.',
   },
   {
-    q: 'Is ad spend included in the Meta Ads pricing?',
-    a: 'No. Ad spend is paid directly by you to Meta via your connected billing method in Meta Ads Manager. Our pricing covers expert campaign architecture, audience targeting, ongoing optimization, reporting, and high-converting creative refreshes.',
+    q: 'Is Meta or Google ad spend included in the management fees?',
+    a: 'No. Advertising spend is paid directly by you to Meta or Google via your billing account. Our fee covers campaign architecture, creative production, audience targeting, tracking, weekly optimization, and strategic reporting.',
   },
   {
-    q: 'How do payments, commitments, and milestone schedules work?',
-    a: 'For one-time project packages, a 50% deposit locks in your sprint, with the remaining 50% due upon final approval before asset handover. For monthly retainers and Growth Partner bundles, billing occurs monthly in advance with a recommended 3-month commitment to allow marketing campaigns to mature.',
+    q: 'Do you offer unlimited revisions or unlimited designs?',
+    a: 'No. To ensure high senior-level craft and timely delivery, we never offer vague "unlimited" claims. Every package clearly specifies the exact number of deliverables, revision rounds, and turnaround timelines.',
   },
   {
-    q: 'Do I own the source files, intellectual property, and code?',
-    a: 'Yes, 100%. Upon receipt of final payment, full intellectual property, commercial usage rights, editable Figma source files, code repositories, vector graphics, and production exports belong entirely to you.',
+    q: 'Who owns the intellectual property and source code?',
+    a: 'Upon final invoice settlement, 100% of all custom Figma design tokens, vector source files, video edits, and production source code belong entirely to you with full commercial rights.',
   },
 ];
 
@@ -864,7 +1280,7 @@ export function getTierPrice(tier: PriceTier, currency: Currency): number {
   if (currency === 'PK_USD' || currency === 'PKR') {
     if (typeof tier.pricePKR === 'number') return tier.pricePKR;
     // For Pakistan visitors: strictly in millions of dollars (>= $100M)
-    if (tier.priceUSD <= 150) return 105000000;
+    if (tier.priceUSD <= 200) return 105000000;
     if (tier.priceUSD <= 500) return 180000000;
     return 250000000;
   }

@@ -80,7 +80,7 @@ export default async function CaseStudyPage({ params }) {
     image: project.heroImg,
     creator: {
       '@type': 'Organization',
-      name: 'PixelMutiny DigiMedia LLP',
+      name: 'PixelMutiny DigiMedia Private Limited',
       url: 'https://pixelmutiny.com',
     },
     datePublished: `${project.year}-01-01`,

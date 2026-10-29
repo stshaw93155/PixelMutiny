@@ -73,7 +73,7 @@ export default function ErrorBoundary({ error, reset }) {
       {/* Bottom telemetry */}
       <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-[#787884] gap-4 z-10">
         <span>SECURITY ENFORCED // NO DATA EXPOSED</span>
-        <span>PIXELMUTINY DIGIMEDIA LLP</span>
+        <span>PIXELMUTINY DIGIMEDIA PRIVATE LIMITED</span>
       </div>
     </div>
   );

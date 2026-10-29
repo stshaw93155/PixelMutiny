@@ -65,7 +65,7 @@ export default function NotFound() {
         {/* Telemetry metadata footer badge */}
         <div className="mt-12 pt-8 border-t border-white/10 w-full flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#5A6072] gap-2">
           <span>COORDINATE: [INDEX_MISS // 404]</span>
-          <span>PIXELMUTINY DIGIMEDIA LLP</span>
+          <span>PIXELMUTINY DIGIMEDIA PRIVATE LIMITED</span>
         </div>
       </div>
     </section>

@@ -236,25 +236,23 @@ function generateAiResponse({ message, userProfile = {}, history = [], currency 
     text.includes('budget') ||
     text.includes('estimate')
   ) {
-    const webPrice = isUSD ? '$950 (₹35,000)' : '₹35,000 ($950)';
-    const landingPrice = isUSD ? '$350 (₹20,000)' : '₹20,000 ($350)';
-    const uiPrice = isUSD ? '$450 (₹25,000)' : '₹25,000 ($450)';
-    const dashPrice = isUSD ? '$800 (₹45,000)' : '₹45,000 ($800)';
-    const brandPrice = isUSD ? '$200 (₹12,000)' : '₹12,000 ($200)';
-    const reelPrice = isUSD ? '$100 (₹6,000)' : '₹6,000 ($100)';
-    const metaPrice = isUSD ? '$250/mo (₹15,000/mo)' : '₹15,000/mo ($250/mo)';
-    const launchPrice = isUSD ? '$1,250 (₹75,000)' : '₹75,000 ($1,250)';
+    const webPrice = isUSD ? '$600 (₹49,999)' : '₹49,999 ($600)';
+    const landingPrice = isUSD ? '$300 (₹24,999)' : '₹24,999 ($300)';
+    const brandPrice = isUSD ? '$480 (₹39,999)' : '₹39,999 ($480)';
+    const autoPrice = isUSD ? '$425 (₹34,999)' : '₹34,999 ($425)';
+    const reelPrice = isUSD ? '$220 (₹17,999)' : '₹17,999 ($220)';
+    const metaPrice = isUSD ? '$180/mo (₹14,999/mo)' : '₹14,999/mo ($180/mo)';
+    const bundlePrice = isUSD ? '$1,200 (₹99,999)' : '₹99,999 ($1,200)';
 
     return {
       reply: `Here is our transparent, fixed-scope pricing structure (no hidden agency surprises):\n\n` +
-        `• **Website Design & Dev**: Starting at ${webPrice} (5 pages, CMS, SEO, 2–3 weeks)\n` +
-        `• **High-Converting Landing Page**: Starting at ${landingPrice} (5–7 day turnaround)\n` +
-        `• **UI/UX & Figma Systems**: Starting at ${uiPrice} (Interactive prototype & components)\n` +
-        `• **Web Apps & Dashboards**: Starting at ${dashPrice} (Data-dense SaaS interfaces)\n` +
-        `• **Brand Identity & Logo**: Starting at ${brandPrice} (Vector logos & complete brand book)\n` +
-        `• **Kinetic Reels & Video**: Starting at ${reelPrice} per reel pack\n` +
-        `• **Meta Ads & Performance**: Starting at ${metaPrice}\n` +
-        `• **Startup Launch Kit**: ${launchPrice} (Full brand + 5-page site + pitch deck + social assets, save over 25%)\n\n` +
+        `• **Business Website Pro**: Starting at ${webPrice} (Up to 5 pages, custom UI, SEO, 12–20 days)\n` +
+        `• **Landing Page Launch**: Starting at ${landingPrice} (Single focused page, 7–12 days)\n` +
+        `• **Brand Identity Pro**: Starting at ${brandPrice} (Logo suite, stylebook, 10 templates, 10–15 days)\n` +
+        `• **Lead Automation Pro**: Starting at ${autoPrice} (CRM pipeline, Meta leads, automated follow-ups)\n` +
+        `• **Short-Form Video Batch**: Starting at ${reelPrice} (Batch of 8 edits with kinetic captions)\n` +
+        `• **Performance Marketing**: Starting at ${metaPrice} (Meta / Google Ads management)\n` +
+        `• **Brand & Growth Bundle**: ${bundlePrice} (Brand Pro + 5-page site + 10 creatives + 4 video edits + CRM sync, save ₹25,000)\n\n` +
         `Would you like me to calculate a custom scope estimate, mail your brief, or schedule a sprint call?`,
       action: 'show_scope_calculator',
       chips: [

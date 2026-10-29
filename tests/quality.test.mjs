@@ -63,9 +63,9 @@ test('1. Pricing Data & Packages Integrity', async (t) => {
     }
   });
 
-  await t.test('Each Service Package has 3 Valid Tiers with Non-Zero Pricing', () => {
+  await t.test('Each Service Package has Valid Tiers with Non-Zero Pricing', () => {
     for (const service of SERVICES_DATA) {
-      assert.equal(service.tiers.length, 3, `Service ${service.name} must have exactly 3 tiers`);
+      assert.ok(service.tiers.length >= 3, `Service ${service.name} must have at least 3 tiers`);
       for (const tier of service.tiers) {
         assert.ok(tier.name, `Tier in ${service.name} missing name`);
         assert.ok(tier.priceINR > 0, `Tier ${tier.name} in ${service.name} has invalid INR price: ${tier.priceINR}`);

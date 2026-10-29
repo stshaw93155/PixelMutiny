@@ -9,28 +9,29 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'PixelMutiny DigiMedia — Break the Template. Built Different.',
   description:
-    'PixelMutiny DigiMedia LLP is a creative and digital studio that builds websites, dashboards, brand identities, content, and ad campaigns for brands and individuals who want to stand out instead of blend in.',
+    'PixelMutiny DigiMedia Private Limited is a strategy-led digital agency that builds websites, brand identities, creative production, and business automation workflows.',
   alternates: {
     canonical: '/',
   },
   keywords: [
     'PixelMutiny',
     'PixelMutiny DigiMedia',
-    'PixelMutiny DigiMedia LLP',
+    'PixelMutiny DigiMedia Private Limited',
     'Website Design & Development',
     'Landing Page Design',
     'UI/UX Design',
     'Dashboard Design & Development',
-    'Graphics Design',
-    'Reel & Video Editing',
-    'Logo & Brand Identity',
+    'Brand Identity & Design',
+    'CRM Implementation',
+    'Business Automation',
+    'Video Editing',
     'Meta Ads',
   ],
-  authors: [{ name: 'PixelMutiny DigiMedia LLP' }],
+  authors: [{ name: 'PixelMutiny DigiMedia Private Limited' }],
   openGraph: {
     title: 'PixelMutiny DigiMedia — Break the Template. Built Different.',
     description:
-      'PixelMutiny DigiMedia LLP is a creative and digital studio that builds websites, dashboards, brand identities, content, and ad campaigns for brands and individuals who want to stand out instead of blend in.',
+      'PixelMutiny DigiMedia Private Limited is a strategy-led digital agency that builds websites, brand identities, creative production, and business automation workflows.',
     url: '/',
     siteName: 'PixelMutiny DigiMedia',
     images: [

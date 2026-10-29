@@ -176,7 +176,7 @@ function ShellInner({ children }) {
                 Back to top ↑
               </button>
             </div>
-            <span>© 2026 PixelMutiny DigiMedia LLP. All rights reserved.</span>
+            <span>© 2026 PixelMutiny DigiMedia Private Limited. All rights reserved.</span>
           </div>
 
         </div>

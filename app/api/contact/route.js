@@ -128,7 +128,7 @@ async function sendResendEmails(lead) {
             <p>A senior partner is reviewing your scope and will reply within 24 business hours with our proposed sprint plan and exact estimate.</p>
             <p>If you prefer to speak sooner, feel free to message us directly on WhatsApp or reply to this email.</p>
             <br/>
-            <p>Best regards,<br/><strong>PixelMutiny Team</strong><br/>PixelMutiny DigiMedia LLP<br/>New Delhi, India</p>
+            <p>Best regards,<br/><strong>PixelMutiny Team</strong><br/>PixelMutiny DigiMedia Private Limited<br/>New Delhi, India</p>
           </div>
         `,
       }),

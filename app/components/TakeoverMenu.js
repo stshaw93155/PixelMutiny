@@ -328,7 +328,7 @@ export default function TakeoverMenu({ isOpen, onClose }) {
 
             <div className="flex items-center justify-between font-mono text-[10px] text-[var(--text-muted)] pt-2">
               <span>FRAMEWORK: XP_CORE_V4</span>
-              <span>© 2026 PIXELMUTINY DIGIMEDIA LLP</span>
+              <span>© 2026 PIXELMUTINY DIGIMEDIA PRIVATE LIMITED</span>
             </div>
           </div>
         </div>

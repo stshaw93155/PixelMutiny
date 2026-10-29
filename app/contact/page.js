@@ -47,12 +47,15 @@ function ContactFormContent() {
   const reducedMotion = useReducedMotion();
 
   const serviceParam = searchParams.get('service');
+  const bundleParam = searchParams.get('bundle');
   const tierParam = searchParams.get('tier');
   const addonParam = searchParams.get('addon');
 
   // Multi-select for services & add-ons initialized directly from URL parameters
   const [selectedServices, setSelectedServices] = useState(() => {
-    if (serviceParam === 'startup-kit') return ['Startup Launch Kit'];
+    if (serviceParam === 'startup-kit' || bundleParam === 'startup-kit' || bundleParam === 'bundle-brand-growth') {
+      return ['Brand & Growth Kit'];
+    }
     if (serviceParam) {
       const match = getServiceById(serviceParam);
       if (match) return [match.name];
@@ -199,15 +202,15 @@ function ContactFormContent() {
     let minTotal = 0;
     let timelines = [];
 
-    // Check if Startup Launch Kit selected
-    if (selectedServices.includes('Startup Launch Kit')) {
+    // Check if Brand & Growth Kit / Startup Launch Kit selected
+    if (selectedServices.includes('Brand & Growth Kit') || selectedServices.includes('Startup Launch Kit')) {
       minTotal += getLaunchKitPrice(currency).price;
       timelines.push('3 to 4 weeks');
     }
 
     // Check each selected service
     for (const serviceName of selectedServices) {
-      if (serviceName === 'Startup Launch Kit') continue;
+      if (serviceName === 'Brand & Growth Kit' || serviceName === 'Startup Launch Kit') continue;
       const servObj = SERVICES_DATA.find(
         (s) => s.name === serviceName || s.shortName === serviceName
       );
@@ -642,13 +645,13 @@ function ContactFormContent() {
                     </div>
                   </div>
 
-                  {/* Startup Launch Kit Option */}
+                  {/* Brand & Growth Kit / Startup Launchpack Option */}
                   <div>
                     <button
                       type="button"
-                      onClick={() => toggleService('Startup Launch Kit')}
+                      onClick={() => toggleService('Brand & Growth Kit')}
                       className={`w-full text-xs p-4 rounded-2xl border text-left transition-all flex items-center justify-between gap-3 cursor-pointer ${
-                        selectedServices.includes('Startup Launch Kit')
+                        selectedServices.includes('Brand & Growth Kit') || selectedServices.includes('Startup Launch Kit')
                           ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
                           : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
                       }`}
@@ -656,7 +659,7 @@ function ContactFormContent() {
                       <div className="flex items-center gap-2">
                         <Zap className="w-4 h-4 text-[#1F3FFF]" />
                         <span className="font-display font-bold text-sm text-[#0A0F1F]">
-                          Startup Launch Kit (Brand + Landing + Meta Ads)
+                          Brand &amp; Growth Kit (Brand Identity Pro + Website + CRM Sync)
                         </span>
                       </div>
                       <span className="text-xs font-bold text-[#1F3FFF]">
