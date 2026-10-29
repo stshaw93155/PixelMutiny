@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useSound } from '../components/SoundManager';
 import { useCurrency } from '../components/useCurrency';
 import { useReducedMotion } from '@/lib/motion';
@@ -10,7 +11,6 @@ import {
   formatPrice,
   COMPANY_LEGAL_NAME,
 } from '../../data/pricing';
-import { PROJECTS } from '../data/projects';
 import {
   Check,
   Sparkles,
@@ -22,8 +22,7 @@ import {
   Layers,
   ArrowUpRight,
   Flame,
-  FileText,
-  Sliders,
+  Maximize2,
   CheckCircle2,
 } from 'lucide-react';
 
@@ -31,8 +30,31 @@ export default function ServicesPage() {
   const { currency } = useCurrency();
   const [openFaq, setOpenFaq] = useState(0);
   const [dotPos, setDotPos] = useState({ x: '50%', y: '50%' });
-  const { playClick } = useSound();
+  const { playClick, playHover } = useSound();
   const reducedMotion = useReducedMotion();
+
+  // Section references for smooth sticky/jump navigation
+  const coreOffersRef = useRef(null);
+  const capabilitiesRef = useRef(null);
+  const selectedWorkRef = useRef(null);
+  const websitePricingRef = useRef(null);
+  const subscriptionsRef = useRef(null);
+  const bundlesRef = useRef(null);
+  const customScopeRef = useRef(null);
+  const faqRef = useRef(null);
+
+  const scrollToRef = (ref) => {
+    playClick();
+    if (ref && ref.current) {
+      const topOffset = 80;
+      const elementPosition = ref.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   // Mouse coordinate tracker for patron-puntos illuminated halo
   const handleMouseMove = (e) => {
@@ -51,15 +73,17 @@ export default function ServicesPage() {
     return formatPrice(usd, 'USD');
   };
 
-  // Select 3 featured projects for portfolio showcase
+  // 3 Featured showcase projects
   const featuredProjects = [
     {
       id: 'veyra-legal',
       name: 'Veyra Legal',
+      clientInitial: 'V',
       designation: 'Flagship Digital Platform',
       category: 'Corporate Advisory Flagship',
+      tag: 'Next.js Flagship',
       challenge:
-        'An elite corporate law firm handling high-stakes cross-border transactions had an outdated web presence that failed to convey their institutional authority and precision.',
+        'An elite corporate law firm handling landmark cross-border transactions had an outdated digital presence that failed to convey their institutional authority and precision.',
       solution:
         'We architected a juristic-inspired digital flagship in Next.js with interactive deal dossiers, private consultation inquiry flows, and sub-second performance.',
       image: '/projects/veyra-legal.png',
@@ -68,20 +92,24 @@ export default function ServicesPage() {
     {
       id: 'flow-task',
       name: 'FlowTask',
+      clientInitial: 'F',
       designation: 'Enterprise Product Systems',
       category: 'Intelligent Workspace Platform',
+      tag: 'UI/UX Systems',
       challenge:
         'Distributed engineering teams were juggling separate apps for sprint planning, resource tracking, and documentation, causing operational friction and lost velocity.',
       solution:
-        'We designed and built an ultra-fast Next.js platform with zero-latency state hydration, intuitive drag-and-drop boards, and keyboard-first shortcut navigation.',
+        'We engineered an ultra-fast Next.js platform with zero-latency state hydration, intuitive drag-and-drop boards, and keyboard-first shortcut navigation.',
       image: '/projects/flow-task.jpg',
       slug: 'flow-task',
     },
     {
       id: 'krono-pay',
       name: 'Krono Pay',
+      clientInitial: 'K',
       designation: 'Independent Design Exploration',
       category: 'Fintech Landing & 3D Assets',
+      tag: 'Fintech & 3D',
       challenge:
         'Competing against established payment processors with generic web templates that failed to convey technical differentiation and developer trust.',
       solution:
@@ -91,7 +119,7 @@ export default function ServicesPage() {
     },
   ];
 
-  // 6 Curated FAQs matching the brief exactly
+  // 6 Curated FAQs from the design brief
   const FAQS = [
     {
       q: 'What types of businesses do you work with?',
@@ -117,6 +145,17 @@ export default function ServicesPage() {
       q: 'How do we get started?',
       a: "Share your business, requirements, goals and timeline through our project inquiry form. We'll review the information and determine the next steps.",
     },
+  ];
+
+  const quickNavItems = [
+    { label: '01 // Core Offers', ref: coreOffersRef },
+    { label: '02 // Capabilities', ref: capabilitiesRef },
+    { label: '03 // Selected Work', ref: selectedWorkRef },
+    { label: '04 // Website Tiers', ref: websitePricingRef },
+    { label: '05 // Subscriptions', ref: subscriptionsRef },
+    { label: '06 // Bundles', ref: bundlesRef },
+    { label: '07 // Custom Scope', ref: customScopeRef },
+    { label: '08 // FAQ', ref: faqRef },
   ];
 
   return (
@@ -157,7 +196,7 @@ export default function ServicesPage() {
           <h1
             className="font-display font-extrabold tracking-tight text-[#0A0F1F] max-w-5xl"
             style={{
-              fontSize: 'clamp(36px, 5.6vw, 74px)',
+              fontSize: 'clamp(38px, 5.8vw, 76px)',
               lineHeight: 1.05,
             }}
           >
@@ -176,7 +215,9 @@ export default function ServicesPage() {
             <Link
               href="/contact"
               onClick={playClick}
-              className="btn-onlines-blue py-3.5 px-7 cursor-pointer font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:shadow"
+              onMouseEnter={playHover}
+              data-cursor="DISCUSS"
+              className="btn-onlines-blue py-3.5 px-8 font-bold tracking-wider uppercase flex items-center gap-2 shadow-md hover:shadow-xl transition-all"
             >
               <span>Discuss Your Project</span>
               <ArrowRight className="w-4 h-4" />
@@ -184,28 +225,76 @@ export default function ServicesPage() {
             <Link
               href="/works"
               onClick={playClick}
-              className="btn-onlines-outline py-3.5 px-7 cursor-pointer font-bold tracking-wider uppercase flex items-center gap-2"
+              onMouseEnter={playHover}
+              data-cursor="PORTFOLIO"
+              className="btn-onlines-outline py-3.5 px-8 font-bold tracking-wider uppercase flex items-center gap-2 transition-all"
             >
               <span>Explore Our Work</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
+
+          {/* Trust Value Badges Strip */}
+          <div className="mt-12 pt-8 border-t border-[#E4E6EB] flex flex-wrap items-center gap-6 sm:gap-10 text-xs text-[#5B6275]">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#1F3FFF]" />
+              <span className="font-semibold text-[#0A0F1F]">100% Bespoke Code</span>
+              <span className="hidden sm:inline text-[#5B6275]">— Zero cookie-cutter templates</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#1F3FFF]" />
+              <span className="font-semibold text-[#0A0F1F]">Fixed 2-Week Sprints</span>
+              <span className="hidden sm:inline text-[#5B6275]">— Guaranteed milestone velocity</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#1F3FFF]" />
+              <span className="font-semibold text-[#0A0F1F]">Total IP Ownership</span>
+              <span className="hidden sm:inline text-[#5B6275]">— All code &amp; tokens belong to you</span>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* =========================================================================
+          INTERACTIVE SUB-NAVIGATION STRIP (STICKY)
+          Quickly jump to any section with smooth scroll
+          ========================================================================= */}
+      <nav
+        aria-label="Services Navigation"
+        className="sticky top-16 z-20 bg-white/95 backdrop-blur-md border-b border-[#E4E6EB] py-3 px-4 sm:px-8 md:px-12 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+      >
+        <div className="max-w-[1920px] mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+          <span className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider mr-2 hidden md:inline flex-shrink-0">
+            Jump to:
+          </span>
+          {quickNavItems.map((item, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => scrollToRef(item.ref)}
+              onMouseEnter={playHover}
+              className="text-xs px-3.5 py-1.5 rounded-full bg-[#F5F6F8] hover:bg-[#1F3FFF] text-[#0A0F1F] hover:text-white border border-[#E4E6EB] hover:border-[#1F3FFF] font-semibold transition-all flex-shrink-0 cursor-pointer shadow-sm"
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </nav>
 
       {/* =========================================================================
           SECTION 2 — OUR PRIMARY CORE OFFERS
           Exactly 3 high-conviction cards:
           1. Business Website Pro (₹49,999)
-          2. Brand & Growth (₹99,999) [Featured]
+          2. Brand & Growth (₹99,999) [Featured with brand-badge-popular]
           3. Lead Automation Pro (₹34,999)
           ========================================================================= */}
       <section
+        ref={coreOffersRef}
         id="core-offers"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
@@ -214,46 +303,50 @@ export default function ServicesPage() {
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
-                Primary Core Offers
+                Our Primary Core Offers.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
               Three focused commercial entry points engineered for immediate clarity, rapid execution and measurable impact.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             {/* Card 1: Business Website Pro */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275]">
+                  <span className="font-mono text-xs font-bold text-[#1F3FFF]">
                     01 // DIGITAL FLAGSHIP
                   </span>
-                  <span className="text-xs font-bold text-[#1F3FFF] bg-[#1F3FFF]/5 px-2.5 py-1 rounded-full border border-[#1F3FFF]/15">
-                    Fixed Scope
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs flex items-center gap-1 border border-[#E4E6EB]">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>12–20 Days</span>
                   </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-2">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-2 group-hover:text-[#1F3FFF] transition-colors">
                   Business Website Pro
                 </h3>
-                <div className="mb-4">
-                  <div className="text-3xl font-display font-extrabold text-[#0A0F1F]">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
+                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(49999, 600)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    One-time fixed investment
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    One-time fixed investment · Excludes GST
                   </span>
                 </div>
                 <p className="text-sm text-[#5B6275] leading-relaxed mb-6">
                   A professional, responsive website designed to establish credibility and turn visitors into inquiries.
                 </p>
 
-                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-xs font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
-                    Includes:
+                <div className="mb-8">
+                  <span className="text-xs font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3.5">
+                    Included in Scope:
                   </span>
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
                     <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Up to five custom responsive pages</span>
@@ -285,7 +378,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=web-business-pro"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-center"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-center"
               >
                 <span>Explore Website Services</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -293,45 +388,51 @@ export default function ServicesPage() {
             </div>
 
             {/* Card 2: Brand & Growth (Featured Offer) */}
-            <div className="relative border-2 border-[#1F3FFF] rounded-2xl p-7 bg-[#1F3FFF]/[0.02] flex flex-col justify-between shadow-lg shadow-[#1F3FFF]/5">
-              <div className="absolute -top-3 left-7 bg-[#1F3FFF] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                Most Popular System
+            <div
+              onMouseEnter={playHover}
+              className="relative border-2 border-[#1F3FFF] ring-2 ring-[#1F3FFF]/15 rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between shadow-2xl transition-all duration-300"
+            >
+              {/* Authentic Brand Badge Popular with Onlines Yellow accent */}
+              <div className="brand-badge-popular absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-md flex items-center gap-1.5 z-10">
+                <Flame className="w-3.5 h-3.5 text-[#0A0F1F]" />
+                <span>Most Popular System</span>
               </div>
 
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4 pt-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#1F3FFF]">
+                  <span className="font-mono text-xs font-bold text-[#1F3FFF]">
                     02 // BRAND + DIGITAL + CREATIVE
                   </span>
-                  <span className="text-xs font-bold text-[#1F3FFF] bg-[#1F3FFF]/10 px-2.5 py-1 rounded-full border border-[#1F3FFF]/20">
-                    Turnkey Package
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1F3FFF]/10 text-[#1F3FFF] font-semibold text-xs flex items-center gap-1 border border-[#1F3FFF]/20">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>3–4 Weeks</span>
                   </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-2">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-2">
                   Brand &amp; Growth
                 </h3>
-                <div className="mb-4">
-                  <div className="text-3xl font-display font-extrabold text-[#0A0F1F]">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
+                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(99999, 1200)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    One-time fixed investment
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    One-time fixed investment · Excludes GST
                   </span>
                 </div>
                 <p className="text-sm text-[#5B6275] leading-relaxed mb-6">
                   A cohesive brand identity and digital presence for businesses ready to present themselves professionally.
                 </p>
 
-                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-xs font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
-                    Includes:
+                <div className="mb-8">
+                  <span className="text-xs font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3.5">
+                    Included in Scope:
                   </span>
-                  <ul className="space-y-2.5 text-xs text-[#0A0F1F]">
-                    <li className="flex items-start gap-2.5 font-medium">
+                  <ul className="space-y-3 text-xs text-[#0A0F1F]">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Brand Identity Pro (Logo, stylebook &amp; collateral)</span>
                     </li>
-                    <li className="flex items-start gap-2.5 font-medium">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Website up to five custom responsive pages</span>
                     </li>
@@ -358,7 +459,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=bundle-brand-growth"
                 onClick={playClick}
-                className="w-full btn-onlines-blue py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-center"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-blue py-3.5 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-center shadow-lg hover:shadow-xl transition-all"
               >
                 <span>Explore Brand &amp; Growth</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -366,36 +469,40 @@ export default function ServicesPage() {
             </div>
 
             {/* Card 3: Lead Automation Pro */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275]">
+                  <span className="font-mono text-xs font-bold text-[#1F3FFF]">
                     03 // REVENUE PIPELINE
                   </span>
-                  <span className="text-xs font-bold text-[#1F3FFF] bg-[#1F3FFF]/5 px-2.5 py-1 rounded-full border border-[#1F3FFF]/15">
-                    Pipeline Engine
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs flex items-center gap-1 border border-[#E4E6EB]">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>10–14 Days</span>
                   </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-2">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-2 group-hover:text-[#1F3FFF] transition-colors">
                   Lead Automation Pro
                 </h3>
-                <div className="mb-4">
-                  <div className="text-3xl font-display font-extrabold text-[#0A0F1F]">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
+                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(34999, 425)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    One-time fixed investment
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    One-time fixed investment · Excludes GST
                   </span>
                 </div>
                 <p className="text-sm text-[#5B6275] leading-relaxed mb-6">
                   Connect incoming leads, organise your sales pipeline and reduce manual follow-up.
                 </p>
 
-                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-xs font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
-                    Includes:
+                <div className="mb-8">
+                  <span className="text-xs font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3.5">
+                    Included in Scope:
                   </span>
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
                     <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>CRM pipeline configuration &amp; lead stages</span>
@@ -427,7 +534,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=lead-automation-pro"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-center"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-center"
               >
                 <span>Explore Automation</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -446,11 +555,12 @@ export default function ServicesPage() {
           04. CRM & Automation
           ========================================================================= */}
       <section
+        ref={capabilitiesRef}
         id="capabilities"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F8FAFC]"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
@@ -459,33 +569,36 @@ export default function ServicesPage() {
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
-                Studio Capabilities &amp; Disciplines
+                Studio Capabilities &amp; Disciplines.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
               Comprehensive creative, technical, and marketing capabilities delivered through senior-led execution sprints.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* 01. Brand Identity */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-6 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-sm">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group"
+            >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-5">
-                  <Sparkles className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Sparkles className="w-6 h-6" />
                 </div>
-                <div className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider mb-1">
+                <div className="font-mono text-xs font-bold text-[#5B6275] uppercase tracking-wider mb-1">
                   01 // IDENTITY
                 </div>
-                <h3 className="font-display text-xl font-bold text-[#0A0F1F] mb-3">
+                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-3 group-hover:text-[#1F3FFF] transition-colors">
                   Brand Identity
                 </h3>
-                <p className="text-xs text-[#5B6275] leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-[#5B6275] leading-relaxed mb-6">
                   Build a recognisable brand through strategic positioning, visual identity and consistent brand systems.
                 </p>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-2.5">
+                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
+                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
                     Disciplines:
                   </span>
                   <ul className="space-y-2 text-xs text-[#5B6275]">
@@ -512,37 +625,42 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=brand-identity"
                 onClick={playClick}
-                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group pt-2"
+                onMouseEnter={playHover}
+                data-cursor="INQUIRE"
+                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group/link pt-2"
               >
                 <span>Inquire Brand Identity</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
               </Link>
             </div>
 
             {/* 02. Digital Experiences */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-6 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-sm">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group"
+            >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-5">
-                  <Layers className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Layers className="w-6 h-6" />
                 </div>
-                <div className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider mb-1">
+                <div className="font-mono text-xs font-bold text-[#5B6275] uppercase tracking-wider mb-1">
                   02 // WEB &amp; PRODUCT
                 </div>
-                <h3 className="font-display text-xl font-bold text-[#0A0F1F] mb-3">
+                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-3 group-hover:text-[#1F3FFF] transition-colors">
                   Digital Experiences
                 </h3>
-                <p className="text-xs text-[#5B6275] leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-[#5B6275] leading-relaxed mb-6">
                   Create responsive websites and digital experiences designed around your customers and business goals.
                 </p>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-2.5">
+                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
+                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
                     Disciplines:
                   </span>
                   <ul className="space-y-2 text-xs text-[#5B6275]">
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#1F3FFF]" />
-                      <span>Website design and development</span>
+                      <span>Website design &amp; development</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#1F3FFF]" />
@@ -563,31 +681,36 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=digital-experiences"
                 onClick={playClick}
-                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group pt-2"
+                onMouseEnter={playHover}
+                data-cursor="INQUIRE"
+                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group/link pt-2"
               >
                 <span>Inquire Websites</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
               </Link>
             </div>
 
             {/* 03. Creative & Growth */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-6 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-sm">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group"
+            >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-5">
-                  <Flame className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Flame className="w-6 h-6" />
                 </div>
-                <div className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider mb-1">
+                <div className="font-mono text-xs font-bold text-[#5B6275] uppercase tracking-wider mb-1">
                   03 // CREATIVE &amp; MEDIA
                 </div>
-                <h3 className="font-display text-xl font-bold text-[#0A0F1F] mb-3">
+                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-3 group-hover:text-[#1F3FFF] transition-colors">
                   Creative &amp; Growth
                 </h3>
-                <p className="text-xs text-[#5B6275] leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-[#5B6275] leading-relaxed mb-6">
                   Create consistent brand communication and campaigns across the channels that matter.
                 </p>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-2.5">
+                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
+                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
                     Disciplines:
                   </span>
                   <ul className="space-y-2 text-xs text-[#5B6275]">
@@ -614,31 +737,36 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=creative-production"
                 onClick={playClick}
-                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group pt-2"
+                onMouseEnter={playHover}
+                data-cursor="INQUIRE"
+                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group/link pt-2"
               >
                 <span>Inquire Creative &amp; Growth</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
               </Link>
             </div>
 
             {/* 04. CRM & Automation */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-6 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-sm">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group"
+            >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-5">
-                  <Zap className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-[#1F3FFF]/10 text-[#1F3FFF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Zap className="w-6 h-6" />
                 </div>
-                <div className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider mb-1">
+                <div className="font-mono text-xs font-bold text-[#5B6275] uppercase tracking-wider mb-1">
                   04 // AUTOMATION &amp; WORKFLOW
                 </div>
-                <h3 className="font-display text-xl font-bold text-[#0A0F1F] mb-3">
+                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-3 group-hover:text-[#1F3FFF] transition-colors">
                   CRM &amp; Automation
                 </h3>
-                <p className="text-xs text-[#5B6275] leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-[#5B6275] leading-relaxed mb-6">
                   Connect lead sources and business tools to make sales workflows more organised and efficient.
                 </p>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-2.5">
+                <div className="pt-5 border-t border-[#E4E6EB] mb-6">
+                  <span className="text-[11px] font-bold text-[#0A0F1F] uppercase tracking-wider block mb-3">
                     Disciplines:
                   </span>
                   <ul className="space-y-2 text-xs text-[#5B6275]">
@@ -665,10 +793,12 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=crm-automation"
                 onClick={playClick}
-                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group pt-2"
+                onMouseEnter={playHover}
+                data-cursor="INQUIRE"
+                className="text-xs font-bold text-[#1F3FFF] hover:text-[#1631CC] flex items-center gap-1.5 group/link pt-2"
               >
                 <span>Inquire Automation</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
@@ -681,11 +811,12 @@ export default function ServicesPage() {
           3 featured projects with challenge, solution & link to case studies.
           ========================================================================= */}
       <section
+        ref={selectedWorkRef}
         id="selected-work"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
@@ -694,10 +825,10 @@ export default function ServicesPage() {
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
-                Selected Work
+                Selected Work.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
               A closer look at the thinking, design and execution behind our digital work.
             </p>
           </div>
@@ -706,33 +837,52 @@ export default function ServicesPage() {
             {featuredProjects.map((project) => (
               <div
                 key={project.id}
-                className="group border border-[#E4E6EB] rounded-2xl overflow-hidden bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-lg"
+                onMouseEnter={playHover}
+                className="group border border-[#E4E6EB] rounded-3xl overflow-hidden bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all duration-300 hover:shadow-2xl shadow-sm"
               >
                 <div>
-                  {/* Project Image */}
-                  <div className="relative aspect-[16/10] bg-[#0A0F1F] overflow-hidden">
+                  {/* Project Image Frame with smooth hover zoom */}
+                  <Link
+                    href={`/works/${project.slug}`}
+                    onClick={playClick}
+                    data-cursor="CASE STUDY"
+                    className="block relative aspect-[16/10] bg-[#0A0F1F] overflow-hidden"
+                  >
                     <Image
                       src={project.image}
                       alt={project.name}
                       fill
                       sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute top-3 left-3 bg-[#0A0F1F]/80 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-white/10">
+                    <div className="absolute top-4 left-4 bg-[#0A0F1F]/80 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/10">
                       {project.designation}
                     </div>
-                  </div>
+
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                      <span className="px-4 py-2 rounded-full bg-white text-[#0A0F1F] text-xs font-bold shadow-xl flex items-center gap-1.5 backdrop-blur-md transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                        <span>View Full Case</span>
+                        <Maximize2 className="w-3.5 h-3.5 text-[#1F3FFF]" />
+                      </span>
+                    </div>
+                  </Link>
 
                   {/* Project Content */}
-                  <div className="p-6">
-                    <div className="text-[11px] font-bold text-[#1F3FFF] uppercase tracking-wider mb-1">
-                      {project.category}
+                  <div className="p-8">
+                    <div className="flex items-center justify-between text-xs mb-3">
+                      <span className="font-mono text-xs font-bold text-[#1F3FFF] uppercase tracking-wider">
+                        {project.category}
+                      </span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded border border-[#E4E6EB] text-[#5B6275] bg-[#F5F6F8]">
+                        {project.tag}
+                      </span>
                     </div>
-                    <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-4">
+
+                    <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-4 group-hover:text-[#1F3FFF] transition-colors">
                       {project.name}
                     </h3>
 
-                    <div className="space-y-3 text-xs text-[#5B6275]">
+                    <div className="space-y-4 text-xs text-[#5B6275]">
                       <div>
                         <span className="font-bold text-[#0A0F1F] block mb-1">
                           Original Challenge:
@@ -749,11 +899,13 @@ export default function ServicesPage() {
                   </div>
                 </div>
 
-                <div className="p-6 pt-0">
+                <div className="p-8 pt-0">
                   <Link
                     href={`/works/${project.slug}`}
                     onClick={playClick}
-                    className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                    onMouseEnter={playHover}
+                    data-cursor="CASE STUDY"
+                    className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
                   >
                     <span>View Case Study</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -764,11 +916,13 @@ export default function ServicesPage() {
           </div>
 
           {/* Link to Full Portfolio */}
-          <div className="mt-12 text-center">
+          <div className="mt-14 text-center">
             <Link
               href="/works"
               onClick={playClick}
-              className="inline-flex items-center gap-2 text-xs font-bold text-[#0A0F1F] hover:text-[#1F3FFF] uppercase tracking-wider border-b border-[#0A0F1F] hover:border-[#1F3FFF] pb-1 transition-colors"
+              onMouseEnter={playHover}
+              data-cursor="ARCHIVE"
+              className="inline-flex items-center gap-2 text-xs font-bold text-[#0A0F1F] hover:text-[#1F3FFF] uppercase tracking-wider border-b-2 border-[#0A0F1F] hover:border-[#1F3FFF] pb-1 transition-all"
             >
               <span>Explore All Case Studies &amp; Work Archive</span>
               <ArrowRight className="w-4 h-4" />
@@ -783,11 +937,12 @@ export default function ServicesPage() {
           3 compact cards: Launch, Growth, Premium + e-commerce note + CTA
           ========================================================================= */}
       <section
+        ref={websitePricingRef}
         id="website-pricing"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F8FAFC]"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
@@ -799,50 +954,54 @@ export default function ServicesPage() {
                 Clear Scope. Thoughtful Execution.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
               Choose a starting point that fits your business. Every engagement is scoped around your requirements, goals and delivery needs.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8">
             {/* Launch Tier */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275]">
+                  <span className="font-mono text-xs font-bold text-[#5B6275]">
                     01 // LAUNCH
                   </span>
-                  <span className="text-[11px] font-medium text-[#5B6275]">
-                    7–12 Days
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs flex items-center gap-1 border border-[#E4E6EB]">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>7–12 Days</span>
                   </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1 group-hover:text-[#1F3FFF] transition-colors">
                   Launch
                 </h3>
-                <div className="mb-4">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
                   <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#0A0F1F]">
                     Starting at {displayPrice(24999, 300)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    Focused landing page build
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    Focused landing page build · Excludes GST
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
-                    <li className="flex items-start gap-2">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>One focused landing page</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Responsive design across mobile, tablet &amp; desktop</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Contact form or WhatsApp CTA integration</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Basic SEO metadata &amp; analytics setup</span>
                     </li>
@@ -853,7 +1012,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=web-landing-launch"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Explore Launch</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -861,47 +1022,52 @@ export default function ServicesPage() {
             </div>
 
             {/* Growth Tier (Recommended) */}
-            <div className="relative border-2 border-[#1F3FFF] rounded-2xl p-7 bg-white flex flex-col justify-between shadow-md">
-              <div className="absolute -top-3 left-7 bg-[#1F3FFF] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                Recommended
+            <div
+              onMouseEnter={playHover}
+              className="relative border-2 border-[#1F3FFF] ring-2 ring-[#1F3FFF]/15 rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between shadow-2xl transition-all duration-300"
+            >
+              <div className="brand-badge-popular absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-md flex items-center gap-1.5 z-10">
+                <Sparkles className="w-3.5 h-3.5 text-[#0A0F1F]" />
+                <span>Recommended Tier</span>
               </div>
 
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3 pt-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#1F3FFF]">
+                  <span className="font-mono text-xs font-bold text-[#1F3FFF]">
                     02 // GROWTH
                   </span>
-                  <span className="text-[11px] font-medium text-[#5B6275]">
-                    12–20 Days
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1F3FFF]/10 text-[#1F3FFF] font-semibold text-xs flex items-center gap-1 border border-[#1F3FFF]/20">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>12–20 Days</span>
                   </span>
                 </div>
                 <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
                   Growth
                 </h3>
-                <div className="mb-4">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
                   <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#0A0F1F]">
                     Starting at {displayPrice(49999, 600)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    Complete 5-page business presence
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    Complete 5-page business presence · Excludes GST
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#0A0F1F]">
-                    <li className="flex items-start gap-2 font-medium">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#0A0F1F]">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Website up to five custom responsive pages</span>
                     </li>
-                    <li className="flex items-start gap-2 font-medium">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Custom responsive design in Figma &amp; Next.js</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Contact forms, WhatsApp &amp; lead notifications</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Basic SEO foundations, GA4 &amp; Search Console</span>
                     </li>
@@ -912,7 +1078,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=web-business-pro"
                 onClick={playClick}
-                className="w-full btn-onlines-blue py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-blue py-3.5 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
               >
                 <span>Explore Growth</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -920,43 +1088,47 @@ export default function ServicesPage() {
             </div>
 
             {/* Premium Tier */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275]">
+                  <span className="font-mono text-xs font-bold text-[#5B6275]">
                     03 // PREMIUM
                   </span>
-                  <span className="text-[11px] font-medium text-[#5B6275]">
-                    20–30 Days
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs flex items-center gap-1 border border-[#E4E6EB]">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>20–30 Days</span>
                   </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1 group-hover:text-[#1F3FFF] transition-colors">
                   Premium
                 </h3>
-                <div className="mb-4">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
                   <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#0A0F1F]">
                     Starting at {displayPrice(89999, 1100)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    Bespoke web platform with CMS
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    Bespoke web platform with CMS · Excludes GST
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
-                    <li className="flex items-start gap-2">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Website up to eight custom pages</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>CMS or blog functionality for self-serve updates</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Agreed CRM integration &amp; custom inquiry flows</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Expanded testing, documentation &amp; handover</span>
                     </li>
@@ -967,7 +1139,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=web-experience-premium"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Explore Premium</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -976,9 +1150,9 @@ export default function ServicesPage() {
           </div>
 
           {/* E-Commerce Note & Proposal CTA */}
-          <div className="p-6 rounded-2xl bg-white border border-[#E4E6EB] flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="p-8 rounded-3xl bg-white border border-[#E4E6EB] flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
             <div className="text-xs text-[#5B6275] text-center md:text-left">
-              <span className="font-bold text-[#0A0F1F] block text-sm mb-0.5">
+              <span className="font-bold text-[#0A0F1F] block text-base mb-1">
                 Custom Web Architecture &amp; E-Commerce
               </span>
               E-commerce storefronts, complex integrations and custom functionality are quoted according to scope.
@@ -986,7 +1160,9 @@ export default function ServicesPage() {
             <Link
               href="/contact?subject=custom-website-proposal"
               onClick={playClick}
-              className="btn-onlines-blue py-3 px-6 rounded-xl text-xs font-bold uppercase tracking-wider flex-shrink-0 flex items-center gap-2"
+              onMouseEnter={playHover}
+              data-cursor="PROPOSAL"
+              className="btn-onlines-blue py-3.5 px-8 text-xs font-bold uppercase tracking-wider flex-shrink-0 flex items-center gap-2 shadow-md hover:shadow-xl transition-all"
             >
               <span>Need Something Custom? Request a Proposal</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -1000,15 +1176,16 @@ export default function ServicesPage() {
           Heading: Your Creative & Growth Team, On Subscription.
           Consolidated 3 options:
           1. Creative Support (₹24,999/mo)
-          2. Growth Partner (₹44,999/mo)
+          2. Growth Partner (₹44,999/mo) [Recommended with brand-badge-popular]
           3. Digital Experience Partner (₹74,999/mo)
           ========================================================================= */}
       <section
+        ref={subscriptionsRef}
         id="subscriptions"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
@@ -1020,46 +1197,54 @@ export default function ServicesPage() {
                 Your Creative &amp; Growth Team, On Subscription.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
               Ongoing creative production and digital support for businesses that need consistent execution.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8">
             {/* Creative Support */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275] mb-2">
-                  01 // CREATIVE SUPPORT
+                <div className="flex items-center justify-between text-xs mb-3">
+                  <span className="font-mono text-xs font-bold text-[#5B6275]">
+                    01 // CREATIVE SUPPORT
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs border border-[#E4E6EB]">
+                    Monthly Retainer
+                  </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-1 group-hover:text-[#1F3FFF] transition-colors">
                   Creative Support
                 </h3>
-                <div className="mb-4">
-                  <div className="text-3xl font-display font-extrabold text-[#0A0F1F]">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
+                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(24999, 300)}
                     <span className="text-xs text-[#5B6275] font-normal"> / month</span>
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    Consistent design &amp; marketing assets
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    Consistent design &amp; marketing assets · Excludes GST
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
-                    <li className="flex items-start gap-2">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Up to 12 static creatives per month</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Two high-converting carousel graphics</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Monthly content calendar &amp; sequencing</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Caption and CTA suggestions</span>
                     </li>
@@ -1070,7 +1255,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=creative-support"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SUBSCRIBE"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Subscribe to Creative Support</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1078,43 +1265,52 @@ export default function ServicesPage() {
             </div>
 
             {/* Growth Partner (Recommended) */}
-            <div className="relative border-2 border-[#1F3FFF] rounded-2xl p-7 bg-white flex flex-col justify-between shadow-md">
-              <div className="absolute -top-3 left-7 bg-[#1F3FFF] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                Recommended Partner
+            <div
+              onMouseEnter={playHover}
+              className="relative border-2 border-[#1F3FFF] ring-2 ring-[#1F3FFF]/15 rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between shadow-2xl transition-all duration-300"
+            >
+              <div className="brand-badge-popular absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-md flex items-center gap-1.5 z-10">
+                <Flame className="w-3.5 h-3.5 text-[#0A0F1F]" />
+                <span>Recommended Partner</span>
               </div>
 
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#1F3FFF] mb-2 pt-1">
-                  02 // GROWTH PARTNER
+                <div className="flex items-center justify-between text-xs mb-3 pt-1">
+                  <span className="font-mono text-xs font-bold text-[#1F3FFF]">
+                    02 // GROWTH PARTNER
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1F3FFF]/10 text-[#1F3FFF] font-semibold text-xs border border-[#1F3FFF]/20">
+                    Monthly Retainer
+                  </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-1">
                   Growth Partner
                 </h3>
-                <div className="mb-4">
-                  <div className="text-3xl font-display font-extrabold text-[#0A0F1F]">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
+                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(44999, 550)}
                     <span className="text-xs text-[#5B6275] font-normal"> / month</span>
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    Creative + video editing + channel growth
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    Creative + video editing + channel growth · Excludes GST
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#0A0F1F]">
-                    <li className="flex items-start gap-2 font-medium">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#0A0F1F]">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Up to 16 static creatives per month</span>
                     </li>
-                    <li className="flex items-start gap-2 font-medium">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Four short-form video edits per month</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Content calendar and scheduling support</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Agreed channel support and monthly review</span>
                     </li>
@@ -1125,7 +1321,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=growth-partner"
                 onClick={playClick}
-                className="w-full btn-onlines-blue py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SUBSCRIBE"
+                className="w-full btn-onlines-blue py-3.5 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
               >
                 <span>Start Growth Partnership</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1133,39 +1331,47 @@ export default function ServicesPage() {
             </div>
 
             {/* Digital Experience Partner */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275] mb-2">
-                  03 // EXPERIENCE PARTNER
+                <div className="flex items-center justify-between text-xs mb-3">
+                  <span className="font-mono text-xs font-bold text-[#5B6275]">
+                    03 // EXPERIENCE PARTNER
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs border border-[#E4E6EB]">
+                    Monthly Retainer
+                  </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-1 group-hover:text-[#1F3FFF] transition-colors">
                   Digital Experience Partner
                 </h3>
-                <div className="mb-4">
-                  <div className="text-3xl font-display font-extrabold text-[#0A0F1F]">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
+                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(74999, 900)}
                     <span className="text-xs text-[#5B6275] font-normal"> / month</span>
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
-                    Creative, video, web updates &amp; CRM oversight
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
+                    Creative, video, web updates &amp; CRM oversight · Excludes GST
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
-                    <li className="flex items-start gap-2">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Up to 20 static creatives per month</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Eight short-form video edits per month</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Agreed website maintenance &amp; content updates</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>CRM workflow monitoring &amp; monthly review</span>
                     </li>
@@ -1176,7 +1382,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=digital-experience-partner"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SUBSCRIBE"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Join as Experience Partner</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1184,7 +1392,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="text-[11px] text-[#5B6275] text-center max-w-2xl mx-auto">
+          <div className="text-xs text-[#5B6275] text-center max-w-2xl mx-auto bg-[#F5F6F8] p-4 rounded-2xl border border-[#E4E6EB]">
             These packages cover agreed monthly sprint allocations with defined turnaround milestones. They do not imply unlimited requests, indefinite revisions, or unmonitored scope creep.
           </div>
         </div>
@@ -1195,15 +1403,16 @@ export default function ServicesPage() {
           Heading: One Partner. A More Connected Digital Presence.
           3 compact cards:
           1. Business Launch (₹59,999)
-          2. Brand & Growth (₹99,999)
+          2. Brand & Growth (₹99,999) [Most Popular with brand-badge-popular]
           3. Digital Business Premium (₹1,49,999)
           ========================================================================= */}
       <section
+        ref={bundlesRef}
         id="bundles"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F8FAFC]"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
@@ -1215,45 +1424,54 @@ export default function ServicesPage() {
                 One Partner. A More Connected Digital Presence.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
               Combine branding, web development and automation in a coordinated engagement.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             {/* Business Launch */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275] mb-2">
-                  BUNDLE 01 // FOUNDATION
+                <div className="flex items-center justify-between text-xs mb-3">
+                  <span className="font-mono text-xs font-bold text-[#5B6275]">
+                    BUNDLE 01 // FOUNDATION
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs flex items-center gap-1 border border-[#E4E6EB]">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>2–3 Weeks</span>
+                  </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-1 group-hover:text-[#1F3FFF] transition-colors">
                   Business Launch
                 </h3>
-                <div className="mb-3">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
                   <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(59999, 750)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
                     Best for new businesses establishing credibility
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
-                    <li className="flex items-start gap-2">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Brand Essentials (Logo, palette &amp; typography)</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Website up to five custom pages</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>WhatsApp contact &amp; lead form integration</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Five branded launch social media creatives</span>
                     </li>
@@ -1264,7 +1482,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=bundle-business-launch"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Choose Business Launch</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1272,42 +1492,52 @@ export default function ServicesPage() {
             </div>
 
             {/* Brand & Growth */}
-            <div className="relative border-2 border-[#1F3FFF] rounded-2xl p-7 bg-white flex flex-col justify-between shadow-md">
-              <div className="absolute -top-3 left-7 bg-[#1F3FFF] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                Most Popular
+            <div
+              onMouseEnter={playHover}
+              className="relative border-2 border-[#1F3FFF] ring-2 ring-[#1F3FFF]/15 rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between shadow-2xl transition-all duration-300"
+            >
+              <div className="brand-badge-popular absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-md flex items-center gap-1.5 z-10">
+                <Sparkles className="w-3.5 h-3.5 text-[#0A0F1F]" />
+                <span>Most Popular Bundle</span>
               </div>
 
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#1F3FFF] mb-2 pt-1">
-                  BUNDLE 02 // SCALE
+                <div className="flex items-center justify-between text-xs mb-3 pt-1">
+                  <span className="font-mono text-xs font-bold text-[#1F3FFF]">
+                    BUNDLE 02 // SCALE
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1F3FFF]/10 text-[#1F3FFF] font-semibold text-xs flex items-center gap-1 border border-[#1F3FFF]/20">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>3–4 Weeks</span>
+                  </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-1">
                   Brand &amp; Growth
                 </h3>
-                <div className="mb-3">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
                   <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(99999, 1200)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
                     Best for growing businesses seeking authority
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#0A0F1F]">
-                    <li className="flex items-start gap-2 font-medium">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#0A0F1F]">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Brand Identity Pro (Discovery, stylebook &amp; stationery)</span>
                     </li>
-                    <li className="flex items-start gap-2 font-medium">
+                    <li className="flex items-start gap-2.5 font-semibold">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Website up to five pages with lead flows</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Ten launch social creatives + four video edits</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Basic lead-capture workflow &amp; analytics setup</span>
                     </li>
@@ -1318,7 +1548,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=bundle-brand-growth"
                 onClick={playClick}
-                className="w-full btn-onlines-blue py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-blue py-3.5 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
               >
                 <span>Choose Brand &amp; Growth</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1326,38 +1558,47 @@ export default function ServicesPage() {
             </div>
 
             {/* Digital Business Premium */}
-            <div className="border border-[#E4E6EB] rounded-2xl p-7 bg-white flex flex-col justify-between hover:border-[#1F3FFF] transition-all hover:shadow-md">
+            <div
+              onMouseEnter={playHover}
+              className="border border-[#E4E6EB] rounded-3xl p-8 lg:p-10 bg-white flex flex-col justify-between hover:border-[#1F3FFF] hover:shadow-xl transition-all duration-300 group shadow-sm"
+            >
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#5B6275] mb-2">
-                  BUNDLE 03 // ENTERPRISE
+                <div className="flex items-center justify-between text-xs mb-3">
+                  <span className="font-mono text-xs font-bold text-[#5B6275]">
+                    BUNDLE 03 // ENTERPRISE
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F5F6F8] text-[#0A0F1F] font-semibold text-xs flex items-center gap-1 border border-[#E4E6EB]">
+                    <Clock className="w-3 h-3 text-[#1F3FFF]" />
+                    <span>4–6 Weeks</span>
+                  </span>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0A0F1F] mb-1">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0A0F1F] mb-1 group-hover:text-[#1F3FFF] transition-colors">
                   Digital Business Premium
                 </h3>
-                <div className="mb-3">
+                <div className="py-4 border-y border-[#E4E6EB] my-5">
                   <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#0A0F1F]">
                     {displayPrice(149999, 1800)}
                   </div>
-                  <span className="text-xs text-[#5B6275] font-medium">
+                  <span className="text-xs text-[#5B6275] font-medium block mt-1">
                     Best for companies wanting unified brand &amp; CRM systems
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#E4E6EB] mb-6">
-                  <ul className="space-y-2.5 text-xs text-[#5B6275]">
-                    <li className="flex items-start gap-2">
+                <div className="mb-8">
+                  <ul className="space-y-3 text-xs text-[#5B6275]">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Complete Brand System (Full manual &amp; collateral)</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Website up to eight pages with CMS integration</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>CRM pipeline configuration &amp; 3 workflow automations</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-2.5">
                       <Check className="w-4 h-4 text-[#1F3FFF] flex-shrink-0 mt-0.5" />
                       <span>Twelve creatives and six short-form video edits</span>
                     </li>
@@ -1368,7 +1609,9 @@ export default function ServicesPage() {
               <Link
                 href="/contact?service=bundle-digital-premium"
                 onClick={playClick}
-                className="w-full btn-onlines-outline py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="SELECT"
+                className="w-full btn-onlines-outline py-3 px-6 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Choose Business Premium</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1383,22 +1626,25 @@ export default function ServicesPage() {
           Replaces full lengthy add-on grid with a clean, high-conviction custom callout
           ========================================================================= */}
       <section
+        ref={customScopeRef}
         id="custom-scope"
-        className="py-16 md:py-20 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
+        className="py-20 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="border border-[#E4E6EB] rounded-3xl p-8 sm:p-12 bg-[#F8FAFC] flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="max-w-2xl">
+          <div className="border border-[#E4E6EB] rounded-3xl p-8 sm:p-12 md:p-16 bg-[#F8FAFC] flex flex-col lg:flex-row items-center justify-between gap-10 shadow-sm relative overflow-hidden">
+            <div className="grilla-celdas opacity-20 pointer-events-none" aria-hidden="true" />
+
+            <div className="max-w-2xl relative z-10">
               <div className="flex items-center gap-2 mb-3 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
                 <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF]">
                   08 // BESPOKE ENGAGEMENTS
                 </span>
               </div>
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0A0F1F] tracking-tight mb-3">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0A0F1F] tracking-tight mb-4">
                 Need Something Beyond the Standard Scope?
               </h2>
-              <p className="text-sm text-[#5B6275] leading-relaxed mb-6">
+              <p className="text-sm text-[#5B6275] leading-relaxed mb-6 font-medium">
                 From additional pages and advanced integrations to custom dashboards and campaign assets, we can tailor the engagement to your requirements.
               </p>
 
@@ -1416,7 +1662,7 @@ export default function ServicesPage() {
                 ].map((item, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 rounded-lg bg-white border border-[#E4E6EB] font-medium"
+                    className="px-3.5 py-1.5 rounded-full bg-white border border-[#E4E6EB] font-medium hover:border-[#1F3FFF] transition-colors shadow-sm"
                   >
                     + {item}
                   </span>
@@ -1424,11 +1670,13 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            <div className="flex-shrink-0 w-full lg:w-auto">
+            <div className="flex-shrink-0 w-full lg:w-auto relative z-10">
               <Link
                 href="/contact?subject=custom-scope"
                 onClick={playClick}
-                className="w-full sm:w-auto btn-onlines-blue py-3.5 px-8 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+                onMouseEnter={playHover}
+                data-cursor="CUSTOM"
+                className="w-full sm:w-auto btn-onlines-blue py-4 px-8 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
               >
                 <span>Request a Custom Scope</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1440,14 +1688,15 @@ export default function ServicesPage() {
 
       {/* =========================================================================
           SECTION 9 — FREQUENTLY ASKED QUESTIONS
-          Exactly 6 questions from the brief in an accessible accordion
+          Exactly 6 questions from the brief in an accessible, animated accordion
           ========================================================================= */}
       <section
+        ref={faqRef}
         id="faq"
-        className="py-16 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
         <div className="max-w-[1920px] mx-auto">
-          <div className="mb-12 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
@@ -1456,43 +1705,58 @@ export default function ServicesPage() {
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0A0F1F] tracking-tight">
-                Clear Answers, Zero Ambiguity
+                <span className="brand-highlight">Frequently asked</span> questions.
               </h2>
             </div>
-            <p className="text-sm text-[#5B6275] max-w-md">
-              Everything you need to know about working with PixelMutiny before starting a project.
+            <p className="text-sm text-[#5B6275] max-w-md font-medium leading-relaxed">
+              Clear answers about scope boundaries, milestones, ad spend, and delivery rules before starting a project.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto divide-y divide-[#E4E6EB] border-y border-[#E4E6EB]">
+          <div className="max-w-4xl mx-auto space-y-4">
             {FAQS.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
-                <div key={index} className="py-5">
+                <div
+                  key={index}
+                  className={`rounded-2xl border transition-all duration-300 bg-white overflow-hidden shadow-sm ${
+                    isOpen ? 'border-[#1F3FFF] ring-1 ring-[#1F3FFF]/20' : 'border-[#E4E6EB] hover:border-[#1F3FFF]/50'
+                  }`}
+                >
                   <button
                     type="button"
                     onClick={() => {
                       playClick();
                       setOpenFaq(isOpen ? -1 : index);
                     }}
+                    onMouseEnter={playHover}
                     aria-expanded={isOpen}
-                    className="w-full flex items-center justify-between text-left gap-4 font-display font-bold text-base sm:text-lg text-[#0A0F1F] hover:text-[#1F3FFF] transition-colors cursor-pointer"
+                    className="w-full p-6 sm:p-7 flex items-center justify-between text-left gap-4 font-display font-bold text-base sm:text-lg text-[#0A0F1F] hover:text-[#1F3FFF] transition-colors cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <span
-                      className={`w-7 h-7 rounded-full border border-[#E4E6EB] flex items-center justify-center flex-shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 bg-[#1F3FFF] text-white border-[#1F3FFF]' : 'text-[#5B6275]'
+                      className={`w-8 h-8 rounded-full border border-[#E4E6EB] flex items-center justify-center flex-shrink-0 transition-all duration-200 ${
+                        isOpen ? 'rotate-180 bg-[#1F3FFF] text-white border-[#1F3FFF]' : 'text-[#5B6275] bg-[#F5F6F8]'
                       }`}
                     >
                       <ChevronDown className="w-4 h-4" />
                     </span>
                   </button>
 
-                  {isOpen && (
-                    <div className="pt-3 pr-8 text-sm text-[#5B6275] leading-relaxed">
-                      {faq.a}
-                    </div>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                      >
+                        <div className="px-6 sm:px-7 pb-6 pt-0 text-sm sm:text-base text-[#5B6275] leading-relaxed border-t border-[#F5F6F8]">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
@@ -1509,12 +1773,12 @@ export default function ServicesPage() {
           ========================================================================= */}
       <section
         id="final-cta"
-        className="py-20 md:py-32 px-4 sm:px-8 md:px-12 bg-[#0A0F1F] text-white relative overflow-hidden"
+        className="py-24 md:py-36 px-4 sm:px-8 md:px-12 bg-[#0A0F1F] text-white relative overflow-hidden"
       >
         <div className="grilla-celdas opacity-20 pointer-events-none" aria-hidden="true" />
 
         <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-white uppercase tracking-wider mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-white uppercase tracking-wider mb-6">
             <span className="w-2 h-2 rounded-full bg-[#12B76A]" />
             <span>Ready for Senior Craft?</span>
           </div>
@@ -1522,14 +1786,14 @@ export default function ServicesPage() {
           <h2
             className="font-display font-extrabold tracking-tight text-white mb-6"
             style={{
-              fontSize: 'clamp(32px, 5vw, 64px)',
+              fontSize: 'clamp(36px, 5.5vw, 68px)',
               lineHeight: 1.05,
             }}
           >
             Let&apos;s Build Your Next Advantage.
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-10 font-normal">
             Tell us what you&apos;re building, what needs to improve and where you&apos;d like to go next.
           </p>
 
@@ -1537,7 +1801,9 @@ export default function ServicesPage() {
             <Link
               href="/contact"
               onClick={playClick}
-              className="btn-onlines-blue py-3.5 px-8 rounded-xl font-bold tracking-wider uppercase flex items-center gap-2 shadow-lg hover:shadow-xl"
+              onMouseEnter={playHover}
+              data-cursor="START"
+              className="btn-onlines-blue py-4 px-9 font-bold tracking-wider uppercase flex items-center gap-2 shadow-2xl hover:shadow-cyan-500/20 transition-all"
             >
               <span>Start a Project</span>
               <ArrowRight className="w-4 h-4" />
@@ -1545,7 +1811,9 @@ export default function ServicesPage() {
             <Link
               href="/works"
               onClick={playClick}
-              className="py-3.5 px-8 rounded-xl border border-white/20 hover:border-white font-bold tracking-wider uppercase text-white hover:text-white transition-colors flex items-center gap-2"
+              onMouseEnter={playHover}
+              data-cursor="WORK"
+              className="py-4 px-9 rounded-full border border-white/20 hover:border-white font-bold tracking-wider uppercase text-white hover:text-white transition-all flex items-center gap-2"
             >
               <span>Explore Our Work</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -1553,18 +1821,18 @@ export default function ServicesPage() {
           </div>
 
           {/* Senior Trust Signals */}
-          <div className="mt-14 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-slate-400">
+          <div className="mt-16 pt-10 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs text-slate-400">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#1F3FFF]" />
-              <span>100% Asset &amp; IP Ownership</span>
+              <span className="text-white font-semibold">100% Asset &amp; IP Ownership</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-[#1F3FFF]" />
-              <span>Fixed-Scope Delivery Sprints</span>
+              <span className="text-white font-semibold">Fixed-Scope Delivery Sprints</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-[#1F3FFF]" />
-              <span>Direct Founder Communication</span>
+              <span className="text-white font-semibold">Direct Founder Communication</span>
             </div>
           </div>
         </div>
