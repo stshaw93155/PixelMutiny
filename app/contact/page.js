@@ -570,11 +570,10 @@ function ContactFormContent() {
                           key={service.id}
                           type="button"
                           onClick={() => toggleService(service.name)}
-                          className={`text-xs p-4 rounded-2xl border text-left transition-all flex items-start justify-between gap-3 cursor-pointer ${
-                            isSelected
+                          className={`text-xs p-4 rounded-2xl border text-left transition-all flex items-start justify-between gap-3 cursor-pointer ${isSelected
                               ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
                               : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
-                          }`}
+                            }`}
                           data-cursor="SELECT"
                         >
                           <div>
@@ -582,19 +581,17 @@ function ContactFormContent() {
                               {service.name}
                             </span>
                             <span
-                              className={`text-[11px] block font-semibold ${
-                                isSelected ? 'text-[#1F3FFF]' : 'text-[#5B6275]'
-                              }`}
+                              className={`text-[11px] block font-semibold ${isSelected ? 'text-[#1F3FFF]' : 'text-[#5B6275]'
+                                }`}
                             >
                               Starting at {formatPrice(getTierPrice(service.tiers[0], currency), currency)}
                             </span>
                           </div>
                           <div
-                            className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                              isSelected
+                            className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${isSelected
                                 ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white font-extrabold'
                                 : 'border-[#E4E6EB] bg-white'
-                            }`}
+                              }`}
                           >
                             {isSelected && <Check className="w-3.5 h-3.5" />}
                           </div>
@@ -616,11 +613,10 @@ function ContactFormContent() {
                             key={ret.id}
                             type="button"
                             onClick={() => toggleService(ret.name)}
-                            className={`text-xs p-3 rounded-xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${
-                              isSelected
+                            className={`text-xs p-3 rounded-xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${isSelected
                                 ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
                                 : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
-                            }`}
+                              }`}
                           >
                             <div>
                               <span className="block text-xs font-display font-bold text-[#0A0F1F] mb-0.5">
@@ -631,11 +627,10 @@ function ContactFormContent() {
                               </span>
                             </div>
                             <div
-                              className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                isSelected
+                              className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${isSelected
                                   ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white'
                                   : 'border-[#E4E6EB] bg-white'
-                              }`}
+                                }`}
                             >
                               {isSelected && <Check className="w-3 h-3" />}
                             </div>
@@ -650,11 +645,10 @@ function ContactFormContent() {
                     <button
                       type="button"
                       onClick={() => toggleService('Brand & Growth Kit')}
-                      className={`w-full text-xs p-4 rounded-2xl border text-left transition-all flex items-center justify-between gap-3 cursor-pointer ${
-                        selectedServices.includes('Brand & Growth Kit') || selectedServices.includes('Startup Launch Kit')
+                      className={`w-full text-xs p-4 rounded-2xl border text-left transition-all flex items-center justify-between gap-3 cursor-pointer ${selectedServices.includes('Brand & Growth Kit') || selectedServices.includes('Startup Launch Kit')
                           ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
                           : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-2">
                         <Zap className="w-4 h-4 text-[#1F3FFF]" />
@@ -685,11 +679,10 @@ function ContactFormContent() {
                           key={addon.id}
                           type="button"
                           onClick={() => toggleAddon(addon.name)}
-                          className={`text-xs px-4 py-2.5 rounded-full border transition-all cursor-pointer font-bold ${
-                            isSelected
+                          className={`text-xs px-4 py-2.5 rounded-full border transition-all cursor-pointer font-bold ${isSelected
                               ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-sm'
                               : 'bg-white border-[#E4E6EB] text-[#0A0F1F] hover:border-[#1F3FFF]'
-                          }`}
+                            }`}
                         >
                           <span className="inline-flex items-center gap-1.5">
                             {isSelected ? (
@@ -724,11 +717,10 @@ function ContactFormContent() {
                             setSelectedBudget(b.value);
                             playClick();
                           }}
-                          className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${
-                            isSelected
+                          className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${isSelected
                               ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-md'
                               : 'border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF]'
-                          }`}
+                            }`}
                         >
                           {b.label}
                         </button>
@@ -756,11 +748,10 @@ function ContactFormContent() {
                             setSelectedTimeline(t.value);
                             playClick();
                           }}
-                          className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${
-                            isSelected
+                          className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${isSelected
                               ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-md'
                               : 'border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF]'
-                          }`}
+                            }`}
                         >
                           {t.label}
                         </button>
@@ -836,11 +827,10 @@ function ContactFormContent() {
                           setFormData({ ...formData, name: e.target.value });
                           if (errors.name) setErrors({ ...errors, name: '' });
                         }}
-                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
-                          errors.name
+                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${errors.name
                             ? 'border-[#EF5533] ring-1 ring-[#EF5533]'
                             : 'border-[#E4E6EB] focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20'
-                        }`}
+                          }`}
                         aria-invalid={errors.name ? 'true' : 'false'}
                         aria-describedby={errors.name ? 'name-error' : undefined}
                       />
@@ -867,11 +857,10 @@ function ContactFormContent() {
                           setFormData({ ...formData, email: e.target.value });
                           if (errors.email) setErrors({ ...errors, email: '' });
                         }}
-                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
-                          errors.email
+                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${errors.email
                             ? 'border-[#EF5533] ring-1 ring-[#EF5533]'
                             : 'border-[#E4E6EB] focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20'
-                        }`}
+                          }`}
                         aria-invalid={errors.email ? 'true' : 'false'}
                         aria-describedby={errors.email ? 'email-error' : undefined}
                       />
