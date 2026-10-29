@@ -174,7 +174,7 @@ export default function ServicesPage() {
       >
         <div className="grilla-celdas opacity-35 pointer-events-none" aria-hidden="true" />
 
-        <div className="max-w-[1920px] mx-auto relative z-10">
+        <div className="max-w-[1400px] mx-auto relative z-10">
           {/* Header Metadata */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2">
@@ -263,7 +263,7 @@ export default function ServicesPage() {
         aria-label="Services Navigation"
         className="sticky top-16 z-20 bg-white/95 backdrop-blur-md border-b border-[#E4E6EB] py-3 px-4 sm:px-8 md:px-12 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
       >
-        <div className="max-w-[1920px] mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+        <div className="max-w-[1400px] mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
           <span className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider mr-2 hidden md:inline flex-shrink-0">
             Jump to:
           </span>
@@ -293,7 +293,7 @@ export default function ServicesPage() {
         id="core-offers"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
@@ -559,7 +559,7 @@ export default function ServicesPage() {
         id="capabilities"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
@@ -815,7 +815,7 @@ export default function ServicesPage() {
         id="selected-work"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
@@ -941,7 +941,7 @@ export default function ServicesPage() {
         id="website-pricing"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
@@ -1151,7 +1151,7 @@ export default function ServicesPage() {
 
           {/* E-Commerce Note & Proposal CTA */}
           <div className="p-8 rounded-3xl bg-white border border-[#E4E6EB] flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-            <div className="text-xs text-[#5B6275] text-center md:text-left">
+            <div className="flex-1 text-xs text-[#5B6275] text-center md:text-left">
               <span className="font-bold text-[#0A0F1F] block text-base mb-1">
                 Custom Web Architecture &amp; E-Commerce
               </span>
@@ -1184,7 +1184,7 @@ export default function ServicesPage() {
         id="subscriptions"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
@@ -1411,7 +1411,7 @@ export default function ServicesPage() {
         id="bundles"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
@@ -1623,64 +1623,105 @@ export default function ServicesPage() {
 
       {/* =========================================================================
           SECTION 8 — NEED SOMETHING BEYOND STANDARD SCOPE?
-          Replaces full lengthy add-on grid with a clean, high-conviction custom callout
+          Architectural 2-column balanced layout with 8 modular scope cards
           ========================================================================= */}
       <section
         ref={customScopeRef}
         id="custom-scope"
-        className="py-20 md:py-24 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
+        className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-white"
       >
-        <div className="max-w-[1920px] mx-auto">
-          <div className="border border-[#E4E6EB] rounded-3xl p-8 sm:p-12 md:p-16 bg-[#F8FAFC] flex flex-col lg:flex-row items-center justify-between gap-10 shadow-sm relative overflow-hidden">
-            <div className="grilla-celdas opacity-20 pointer-events-none" aria-hidden="true" />
+        <div className="max-w-[1400px] mx-auto">
+          <div className="border border-[#E4E6EB] rounded-3xl p-8 sm:p-12 lg:p-14 bg-[#F8FAFC] shadow-sm relative overflow-hidden">
+            <div className="grilla-celdas opacity-25 pointer-events-none" aria-hidden="true" />
 
-            <div className="max-w-2xl relative z-10">
-              <div className="flex items-center gap-2 mb-3 text-xs">
-                <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
-                <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF]">
-                  08 // BESPOKE ENGAGEMENTS
-                </span>
-              </div>
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0A0F1F] tracking-tight mb-4">
-                Need Something Beyond the Standard Scope?
-              </h2>
-              <p className="text-sm text-[#5B6275] leading-relaxed mb-6 font-medium">
-                From additional pages and advanced integrations to custom dashboards and campaign assets, we can tailor the engagement to your requirements.
-              </p>
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Left Column: Heading, description, and primary CTA */}
+              <div className="lg:col-span-5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-3 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#1F3FFF]">
+                      08 // BESPOKE ENGAGEMENTS
+                    </span>
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#0A0F1F] tracking-tight mb-4 leading-tight">
+                    Need Something Beyond the Standard Scope?
+                  </h2>
+                  <p className="text-sm text-[#5B6275] leading-relaxed mb-8 font-medium">
+                    From additional pages and advanced integrations to custom dashboards and campaign assets, we can tailor the engagement to your exact requirements.
+                  </p>
+                </div>
 
-              {/* Scope Tags */}
-              <div className="flex flex-wrap gap-2 text-xs text-[#0A0F1F]">
-                {[
-                  'Additional Web Pages',
-                  'Advanced Form Webhooks',
-                  'Custom Dashboards',
-                  'Motion Graphics & Video',
-                  'Multi-Source CRM Pipelines',
-                  'Custom Copywriting',
-                  'Speed & Technical SEO Audits',
-                  'Ongoing Maintenance & Hypercare',
-                ].map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3.5 py-1.5 rounded-full bg-white border border-[#E4E6EB] font-medium hover:border-[#1F3FFF] transition-colors shadow-sm"
+                <div>
+                  <Link
+                    href="/contact?subject=custom-scope"
+                    onClick={playClick}
+                    onMouseEnter={playHover}
+                    data-cursor="CUSTOM"
+                    className="btn-onlines-blue py-3.5 px-8 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 shadow-lg hover:shadow-xl transition-all"
                   >
-                    + {item}
+                    <span>Request a Custom Scope</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <span className="block text-[11px] text-[#5B6275] mt-3 font-medium">
+                    Direct founder review · Proposals delivered within 24h
                   </span>
+                </div>
+              </div>
+
+              {/* Right Column: 8 modular scope cards in a 2-column grid */}
+              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {[
+                  {
+                    title: 'Additional Web Pages',
+                    description: 'Custom responsive templates & landing page extensions.',
+                  },
+                  {
+                    title: 'Advanced Form Webhooks',
+                    description: 'Multi-step lead capture, verification & CRM sync.',
+                  },
+                  {
+                    title: 'Custom Dashboards',
+                    description: 'Real-time performance metrics & business pipelines.',
+                  },
+                  {
+                    title: 'Motion Graphics & Video',
+                    description: 'Kinetic typography, reel edits & sound design.',
+                  },
+                  {
+                    title: 'Multi-Source CRM Pipelines',
+                    description: 'WhatsApp, Meta Lead Ads & automated routing.',
+                  },
+                  {
+                    title: 'Custom Copywriting',
+                    description: 'High-converting headlines, positioning & sequences.',
+                  },
+                  {
+                    title: 'Speed & Technical SEO',
+                    description: 'Core Web Vitals 95+, schema markup & indexing.',
+                  },
+                  {
+                    title: 'Ongoing Maintenance',
+                    description: 'Dedicated SLA, priority bugfixes & security patches.',
+                  },
+                ].map((scope, idx) => (
+                  <div
+                    key={idx}
+                    onMouseEnter={playHover}
+                    className="p-4 rounded-2xl bg-white border border-[#E4E6EB] hover:border-[#1F3FFF] hover:shadow-md transition-all group shadow-sm"
+                  >
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#1F3FFF] flex-shrink-0" />
+                      <span className="font-display font-bold text-xs sm:text-sm text-[#0A0F1F] group-hover:text-[#1F3FFF] transition-colors">
+                        {scope.title}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#5B6275] leading-relaxed pl-3.5">
+                      {scope.description}
+                    </p>
+                  </div>
                 ))}
               </div>
-            </div>
-
-            <div className="flex-shrink-0 w-full lg:w-auto relative z-10">
-              <Link
-                href="/contact?subject=custom-scope"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                data-cursor="CUSTOM"
-                className="w-full sm:w-auto btn-onlines-blue py-4 px-8 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
-              >
-                <span>Request a Custom Scope</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
           </div>
         </div>
@@ -1695,7 +1736,7 @@ export default function ServicesPage() {
         id="faq"
         className="py-20 md:py-28 px-4 sm:px-8 md:px-12 border-b border-[#E4E6EB] bg-[#F5F6F8]"
       >
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-14 pb-6 border-b border-[#E4E6EB] flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 text-xs">
