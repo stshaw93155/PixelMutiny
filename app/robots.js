@@ -8,5 +8,6 @@ export default function robots() {
       disallow: ['/api/'],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }

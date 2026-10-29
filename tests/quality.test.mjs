@@ -147,8 +147,17 @@ test('3. Next.js Configuration & Security Headers', async (t) => {
     const redirects = await nextConfig.redirects();
     const workRedirect = redirects.find((r) => r.source === '/work');
     const workSlugRedirect = redirects.find((r) => r.source === '/work/:slug');
+    const agencyRedirect = redirects.find((r) => r.source === '/agency');
+    const pricingRedirect = redirects.find((r) => r.source === '/pricing');
+    const portfolioRedirect = redirects.find((r) => r.source === '/portfolio');
+    const projectsRedirect = redirects.find((r) => r.source === '/projects');
+
     assert.ok(workRedirect && workRedirect.permanent, '/work permanent redirect missing');
     assert.ok(workSlugRedirect && workSlugRedirect.permanent, '/work/:slug permanent redirect missing');
+    assert.ok(agencyRedirect && agencyRedirect.permanent && agencyRedirect.destination === '/about', '/agency redirect missing');
+    assert.ok(pricingRedirect && pricingRedirect.permanent && pricingRedirect.destination === '/services', '/pricing redirect missing');
+    assert.ok(portfolioRedirect && portfolioRedirect.permanent && portfolioRedirect.destination === '/works', '/portfolio redirect missing');
+    assert.ok(projectsRedirect && projectsRedirect.permanent && projectsRedirect.destination === '/works', '/projects redirect missing');
   });
 
   await t.test('Security Headers Configured', async () => {

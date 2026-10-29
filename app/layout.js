@@ -66,10 +66,77 @@ export const viewport = {
   themeColor: '#FFFFFF',
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'PixelMutiny DigiMedia Private Limited',
+  alternateName: 'PixelMutiny',
+  url: SITE_URL,
+  logo: `${SITE_URL}/img/logo-main.png`,
+  image: `${SITE_URL}/website-design/01-home-landing.png`,
+  description:
+    'PixelMutiny DigiMedia Private Limited is a strategy-led digital agency delivering high-converting websites, branding, creative production, and business automation.',
+  telephone: '+919315580036',
+  email: 'founder@pixelmutiny.com',
+  priceRange: '₹₹₹',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Gurugram',
+    addressRegion: 'Haryana',
+    addressCountry: 'IN',
+  },
+  sameAs: [
+    'https://instagram.com/pixelmutiny',
+    'https://linkedin.com/company/pixelmutiny',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'PixelMutiny Agency Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Digital Experiences & Website Development',
+          description: 'High-performance Next.js websites, custom landing pages, and interactive WebGL experiences.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Brand Identity & Visual Systems',
+          description: 'Comprehensive brand systems, typography, color palettes, vector assets, and design guidelines.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Content Production & Social Media',
+          description: 'Short-form video editing, kinetic motion design, reels, and multi-channel campaign creatives.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Performance Marketing & Lead Automation',
+          description: 'Meta and Google Ads management, CRM pipelines, webhook lead distribution, and automated workflows.',
+        },
+      },
+    ],
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <GlobalShell>{children}</GlobalShell>
       </body>
     </html>

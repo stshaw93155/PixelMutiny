@@ -15,6 +15,51 @@ const nextConfig = {
         destination: '/works/:slug',
         permanent: true,
       },
+      {
+        source: '/agency',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/pricing',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/pricing/:path*',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/portfolio',
+        destination: '/works',
+        permanent: true,
+      },
+      {
+        source: '/portfolio/:path*',
+        destination: '/works',
+        permanent: true,
+      },
+      {
+        source: '/projects',
+        destination: '/works',
+        permanent: true,
+      },
+      {
+        source: '/project/:slug',
+        destination: '/works/:slug',
+        permanent: true,
+      },
+      {
+        source: '/case-studies',
+        destination: '/works',
+        permanent: true,
+      },
+      {
+        source: '/case-study/:slug',
+        destination: '/works/:slug',
+        permanent: true,
+      },
     ];
   },
   async headers() {

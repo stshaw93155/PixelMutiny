@@ -6,8 +6,8 @@ export default function sitemap() {
   const staticRoutes = ['', '/works', '/services', '/about', '/contact'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: route === '' ? 1.0 : 0.8,
+    changeFrequency: route === '' || route === '/services' || route === '/works' ? 'weekly' : 'monthly',
+    priority: route === '' ? 1.0 : (route === '/services' || route === '/works' ? 0.9 : 0.8),
   }));
 
   const projectRoutes = PROJECTS.map((p) => ({
