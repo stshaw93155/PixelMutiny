@@ -1,626 +1,816 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  ArrowUp,
   ArrowUpRight,
-  ShieldCheck,
+  ArrowRight,
   Check,
+  Clock,
+  Globe,
+  Mail,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+  MapPin,
+  Send,
+  Compass,
 } from 'lucide-react';
 import { useSound } from './SoundManager';
+import { useCurrency } from './useCurrency';
 
-// 6 Strategic Delivery Nodes for the Dotted World Map
-const GLOBAL_HUBS = [
+// Operating Locations for the Interactive Map
+const OPERATIONS_HUBS = [
   {
     id: 'delhi',
-    name: 'New Delhi (HQ)',
-    country: 'India',
+    city: 'New Delhi',
+    code: 'DEL',
+    tz: 'Asia/Kolkata',
+    role: 'Global HQ & Engineering Core',
+    coordinates: '28.6139° N, 77.2090° E',
     x: 68.5,
-    y: 43.5,
+    y: 48.5,
+    status: 'STUDIO ACTIVE',
     isHQ: true,
-    timezone: 'Asia/Kolkata',
-    status: 'Primary Studio & Lab',
-    latency: '4ms',
   },
   {
-    id: 'sf',
-    name: 'San Francisco',
-    country: 'United States',
-    x: 17.5,
-    y: 35.0,
+    id: 'newyork',
+    city: 'New York',
+    code: 'NYC',
+    tz: 'America/New_York',
+    role: 'US Commercial Desk',
+    coordinates: '40.7128° N, 74.0060° W',
+    x: 28.5,
+    y: 37.0,
+    status: 'CLIENT LIAISON',
     isHQ: false,
-    timezone: 'America/Los_Angeles',
-    status: 'Client Sprints',
-    latency: '68ms',
-  },
-  {
-    id: 'nyc',
-    name: 'New York',
-    country: 'United States',
-    x: 27.5,
-    y: 33.5,
-    isHQ: false,
-    timezone: 'America/New_York',
-    status: 'Brand Growth',
-    latency: '52ms',
   },
   {
     id: 'london',
-    name: 'London',
-    country: 'United Kingdom',
-    x: 48.0,
-    y: 28.0,
+    city: 'London',
+    code: 'LON',
+    tz: 'Europe/London',
+    role: 'EMEA Partner Desk',
+    coordinates: '51.5074° N, 0.1278° W',
+    x: 48.5,
+    y: 31.5,
+    status: 'ACTIVE REVIEW',
     isHQ: false,
-    timezone: 'Europe/London',
-    status: 'European Deployments',
-    latency: '41ms',
-  },
-  {
-    id: 'dubai',
-    name: 'Dubai',
-    country: 'UAE',
-    x: 60.5,
-    y: 40.5,
-    isHQ: false,
-    timezone: 'Asia/Dubai',
-    status: 'Fintech Systems',
-    latency: '26ms',
   },
   {
     id: 'singapore',
-    name: 'Singapore',
-    country: 'Singapore',
-    x: 77.5,
-    y: 56.5,
+    city: 'Singapore',
+    code: 'SIN',
+    tz: 'Asia/Singapore',
+    role: 'APAC Partner Network',
+    coordinates: '1.3521° N, 103.8198° E',
+    x: 77.0,
+    y: 59.0,
+    status: 'REGIONAL DESK',
     isHQ: false,
-    timezone: 'Asia/Singapore',
-    status: 'APAC Regional Ops',
-    latency: '34ms',
   },
 ];
 
-// Content for the interactive ribbon (Industries & Services)
-const RIBBON_ITEMS = {
-  industries: [
-    'Fintech & Digital Banking',
-    'AI & Deep Tech Platforms',
-    'Luxury Architecture & Real Estate',
-    'Legal Intelligence & Analytics',
-    'Supply Chain & Fleet Logistics',
-    'Enterprise B2B SaaS',
-    'Biotech & Health Systems',
-    'Direct-to-Consumer Brands',
-    'Creative Production Studios',
-  ],
-  services: [
-    'Website Design & Engineering',
-    'High-Converting Landing Pages',
-    'UI/UX & Figma Design Systems',
-    'Custom Dashboards & Web Apps',
-    'Multi-Source CRM Automation',
-    'Kinetic Motion & Short-form Video',
-    'Sub-16ms WebGL Experiences',
-    'Headless E-Commerce Architecture',
-    'Core Web Vitals & Speed Optimization',
-  ],
-};
+// Marquee Ribbon Tracks
+const DISCIPLINE_TICKER = [
+  'Custom Web Platforms',
+  'Conversion Landing Pages',
+  'UI/UX Design Systems',
+  'Interactive 3D WebGL',
+  'Brand Identity Systems',
+  'Kinetic Motion & Reels',
+  'Multi-Channel CRM Sync',
+  'Rapid 14-Day Production Sprints',
+  'Zero-Template Bespoke Engineering',
+  'Core Web Vitals 95+',
+];
+
+const SECTOR_TICKER = [
+  'Fintech & Payments Infrastructure',
+  'Enterprise SaaS Platforms',
+  'Logistics & Freight Architecture',
+  'Luxury Architecture & Living',
+  'Legal & Corporate Advisory',
+  'Autonomous AI & Robotics',
+  'High-Growth Consumer Brands',
+];
 
 export default function AgencyFooter({ onOpenInquiry }) {
-  const { playClick, playHover } = useSound();
-  const [activeTab, setActiveTab] = useState('industries');
-  const [hoveredHub, setHoveredHub] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const magneticBtnRef = useRef(null);
+  const { playClick, playHover, playSuccess } = useSound();
+  const { currency } = useCurrency();
 
-  // Smooth scroll to top
+  // State for live clocks
+  const [times, setTimes] = useState({
+    ist: '--:--:--',
+    nyc: '--:--:--',
+    lon: '--:--:--',
+  });
+
+  // State for interactive tab switcher
+  const [activeTab, setActiveTab] = useState('disciplines'); // 'disciplines' | 'sectors'
+
+  // State for hover on map hub
+  const [selectedHub, setSelectedHub] = useState(OPERATIONS_HUBS[0]);
+
+  // State for newsletter dispatch
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+
+  // Update real-time world clocks every 1000ms
+  useEffect(() => {
+    function updateClocks() {
+      const now = new Date();
+      const formatTime = (tz) =>
+        new Intl.DateTimeFormat('en-US', {
+          timeZone: tz,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        }).format(now);
+
+      setTimes({
+        ist: formatTime('Asia/Kolkata'),
+        nyc: formatTime('America/New_York'),
+        lon: formatTime('Europe/London'),
+      });
+    }
+
+    updateClocks();
+    const interval = setInterval(updateClocks, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Back to top helper
   const handleBackToTop = () => {
     playClick?.();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-  // Magnetic cursor interaction for back-to-top button
-  const handleMouseMove = (e) => {
-    if (!magneticBtnRef.current) return;
-    const rect = magneticBtnRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const deltaX = (e.clientX - centerX) * 0.22;
-    const deltaY = (e.clientY - centerY) * 0.22;
-    setMousePos({ x: deltaX, y: deltaY });
+  // Handle newsletter / sprint proposal dispatch
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    if (!newsletterEmail || !newsletterEmail.includes('@')) return;
+
+    setNewsletterLoading(true);
+    playClick?.();
+
+    setTimeout(() => {
+      setNewsletterLoading(false);
+      setNewsletterSubmitted(true);
+      playSuccess?.();
+    }, 600);
   };
 
-  const handleMouseLeave = () => {
-    setMousePos({ x: 0, y: 0 });
-  };
+  const activeMarqueeList = activeTab === 'disciplines' ? DISCIPLINE_TICKER : SECTOR_TICKER;
 
   return (
-    <footer className="w-full bg-[#FFFFFF] text-[#0A0F1F] border-t border-[#E5E7EB] font-sans antialiased relative overflow-hidden select-none">
-      {/* =========================================================================
-          ROW 1: SOCIALS | COMPANY (3 COLUMNS) | SECURE PAYMENTS
-          ========================================================================= */}
-      <div className="w-full max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14 pt-14 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
-          {/* SOCIALS (Col 1 — 3 columns wide) */}
-          <div className="lg:col-span-3 space-y-4">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
-              SOCIALS
-            </span>
-
-            {/* Circular Social Buttons exactly matching reference */}
-            <div className="flex items-center gap-2.5">
-              {[
-                { name: 'in', href: 'https://www.linkedin.com/in/gfxsumit/', label: 'LinkedIn', icon: 'in' },
-                { name: 'ig', href: 'https://instagram.com', label: 'Instagram', icon: 'ig' },
-                { name: 'x', href: 'https://twitter.com', label: 'X (Twitter)', icon: '𝕏' },
-                { name: 'wa', href: 'https://wa.me/919315580036', label: 'WhatsApp', icon: 'wa' },
-              ].map((soc) => (
-                <a
-                  key={soc.name}
-                  href={soc.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={playClick}
-                  onMouseEnter={playHover}
-                  title={soc.label}
-                  aria-label={soc.label}
-                  className="w-9 h-9 rounded-full border border-[#D1D5DB] bg-[#FFFFFF] text-[#111827] hover:border-[#1F3FFF] hover:bg-[#1F3FFF] hover:text-white transition-all duration-200 flex items-center justify-center text-xs font-mono font-bold shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
-                >
-                  <span>{soc.icon}</span>
-                </a>
-              ))}
-            </div>
-
-            <p className="text-xs text-[#6B7280] leading-relaxed pt-1">
-              Direct founder access &amp; open dispatches.
-            </p>
-          </div>
-
-          {/* COMPANY DIRECTORY (Col 2 — 6 columns wide, 3 sub-columns) */}
-          <div className="lg:col-span-6 space-y-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
-              COMPANY
-            </span>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-[13px]">
-              {/* Column 1 */}
-              <div className="flex flex-col gap-2.5">
-                <Link
-                  href="/"
-                  className="text-[#1F3FFF] font-bold hover:underline"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  About us
-                </Link>
-                <Link
-                  href="/works"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  Selected Work
-                </Link>
-              </div>
-
-              {/* Column 2 */}
-              <div className="flex flex-col gap-2.5">
-                <Link
-                  href="/about#manifesto"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  Manifesto
-                </Link>
-                <Link
-                  href="/about#ledger"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  Benchmark Ledger
-                </Link>
-                <Link
-                  href="/services"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  Services &amp; Pricing
-                </Link>
-              </div>
-
-              {/* Column 3 */}
-              <div className="flex flex-col gap-2.5">
-                <Link
-                  href="/works"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  Industries
-                </Link>
-                <Link
-                  href="/services"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors"
-                >
-                  Deliverables
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-[#111827] hover:text-[#1F3FFF] transition-colors font-semibold"
-                >
-                  Contact us
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* SECURE PAYMENTS (Col 3 — 3 columns wide) */}
-          <div className="lg:col-span-3 space-y-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
-              SECURE PAYMENTS
-            </span>
-            <p className="text-xs text-[#6B7280] leading-relaxed">
-              Payments secured via PCI-DSS compliant gateway. Card details are not stored.
-            </p>
-
-            {/* Payment Method Badges Row */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              {[
-                { name: 'VISA', bg: 'bg-[#1A1F71]', text: 'text-white' },
-                { name: 'MC', bg: 'bg-[#EB001B]', text: 'text-white' },
-                { name: 'AMEX', bg: 'bg-[#006FCF]', text: 'text-white' },
-                { name: 'UPI', bg: 'bg-[#097939]', text: 'text-white' },
-                { name: ' Pay', bg: 'bg-[#000000]', text: 'text-white' },
-                { name: 'WIRE', bg: 'bg-[#374151]', text: 'text-white' },
-              ].map((badge) => (
-                <span
-                  key={badge.name}
-                  className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider ${badge.bg} ${badge.text}`}
-                >
-                  {badge.name}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+    <footer className="w-full bg-[#070A14] border-t border-white/10 text-white relative overflow-hidden select-none">
+      {/* Background ambient radial glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[360px] bg-[#1F3FFF]/5 blur-[120px] pointer-events-none rounded-full" />
 
       {/* =========================================================================
-          ROW 2: INTERACTIVE TAB PILLS & FULL-WIDTH STREAMING RIBBON
+          SECTION 1 — TOP ROW: EDITORIAL STATEMENT, LIVE CLOCKS & SPRINT DISPATCH
+          (Inspired by The Collected Works)
           ========================================================================= */}
-      <div className="w-full border-t border-[#E5E7EB] pt-8 pb-10">
-        <div className="w-full max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14 mb-4">
-          {/* Tab Switcher Pills */}
-          <div className="inline-flex items-center gap-1 p-1 rounded-full bg-[#F3F4F6] border border-[#E5E7EB]">
-            <button
-              type="button"
-              onClick={() => {
-                playClick?.();
-                setActiveTab('industries');
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === 'industries'
-                  ? 'bg-white text-[#111827] shadow-xs'
-                  : 'text-[#6B7280] hover:text-[#111827]'
-              }`}
-            >
-              Industries
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                playClick?.();
-                setActiveTab('services');
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === 'services'
-                  ? 'bg-white text-[#111827] shadow-xs'
-                  : 'text-[#6B7280] hover:text-[#111827]'
-              }`}
-            >
-              Services
-            </button>
-          </div>
-        </div>
-
-        {/* Large Elegant Horizontal Ticker Ribbon */}
-        <div className="w-full overflow-hidden whitespace-nowrap relative flex items-center py-2">
-          <div className="marquee-track gap-10 items-center text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-[#9CA3AF] tracking-tight hover:text-[#111827] transition-colors cursor-default">
-            {RIBBON_ITEMS[activeTab].concat(RIBBON_ITEMS[activeTab]).map((item, idx) => (
-              <span key={idx} className="inline-flex items-center gap-10">
-                <span className="hover:text-[#1F3FFF] transition-colors">
-                  {item}
-                </span>
-                <span className="text-[#D1D5DB] font-sans">•</span>
+      <div className="w-full border-b border-white/10">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 py-10 lg:py-12">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            
+            {/* Left: Editorial Statement */}
+            <div className="max-w-xl">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-[#1F3FFF] font-bold block mb-2">
+                01 // DIGITAL AGENCY ETHOS
               </span>
-            ))}
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl italic font-normal tracking-tight text-white leading-tight">
+                Strategy-Led Experiences.<br />
+                <span className="text-white/90">Built Different.™</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-[#8E95A5] mt-2 font-medium">
+                PixelMutiny DigiMedia Private Limited · Bespoke websites, visual systems &amp; automation workflows.
+              </p>
+            </div>
+
+            {/* Center: Live Studio Clocks */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              {/* Delhi Clock (Hub) */}
+              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+                </span>
+                <span className="font-mono text-xs font-bold text-white tracking-wider">
+                  DEL
+                </span>
+                <span className="font-mono text-xs text-[#8E95A5]">
+                  {times.ist}
+                </span>
+                <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-[#10B981]/20 text-[#10B981]">
+                  STUDIO OPEN
+                </span>
+              </div>
+
+              {/* NYC Clock */}
+              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
+                <span className="font-mono text-xs font-bold text-white tracking-wider">
+                  NYC
+                </span>
+                <span className="font-mono text-xs text-[#8E95A5]">
+                  {times.nyc}
+                </span>
+                <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-white/10 text-white/70">
+                  EST
+                </span>
+              </div>
+
+              {/* London Clock */}
+              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                <span className="w-2 h-2 rounded-full bg-[#1F3FFF]" />
+                <span className="font-mono text-xs font-bold text-white tracking-wider">
+                  LON
+                </span>
+                <span className="font-mono text-xs text-[#8E95A5]">
+                  {times.lon}
+                </span>
+                <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-white/10 text-white/70">
+                  GMT
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Rapid Sprint / Newsletter Capsule */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+              {!newsletterSubmitted ? (
+                <form
+                  onSubmit={handleNewsletterSubmit}
+                  className="flex items-center p-1 rounded-full bg-white/5 border border-white/15 focus-within:border-[#1F3FFF] focus-within:ring-2 focus-within:ring-[#1F3FFF]/30 transition-all shadow-lg"
+                >
+                  <label htmlFor="footer-sprint-email" className="sr-only">
+                    Work Email for Project Inquiry
+                  </label>
+                  <div className="flex items-center pl-3 pr-2 text-[#8E95A5]">
+                    <Mail className="w-3.5 h-3.5" />
+                  </div>
+                  <input
+                    id="footer-sprint-email"
+                    type="email"
+                    required
+                    placeholder="Enter work email for sprint availability..."
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className="bg-transparent text-xs text-white placeholder:text-white/40 focus:outline-none w-56 sm:w-64 pr-2 font-medium"
+                  />
+                  <button
+                    type="submit"
+                    disabled={newsletterLoading}
+                    onMouseEnter={playHover}
+                    className="px-4 py-2 rounded-full bg-[#1F3FFF] hover:bg-[#3855FF] text-white text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <span>{newsletterLoading ? 'Dispatching...' : 'Request Sprint'}</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </form>
+              ) : (
+                <div className="px-5 py-2.5 rounded-full bg-[#10B981]/15 border border-[#10B981]/30 text-white text-xs flex items-center gap-2 font-semibold">
+                  <Check className="w-4 h-4 text-[#10B981]" />
+                  <span>Brief received. Founder reviews within 24 business hours.</span>
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
       </div>
 
       {/* =========================================================================
-          ROW 3: ARCHITECTURAL VISUAL | OPERATIONAL GRID | DOTTED WORLD MAP
+          SECTION 2 — INTERACTIVE PILL TOGGLE & SMOOTH INFINITE MARQUEE
+          (Inspired by United Carriers)
           ========================================================================= */}
-      <div className="w-full border-t border-[#E5E7EB] py-14">
-        <div className="w-full max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Visual Thumbnail (Col 1 — 3 columns wide) */}
-            <div className="lg:col-span-3">
-              <div className="relative rounded-lg overflow-hidden border border-[#E5E7EB] bg-[#F3F4F6] aspect-[4/3] shadow-xs group">
+      <div className="w-full border-b border-white/10 bg-[#0A0E1C]/60 backdrop-blur-md py-4">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 flex flex-col sm:flex-row sm:items-center gap-4">
+          
+          {/* Interactive Switcher Pills */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                playClick?.();
+                setActiveTab('disciplines');
+              }}
+              onMouseEnter={playHover}
+              className={`px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                activeTab === 'disciplines'
+                  ? 'bg-white text-[#0A0F1F] shadow-md'
+                  : 'bg-white/5 text-[#8E95A5] hover:text-white hover:bg-white/10'
+              }`}
+            >
+              CORE DISCIPLINES
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                playClick?.();
+                setActiveTab('sectors');
+              }}
+              onMouseEnter={playHover}
+              className={`px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                activeTab === 'sectors'
+                  ? 'bg-white text-[#0A0F1F] shadow-md'
+                  : 'bg-white/5 text-[#8E95A5] hover:text-white hover:bg-white/10'
+              }`}
+            >
+              SECTOR FOCUS
+            </button>
+          </div>
+
+          <div className="hidden sm:block w-px h-5 bg-white/10 flex-shrink-0" />
+
+          {/* Running marquee strip */}
+          <div className="overflow-hidden flex-1 relative mask-fade-edges">
+            <div className="marquee-track flex items-center gap-8 text-xs font-mono tracking-wide text-white/70">
+              {activeMarqueeList.concat(activeMarqueeList).map((item, idx) => (
+                <span key={idx} className="flex items-center gap-3 flex-shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#1F3FFF]" />
+                  <span className="hover:text-white transition-colors cursor-default">{item}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* =========================================================================
+          SECTION 3 — DIRECTORY NAVIGATION & SECURE PAYMENTS GRID
+          ========================================================================= */}
+      <div className="w-full border-b border-white/10 py-14 lg:py-16">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+            
+            {/* Column 1: Brand & Direct CTA */}
+            <div className="space-y-6 lg:pr-4">
+              <Link
+                href="/"
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="inline-flex items-center hover:opacity-80 transition-opacity"
+              >
                 <Image
-                  src="/projects/morrow-house.jpg"
-                  alt="PixelMutiny Studio Perspective"
-                  fill
-                  className="object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-500"
+                  src="/img/PixelMutiny reverse.png"
+                  alt="PixelMutiny DigiMedia"
+                  width={150}
+                  height={34}
+                  className="h-[30px] w-auto object-contain block"
                 />
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+              </Link>
+              <p className="text-xs text-[#8E95A5] leading-relaxed">
+                Strategy-led agency building high-performance websites, distinctive brand identities, and connected business automation workflows.
+              </p>
+
+              {/* Get In Touch Pill Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  playClick?.();
+                  onOpenInquiry?.();
+                }}
+                onMouseEnter={playHover}
+                className="group inline-flex items-center rounded-xl overflow-hidden cursor-pointer transition-all active:scale-95 shadow-lg hover:shadow-[#1F3FFF]/25"
+                style={{ backgroundColor: '#1F3FFF' }}
+              >
+                <span className="px-5 py-3 text-xs font-bold tracking-wider uppercase text-white">
+                  Initiate Project
+                </span>
+                <span className="px-3 py-3 flex items-center justify-center bg-white/10 border-l border-white/20">
+                  <ArrowUpRight className="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </span>
+              </button>
+
+              {/* Social Channels */}
+              <div className="pt-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-white/50 block mb-2.5 font-bold">
+                  STUDIO CHANNELS
+                </span>
+                <div className="flex items-center gap-2">
+                  {[
+                    { label: 'X', href: 'https://twitter.com' },
+                    { label: 'IN', href: 'https://instagram.com' },
+                    { label: 'WA', href: 'https://wa.me/919315580036' },
+                    { label: 'LI', href: 'https://www.linkedin.com/in/gfxsumit/' },
+                  ].map((soc) => (
+                    <a
+                      key={soc.label}
+                      href={soc.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      onMouseEnter={playHover}
+                      className="w-8 h-8 rounded-full border border-white/15 bg-white/5 hover:bg-[#1F3FFF] hover:border-[#1F3FFF] text-white flex items-center justify-center text-[10px] font-mono font-bold transition-all hover:scale-105"
+                      aria-label={soc.label}
+                    >
+                      {soc.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Typographic Metadata (Col 2 — 5 columns wide, 2-column grid) */}
-            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-y-7 gap-x-6 text-xs">
+            {/* Column 2: Disciplines & Services */}
+            <div className="flex flex-col gap-3">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#1F3FFF] mb-1">
+                DISCIPLINES
+              </span>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                High-Performance Web Platforms
+              </Link>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Conversion Landing Pages
+              </Link>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                UI/UX &amp; Figma Design Systems
+              </Link>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Brand Identity &amp; Collateral
+              </Link>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Multi-Channel CRM Pipelines
+              </Link>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Monthly Growth Retainers
+              </Link>
+            </div>
+
+            {/* Column 3: Portfolio & Case Studies */}
+            <div className="flex flex-col gap-3">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#1F3FFF] mb-1">
+                SELECTED WORKS (08)
+              </span>
+              <Link href="/works" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors font-semibold">
+                Explore All Case Studies (08) →
+              </Link>
+              <Link href="/works/avenor" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Avenor Logistics (Enterprise)
+              </Link>
+              <Link href="/works/flow-task" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                FlowTask App (SaaS Platform)
+              </Link>
+              <Link href="/works/veyra-legal" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Veyra Legal (Corporate Site)
+              </Link>
+              <Link href="/works/morrow-house" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Morrow House (Architecture)
+              </Link>
+              <Link href="/works/veloce-ai" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Veloce AI (Concept / 3D WebGL)
+              </Link>
+            </div>
+
+            {/* Column 4: Agency Intelligence */}
+            <div className="flex flex-col gap-3">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#1F3FFF] mb-1">
+                AGENCY &amp; SPECS
+              </span>
+              <Link href="/about" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Agency Overview &amp; Partners
+              </Link>
+              <Link href="/about#manifesto" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Studio Manifesto
+              </Link>
+              <Link href="/about#ledger" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Benchmark Performance Ledger
+              </Link>
+              <Link href="/services" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Transparent Pricing Catalog
+              </Link>
+              <Link href="/contact" onMouseEnter={playHover} className="text-xs text-[#8E95A5] hover:text-white transition-colors">
+                Schedule Discovery Call
+              </Link>
+            </div>
+
+            {/* Column 5: Secure Payments & Financial Integrity (From United Carriers) */}
+            <div className="space-y-4 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#10B981]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-white">
+                  SECURE PAYMENTS
+                </span>
+              </div>
+              <p className="text-[11px] text-[#8E95A5] leading-relaxed">
+                Commercial projects billed via PCI-DSS Level 1 compliant gateways. Milestone escrow &amp; direct bank transfers supported.
+              </p>
+
+              {/* Payment Gateway Badges */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                {['VISA', 'MC', 'AMEX', 'STRIPE', 'RAZORPAY', 'APPLE PAY', 'UPI'].map((badge) => (
+                  <span
+                    key={badge}
+                    className="text-[9px] font-mono font-bold px-2 py-1 rounded bg-black/40 border border-white/10 text-white/80"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+
+              {/* Tax & Currency Notice */}
+              <div className="pt-2 border-t border-white/10 text-[10px] font-mono text-[#8E95A5] space-y-1">
+                <div>CURRENCY: {currency === 'INR' ? '₹ INR (India)' : '$ USD (Global)'}</div>
+                <div>EXCLUDES APPLICABLE GST FOR INDIAN CLIENTS</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          SECTION 4 — OPERATIONS DETAILS & INTERACTIVE GLOBAL LOCATOR MAP
+          (Inspired by United Carriers)
+          ========================================================================= */}
+      <div className="w-full border-b border-white/10 py-12 lg:py-16 bg-[#060912]">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* 1. Left Thumbnail Showcase */}
+            <div className="lg:col-span-3">
+              <div className="relative rounded-2xl overflow-hidden border border-white/15 group aspect-[4/3] bg-[#0E1324]">
+                <Image
+                  src="/projects/veloce-ai.jpg"
+                  alt="Veloce AI Studio Specimen"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-[#1F3FFF] font-bold block">
+                    STUDIO SPECIMEN 01
+                  </span>
+                  <span className="text-xs font-bold block text-white mt-0.5">
+                    Veloce AI — Interactive 3D WebGL
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Center: Operations & Studio Data Grid */}
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
+              
               {/* Head Office */}
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E95A5] block mb-1">
                   HEAD OFFICE
                 </span>
-                <p className="text-[#111827] leading-relaxed font-medium">
-                  PixelMutiny DigiMedia Pvt. Ltd.
-                  <br />
-                  2A Connaught Place,
-                  <br />
-                  New Delhi 110001, India.
+                <p className="font-semibold text-white leading-relaxed">
+                  PixelMutiny DigiMedia Pvt Ltd<br />
+                  Outer Ring Road, New Delhi 110001, India.
                 </p>
                 <a
-                  href="https://maps.google.com/?q=Connaught+Place+New+Delhi"
+                  href="https://maps.google.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-[11px] text-[#111827] hover:text-[#1F3FFF] font-semibold mt-1 transition-colors"
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1 text-[11px] text-[#1F3FFF] hover:underline mt-1 font-semibold"
                 >
-                  <span>↳ Direction on Google</span>
+                  <span>→ Studio Location</span>
                 </a>
               </div>
 
-              {/* Email & Hotline */}
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
-                    EMAIL
-                  </span>
-                  <a
-                    href="mailto:hello@pixelmutiny.com"
-                    className="text-[#111827] hover:text-[#1F3FFF] font-mono font-medium block transition-colors"
-                  >
-                    hello@pixelmutiny.com
-                  </a>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
-                    HOTLINE
-                  </span>
-                  <a
-                    href="https://wa.me/919315580036"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[#111827] hover:text-[#1F3FFF] font-mono font-semibold block transition-colors"
-                  >
-                    +91 93155 80036
-                  </a>
-                </div>
+              {/* Direct Inquiries */}
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E95A5] block mb-1">
+                  DIRECT INQUIRIES
+                </span>
+                <a
+                  href="mailto:hello@pixelmutiny.com"
+                  onMouseEnter={playHover}
+                  className="font-semibold text-white hover:text-[#1F3FFF] transition-colors block"
+                >
+                  hello@pixelmutiny.com
+                </a>
+                <span className="text-[10px] font-mono text-[#8E95A5] block mt-1">
+                  HOTLINE / WHATSAPP:
+                </span>
+                <a
+                  href="https://wa.me/919315580036"
+                  target="_blank"
+                  rel="noreferrer"
+                  onMouseEnter={playHover}
+                  className="font-semibold text-white hover:text-[#1F3FFF] transition-colors block"
+                >
+                  +91 93155 80036
+                </a>
               </div>
 
-              {/* Operating Across */}
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
+              {/* Operating Reach */}
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E95A5] block mb-1">
                   OPERATING ACROSS
                 </span>
-                <p className="text-[#111827] font-medium leading-relaxed">
-                  Australia / New Zealand / India / UAE / US
+                <p className="font-semibold text-white">
+                  India / United States / United Kingdom / Singapore / Global Remote
                 </p>
               </div>
 
-              {/* Office Hours */}
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6B7280] block">
-                  OFFICE HOURS
+              {/* Studio Hours */}
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E95A5] block mb-1">
+                  STUDIO HOURS
                 </span>
-                <p className="text-[#111827] font-medium leading-relaxed">
-                  Monday - Friday / 8:30AM - 5PM (IST)
+                <p className="font-semibold text-white">
+                  Monday – Friday / 10:00 AM – 7:00 PM IST
                 </p>
+                <span className="text-[10px] text-[#10B981] font-bold inline-flex items-center gap-1 mt-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                  <span>Sprint Desk Online</span>
+                </span>
               </div>
+
             </div>
 
-            {/* Dotted World Map (Col 3 — 4 columns wide) */}
-            <div className="lg:col-span-4 relative flex flex-col items-center">
-              <div className="w-full relative aspect-[1.85/1] max-w-[420px] mx-auto p-1">
-                {/* SVG Dot Matrix Map Base on Pure White */}
+            {/* 3. Right: Interactive Dot-Matrix World Operations Map */}
+            <div className="lg:col-span-4 bg-[#0A0F1F] p-4 rounded-2xl border border-white/10 relative">
+              <div className="flex items-center justify-between text-xs mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-white/50 font-bold flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-[#1F3FFF]" />
+                  <span>GLOBAL SPRINT HUBS</span>
+                </span>
+                <span className="text-[10px] font-mono text-[#10B981] font-bold">
+                  {selectedHub.code} · {selectedHub.status}
+                </span>
+              </div>
+
+              {/* SVG World Map Schematic with interactive pins */}
+              <div className="relative w-full aspect-[2/1] bg-[#070A14] rounded-xl border border-white/5 overflow-hidden flex items-center justify-center">
+                {/* SVG Dot-Matrix World Grid */}
                 <svg
-                  viewBox="0 0 100 60"
-                  className="w-full h-full"
+                  viewBox="0 0 400 200"
+                  className="w-full h-full opacity-40"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Continental Dots Array in Subtle Slate/Grey */}
-                  <g fill="#CBD5E1">
-                    {/* North America */}
-                    <circle cx="15" cy="22" r="0.9" /><circle cx="18" cy="20" r="0.9" /><circle cx="22" cy="18" r="0.9" />
-                    <circle cx="26" cy="18" r="0.9" /><circle cx="30" cy="20" r="0.9" /><circle cx="16" cy="26" r="0.9" />
-                    <circle cx="20" cy="24" r="0.9" /><circle cx="24" cy="22" r="0.9" /><circle cx="28" cy="24" r="0.9" />
-                    <circle cx="18" cy="30" r="0.9" /><circle cx="22" cy="28" r="0.9" /><circle cx="26" cy="30" r="0.9" />
-                    <circle cx="20" cy="34" r="0.9" /><circle cx="24" cy="36" r="0.9" /><circle cx="28" cy="34" r="0.9" />
+                  {/* Subtle Grid Lat/Long */}
+                  <line x1="0" y1="100" x2="400" y2="100" stroke="rgba(255,255,255,0.08)" strokeDasharray="2 4" />
+                  <line x1="200" y1="0" x2="200" y2="200" stroke="rgba(255,255,255,0.08)" strokeDasharray="2 4" />
 
-                    {/* South America */}
-                    <circle cx="30" cy="42" r="0.9" /><circle cx="32" cy="45" r="0.9" /><circle cx="34" cy="48" r="0.9" />
-                    <circle cx="32" cy="52" r="0.9" /><circle cx="30" cy="55" r="0.9" />
-
-                    {/* Europe */}
-                    <circle cx="48" cy="20" r="0.9" /><circle cx="52" cy="18" r="0.9" /><circle cx="55" cy="20" r="0.9" />
-                    <circle cx="47" cy="25" r="0.9" /><circle cx="50" cy="24" r="0.9" /><circle cx="54" cy="25" r="0.9" />
-                    <circle cx="48" cy="29" r="0.9" /><circle cx="52" cy="28" r="0.9" />
-
-                    {/* Africa */}
-                    <circle cx="48" cy="34" r="0.9" /><circle cx="52" cy="33" r="0.9" /><circle cx="56" cy="35" r="0.9" />
-                    <circle cx="50" cy="38" r="0.9" /><circle cx="54" cy="39" r="0.9" /><circle cx="52" cy="44" r="0.9" />
-                    <circle cx="54" cy="48" r="0.9" /><circle cx="53" cy="52" r="0.9" />
-
-                    {/* Asia & India */}
-                    <circle cx="62" cy="20" r="0.9" /><circle cx="66" cy="18" r="0.9" /><circle cx="70" cy="20" r="0.9" />
-                    <circle cx="75" cy="22" r="0.9" /><circle cx="80" cy="24" r="0.9" /><circle cx="63" cy="26" r="0.9" />
-                    <circle cx="67" cy="25" r="0.9" /><circle cx="71" cy="26" r="0.9" /><circle cx="76" cy="27" r="0.9" />
-                    <circle cx="82" cy="28" r="0.9" /><circle cx="61" cy="32" r="0.9" /><circle cx="65" cy="31" r="0.9" />
-                    <circle cx="69" cy="33" r="0.9" /><circle cx="73" cy="32" r="0.9" /><circle cx="78" cy="34" r="0.9" />
-                    <circle cx="84" cy="33" r="0.9" /><circle cx="64" cy="38" r="0.9" /><circle cx="68" cy="37" r="0.9" />
-                    <circle cx="72" cy="39" r="0.9" /><circle cx="76" cy="40" r="0.9" /><circle cx="82" cy="40" r="0.9" />
-                    <circle cx="68" cy="42" r="1.1" /><circle cx="69" cy="44" r="1.1" /><circle cx="68" cy="46" r="1.1" />
-
-                    {/* Australia */}
-                    <circle cx="84" cy="48" r="0.9" /><circle cx="88" cy="47" r="0.9" /><circle cx="86" cy="52" r="0.9" />
-                    <circle cx="90" cy="51" r="0.9" />
-                  </g>
+                  {/* Continent Schematic Shapes (Stylized Dots) */}
+                  {/* North America */}
+                  <ellipse cx="110" cy="70" rx="35" ry="25" fill="rgba(255,255,255,0.08)" />
+                  {/* South America */}
+                  <ellipse cx="150" cy="140" rx="20" ry="35" fill="rgba(255,255,255,0.06)" />
+                  {/* Europe */}
+                  <ellipse cx="205" cy="60" rx="25" ry="18" fill="rgba(255,255,255,0.08)" />
+                  {/* Africa */}
+                  <ellipse cx="215" cy="115" rx="25" ry="30" fill="rgba(255,255,255,0.06)" />
+                  {/* Asia */}
+                  <ellipse cx="280" cy="75" rx="55" ry="30" fill="rgba(255,255,255,0.08)" />
+                  {/* Australia */}
+                  <ellipse cx="325" cy="145" rx="22" ry="16" fill="rgba(255,255,255,0.06)" />
                 </svg>
 
-                {/* Electric Blue Nodes exactly as in reference */}
-                {GLOBAL_HUBS.map((hub) => (
-                  <div
-                    key={hub.id}
-                    onMouseEnter={() => {
-                      playHover?.();
-                      setHoveredHub(hub);
-                    }}
-                    onMouseLeave={() => setHoveredHub(null)}
-                    style={{ left: `${hub.x}%`, top: `${hub.y}%` }}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer p-1 group z-20"
-                  >
-                    <span className="absolute inset-0 rounded-full bg-[#1F3FFF] animate-ping opacity-75" />
-                    <span className="relative block w-2 h-2 rounded-full bg-[#1F3FFF] shadow-xs group-hover:scale-150 transition-transform" />
-                  </div>
-                ))}
+                {/* Interactive Location Pins */}
+                {OPERATIONS_HUBS.map((hub) => {
+                  const isHovered = selectedHub.id === hub.id;
+                  return (
+                    <button
+                      key={hub.id}
+                      type="button"
+                      onClick={() => {
+                        playClick?.();
+                        setSelectedHub(hub);
+                      }}
+                      onMouseEnter={() => {
+                        playHover?.();
+                        setSelectedHub(hub);
+                      }}
+                      className="absolute group -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 focus:outline-none"
+                      style={{ left: `${hub.x}%`, top: `${hub.y}%` }}
+                      aria-label={`${hub.city} Hub`}
+                    >
+                      <span className="relative flex h-3.5 w-3.5 items-center justify-center">
+                        <span
+                          className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                            hub.isHQ ? 'bg-[#1F3FFF]' : 'bg-[#10B981]'
+                          }`}
+                        />
+                        <span
+                          className={`relative inline-flex rounded-full h-2 w-2 border border-white ${
+                            hub.isHQ ? 'bg-[#1F3FFF]' : 'bg-[#10B981]'
+                          }`}
+                        />
+                      </span>
+                    </button>
+                  );
+                })}
 
-                {/* Tooltip */}
-                {hoveredHub && (
-                  <div
-                    style={{
-                      left: `${Math.min(Math.max(hoveredHub.x, 20), 80)}%`,
-                      top: `${hoveredHub.y > 45 ? hoveredHub.y - 18 : hoveredHub.y + 12}%`,
-                    }}
-                    className="absolute -translate-x-1/2 z-30 pointer-events-none p-2 rounded-md bg-[#111827] text-white shadow-lg text-[10px] font-mono whitespace-nowrap"
-                  >
-                    <p className="font-bold">{hoveredHub.name}</p>
-                    <p className="text-white/70 text-[9px] mt-0.5">{hoveredHub.status}</p>
+                {/* Selected Hub Live Tooltip */}
+                <div className="absolute bottom-2 left-2 right-2 p-2 rounded-lg bg-[#0E1324]/90 backdrop-blur-md border border-white/15 flex items-center justify-between text-[10px] font-mono">
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="w-3 h-3 text-[#1F3FFF]" />
+                    <span className="text-white font-bold">{selectedHub.city}</span>
+                    <span className="text-[#8E95A5]">({selectedHub.role})</span>
                   </div>
-                )}
+                  <span className="text-[#10B981] font-semibold">{selectedHub.coordinates}</span>
+                </div>
               </div>
+
             </div>
+
           </div>
         </div>
       </div>
 
       {/* =========================================================================
-          ROW 4: LEGAL & POLICY METADATA STRIP
+          SECTION 5 — COLOSSAL STATEMENT DISPLAY BRANDING
+          (Inspired by United Carriers & The Collected Works)
           ========================================================================= */}
-      <div className="w-full border-t border-[#E5E7EB] py-4 bg-[#FFFFFF]">
-        <div className="w-full max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14 flex flex-col md:flex-row items-center justify-between gap-3 text-[10px] font-mono uppercase tracking-wider text-[#6B7280]">
-          <div>
-            <span>© 2026 PIXELMUTINY DIGIMEDIA PRIVATE LIMITED. CRAFTED BY PIXELMUTINY</span>
+      <div className="w-full relative border-b border-white/10 overflow-hidden bg-[#05070E] py-8 lg:py-12">
+        <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
+          
+          {/* Giant Display Typography */}
+          <div className="w-full relative">
+            <h1
+              className="font-display text-[15vw] leading-[0.8] font-extrabold uppercase tracking-tighter text-white/90 select-none hover:text-white transition-colors duration-300"
+              style={{
+                letterSpacing: '-0.04em',
+                WebkitTextStroke: '1px rgba(255,255,255,0.2)',
+              }}
+            >
+              PIXELMUTINY
+            </h1>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
-            <Link href="/privacy-policy" className="hover:text-[#111827] transition-colors">
-              PRIVACY POLICY
-            </Link>
-            <Link href="/terms-of-use" className="hover:text-[#111827] transition-colors">
-              TERMS &amp; CONDITIONS
-            </Link>
-            <Link href="/sitemap.xml" className="hover:text-[#111827] transition-colors">
-              COOKIE SETTINGS
-            </Link>
-            <span className="text-[#D1D5DB]">|</span>
-            <span>ALL PRICES IN AUD / INR / USD. POWERED BY STRIPE.</span>
+          {/* Floating Compass / Studio Seal */}
+          <div className="hidden lg:flex flex-col items-center gap-1.5 absolute right-16 top-1/2 -translate-y-1/2 px-4 py-3 rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md group hover:border-[#1F3FFF] transition-all">
+            <Compass className="w-6 h-6 text-[#1F3FFF] animate-[spin_12s_linear_infinite]" />
+            <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-white text-center">
+              EST. 2025<br />NEW DELHI
+            </span>
           </div>
+
         </div>
       </div>
 
       {/* =========================================================================
-          ROW 5: MASSIVE HALFTONE DOT-MATRIX WORDMARK & BACK-TO-TOP BUTTON
+          SECTION 6 — LEGAL, COMPLIANCE & BACK TO TOP STRIP
           ========================================================================= */}
-      <div
-        className="w-full border-t border-[#E5E7EB] pt-6 pb-12 sm:pb-16 relative bg-[#FFFFFF]"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="w-full max-w-[1520px] mx-auto px-4 sm:px-8 relative flex items-center justify-between">
-          {/* Edge-to-Edge Dot Matrix Wordmark SVG matching reference */}
-          <svg
-            viewBox="0 0 1200 130"
-            className="w-full h-auto select-none pointer-events-auto group cursor-default"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              {/* Dot Grid Pattern on Pure White */}
-              <pattern
-                id="pm-dots-pattern"
-                x="0"
-                y="0"
-                width="5"
-                height="5"
-                patternUnits="userSpaceOnUse"
-              >
-                <circle cx="2.5" cy="2.5" r="1.1" fill="#9CA3AF" />
-              </pattern>
-            </defs>
+      <div className="w-full py-6 bg-[#04060B] text-xs text-[#8E95A5]">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          {/* Copyright & Registration */}
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+            <span className="font-medium text-white/70">
+              © 2026 PixelMutiny DigiMedia Private Limited.
+            </span>
+            <span className="hidden sm:inline text-white/20">|</span>
+            <span className="text-[11px] font-mono text-white/50">
+              CIN: U74999DL2025PTC000000 · CRAFTED IN INDIA
+            </span>
+          </div>
 
-            {/* Dotted Halftone Fill */}
-            <text
-              x="50%"
-              y="82%"
-              textAnchor="middle"
-              className="font-display font-black tracking-[-0.03em] transition-opacity duration-300 opacity-70 group-hover:opacity-90"
-              fontSize="140"
-              fill="url(#pm-dots-pattern)"
-              letterSpacing="0.04em"
+          {/* Legal Navigation Links */}
+          <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] font-medium">
+            <Link
+              href="/privacy-policy"
+              onMouseEnter={playHover}
+              className="text-[#8E95A5] hover:text-white transition-colors"
             >
-              PIXELMUTINY.
-            </text>
-
-            {/* Subtle Hairline Vector Outline */}
-            <text
-              x="50%"
-              y="82%"
-              textAnchor="middle"
-              className="font-display font-black tracking-[-0.03em]"
-              fontSize="140"
-              stroke="#D1D5DB"
-              strokeWidth="0.75"
-              fill="none"
-              letterSpacing="0.04em"
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-of-use"
+              onMouseEnter={playHover}
+              className="text-[#8E95A5] hover:text-white transition-colors"
             >
-              PIXELMUTINY.
-            </text>
-          </svg>
-
-          {/* Magnetic Circular Back-to-Top Button exactly as in reference */}
-          <div
-            ref={magneticBtnRef}
-            style={{
-              transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
-              transition: mousePos.x === 0 ? 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)' : 'none',
-            }}
-            className="absolute right-6 sm:right-12 bottom-6 sm:bottom-10 z-30"
-          >
+              Terms of Use
+            </Link>
+            <Link
+              href="/about#manifesto"
+              onMouseEnter={playHover}
+              className="text-[#8E95A5] hover:text-white transition-colors"
+            >
+              Studio Manifesto
+            </Link>
+            <Link
+              href="/about#ledger"
+              onMouseEnter={playHover}
+              className="text-[#8E95A5] hover:text-white transition-colors"
+            >
+              Benchmark Ledger
+            </Link>
             <button
               type="button"
               onClick={handleBackToTop}
               onMouseEnter={playHover}
-              title="Return to top"
-              data-cursor="TOP"
-              className="group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-[#111827] bg-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm"
-              aria-label="Back to top"
+              className="text-white hover:text-[#1F3FFF] transition-colors inline-flex items-center gap-1 cursor-pointer font-bold px-2 py-1 rounded bg-white/5 border border-white/10 hover:border-[#1F3FFF]"
+              aria-label="Back to top of page"
             >
-              {/* Center Crosshair Dot/Arrow matching reference */}
-              <div className="w-1.5 h-1.5 rounded-full bg-[#111827] group-hover:scale-150 transition-transform" />
-              <ArrowUp className="w-4 h-4 text-[#111827] absolute opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 transition-all duration-200" />
+              <span>Back to top ↑</span>
             </button>
           </div>
+
         </div>
       </div>
     </footer>

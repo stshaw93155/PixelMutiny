@@ -21,6 +21,8 @@ function ShellInner({ children }) {
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const { playClick } = useSound();
 
+
+
   return (
     <SmoothScroll>
       <ScrollProgressBar />
@@ -49,7 +51,7 @@ function ShellInner({ children }) {
         </main>
       </PageTransition>
 
-      {/* Dynamic Editorial Agency Footer (Inspired by Site of the Day / Brutalist Reference) */}
+      {/* Interactive Agency Footer (Crafted with UI-Skills) */}
       <AgencyFooter onOpenInquiry={() => setIsInquiryOpen(true)} />
 
 
