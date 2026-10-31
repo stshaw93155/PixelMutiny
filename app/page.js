@@ -666,7 +666,7 @@ export default function Home() {
                         {proj.client}
                       </h4>
                       <p className="text-[11px] text-white/80 line-clamp-1 mt-0.5">
-                        {proj.metrics?.[0]?.value || '+340% Traffic'} — {proj.metrics?.[0]?.label || 'Impact'}
+                        {proj.results?.[0]?.value || proj.metric} — {proj.results?.[0]?.label || 'Measured Impact'}
                       </p>
                     </div>
                   </div>
@@ -774,10 +774,10 @@ export default function Home() {
                 </button>
 
                 <a
-                  href="mailto:contact@pixelmutiny.com"
+                  href="mailto:hello@pixelmutiny.com"
                   className="btn-onlines-outline"
                 >
-                  contact@pixelmutiny.com
+                  hello@pixelmutiny.com
                 </a>
               </div>
 

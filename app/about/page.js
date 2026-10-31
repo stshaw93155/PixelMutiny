@@ -243,6 +243,7 @@ export default function AboutPage() {
           HERO SECTION: MANIFESTO & ORIGIN + REAL FEATURED PREVIEW CARD
           ========================================================================= */}
       <section
+        id="manifesto"
         onMouseMove={handleMouseMove}
         className="relative border-b border-[#E4E6EB] pt-28 pb-16 md:pt-32 md:pb-20 px-4 sm:px-8 md:px-12 bg-white patron-puntos overflow-hidden"
         style={{
@@ -744,7 +745,7 @@ export default function AboutPage() {
       {/* =========================================================================
           SECTION 06: BENCHMARK LEDGER
           ========================================================================= */}
-      <section className="max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 py-20 border-b border-[rgba(18,18,19,0.08)] bg-white">
+      <section id="ledger" className="max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 py-20 border-b border-[rgba(18,18,19,0.08)] bg-white">
         <AwardsTable />
       </section>
 

@@ -274,29 +274,30 @@ function WorksContent() {
                       <span className="font-bold text-[#0A0F1F] truncate group-hover:text-[#1F3FFF] transition-colors">
                         {project.client}
                       </span>
-                      <span className="text-[9px] font-bold uppercase text-[#5B6275] bg-[#F5F6F8] px-1.5 py-0.5 rounded border border-[#E4E6EB] flex-shrink-0">
-                        PRO
-                      </span>
+                      {project.isConcept ? (
+                        <span className="text-[9px] font-bold uppercase text-[#1F3FFF] bg-[#1F3FFF]/10 px-2 py-0.5 rounded-full border border-[#1F3FFF]/20 flex-shrink-0">
+                          Concept
+                        </span>
+                      ) : (
+                        <span className="text-[9px] font-bold uppercase text-[#5B6275] bg-[#F5F6F8] px-2 py-0.5 rounded-full border border-[#E4E6EB] flex-shrink-0">
+                          Client
+                        </span>
+                      )}
                     </div>
 
-                    {/* Right: Status Pill Tags (DEV, SOTD, popout) */}
-                    <div className="flex items-center gap-1.5 flex-shrink-0">
-                      {project.award ? (
-                        <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded border border-[#EF5533]/30 text-[#EF5533] bg-[#EF5533]/8 uppercase tracking-wider">
-                          SOTD
-                        </span>
-                      ) : null}
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded border border-[#E4E6EB] text-[#5B6275] bg-white uppercase">
-                        DEV
+                    {/* Right: Category + Case study arrow */}
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-[10px] font-mono font-semibold text-[#5B6275] uppercase">
+                        {project.category}
                       </span>
                       <Link
                         href={`/works/${project.slug}`}
                         onClick={playClick}
-                        className="w-5 h-5 rounded-full flex items-center justify-center text-[#5B6275] hover:text-[#1F3FFF] hover:bg-[#F5F6F8] transition-all"
+                        className="w-6 h-6 rounded-full flex items-center justify-center text-[#5B6275] hover:text-[#1F3FFF] hover:bg-[#F5F6F8] transition-all"
                         title={`Open dedicated ${project.client} case study`}
                         aria-label={`Open ${project.client} case study page`}
                       >
-                        <ArrowUpRight className="w-3.5 h-3.5" />
+                        <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     </div>
                   </div>

@@ -186,13 +186,15 @@ test('4. Robots and Sitemap Dynamic Route Generators', async (t) => {
   await t.test('Sitemap Coverage', () => {
     const sm = sitemap();
     assert.ok(Array.isArray(sm), 'Sitemap must return array of routes');
-    assert.equal(sm.length, 5 + 8, 'Sitemap must cover 5 static pages and 8 project pages');
+    assert.equal(sm.length, 7 + 8, 'Sitemap must cover 7 static pages and 8 project pages');
     const urls = sm.map((entry) => entry.url);
     assert.ok(urls.includes('https://pixelmutiny.com'), 'Home route missing');
     assert.ok(urls.includes('https://pixelmutiny.com/works'), 'Works route missing');
     assert.ok(urls.includes('https://pixelmutiny.com/services'), 'Services route missing');
     assert.ok(urls.includes('https://pixelmutiny.com/about'), 'About route missing');
     assert.ok(urls.includes('https://pixelmutiny.com/contact'), 'Contact route missing');
+    assert.ok(urls.includes('https://pixelmutiny.com/privacy-policy'), 'Privacy Policy route missing');
+    assert.ok(urls.includes('https://pixelmutiny.com/terms-of-use'), 'Terms of Use route missing');
     assert.ok(urls.includes('https://pixelmutiny.com/works/veloce-ai') || urls.includes('https://pixelmutiny.com/works/avenor'), 'Project route missing');
   });
 });

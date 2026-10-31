@@ -73,13 +73,13 @@ const BENCHMARK_PROJECTS = [
     badge: 'SPATIAL WEB',
   },
   {
-    year: '2024',
-    client: 'Synthetix Cloud',
-    slug: 'synthetix-cloud',
-    architecture: 'Multi-Tenant Infrastructure Dashboard & Ops Telemetry',
-    discipline: 'UI/UX SYSTEMS',
-    metric: 'SERIES B EXPANSION',
-    badge: 'DEV-OPS UI',
+    year: '2026',
+    client: 'Axon Robotics',
+    slug: 'axon-robotics',
+    architecture: 'Commercial Humanoid Robotics Flagship & 3D Key Visuals',
+    discipline: 'GRAPHICS & BRAND',
+    metric: '3D KINEMATICS',
+    badge: 'CONCEPT SPEC',
   },
 ];
 

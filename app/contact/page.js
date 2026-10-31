@@ -558,40 +558,62 @@ function ContactFormContent() {
                     <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
                       01 What do you need?
                     </h2>
-                    <span className="uppercase tracking-wider font-semibold text-[11px]">MULTI-SELECT</span>
+                    <span className="uppercase tracking-wider font-semibold text-[11px]">SELECT ONE OR MORE</span>
                   </div>
 
-                  {/* 4 Core Agency Pillars */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                    {SERVICES_DATA.map((service) => {
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[
+                      {
+                        name: 'Website Design & Development',
+                        tag: 'Landing pages, CMS, WebGL & full platforms',
+                        starting: currency === 'INR' ? '₹24,999' : '$300',
+                      },
+                      {
+                        name: 'Brand Identity & Design',
+                        tag: 'Logo system, visual guidelines, collateral',
+                        starting: currency === 'INR' ? '₹19,999' : '$250',
+                      },
+                      {
+                        name: 'Content & Video Production',
+                        tag: 'Reels, kinetic typography, motion assets',
+                        starting: currency === 'INR' ? '₹14,999' : '$200',
+                      },
+                      {
+                        name: 'Business Automation & CRM',
+                        tag: 'Lead routing, CRM pipelines, webhook sync',
+                        starting: currency === 'INR' ? '₹34,999' : '$420',
+                      },
+                    ].map((service) => {
                       const isSelected = selectedServices.includes(service.name);
                       return (
                         <button
-                          key={service.id}
+                          key={service.name}
                           type="button"
                           onClick={() => toggleService(service.name)}
-                          className={`text-xs p-4 rounded-2xl border text-left transition-all flex items-start justify-between gap-3 cursor-pointer ${isSelected
+                          className={`text-xs p-4 rounded-2xl border text-left transition-all flex items-start justify-between gap-3 cursor-pointer ${
+                            isSelected
                               ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
                               : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
-                            }`}
+                          }`}
                           data-cursor="SELECT"
                         >
                           <div>
                             <span className="block text-sm font-display font-bold mb-1 text-[#0A0F1F]">
                               {service.name}
                             </span>
-                            <span
-                              className={`text-[11px] block font-semibold ${isSelected ? 'text-[#1F3FFF]' : 'text-[#5B6275]'
-                                }`}
-                            >
-                              Starting at {formatPrice(getTierPrice(service.tiers[0], currency), currency)}
+                            <span className="text-[11px] text-[#5B6275] block mb-1">
+                              {service.tag}
+                            </span>
+                            <span className={`text-[11px] font-semibold ${isSelected ? 'text-[#1F3FFF]' : 'text-[#5B6275]'}`}>
+                              From {service.starting}
                             </span>
                           </div>
                           <div
-                            className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${isSelected
+                            className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                              isSelected
                                 ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white font-extrabold'
                                 : 'border-[#E4E6EB] bg-white'
-                              }`}
+                            }`}
                           >
                             {isSelected && <Check className="w-3.5 h-3.5" />}
                           </div>
@@ -599,213 +621,13 @@ function ContactFormContent() {
                       );
                     })}
                   </div>
-
-                  {/* Monthly Retainers */}
-                  <div className="mb-4">
-                    <span className="text-[11px] font-bold text-[#5B6275] uppercase tracking-wider block mb-2">
-                      Monthly Retainers &amp; Partnerships:
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                      {MONTHLY_RETAINERS.map((ret) => {
-                        const isSelected = selectedServices.includes(ret.name);
-                        return (
-                          <button
-                            key={ret.id}
-                            type="button"
-                            onClick={() => toggleService(ret.name)}
-                            className={`text-xs p-3 rounded-xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${isSelected
-                                ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
-                                : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
-                              }`}
-                          >
-                            <div>
-                              <span className="block text-xs font-display font-bold text-[#0A0F1F] mb-0.5">
-                                {ret.shortName}
-                              </span>
-                              <span className="text-[10px] text-[#1F3FFF] font-semibold block">
-                                {currency === 'INR' ? ret.priceRangeINR : ret.priceRangeUSD}
-                              </span>
-                            </div>
-                            <div
-                              className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${isSelected
-                                  ? 'bg-[#1F3FFF] border-[#1F3FFF] text-white'
-                                  : 'border-[#E4E6EB] bg-white'
-                                }`}
-                            >
-                              {isSelected && <Check className="w-3 h-3" />}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Brand & Growth Kit / Startup Launchpack Option */}
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => toggleService('Brand & Growth Kit')}
-                      className={`w-full text-xs p-4 rounded-2xl border text-left transition-all flex items-center justify-between gap-3 cursor-pointer ${selectedServices.includes('Brand & Growth Kit') || selectedServices.includes('Startup Launch Kit')
-                          ? 'bg-[#1F3FFF]/10 text-[#0A0F1F] border-2 border-[#1F3FFF] font-bold shadow-sm'
-                          : 'border-[#E4E6EB] bg-white text-[#5B6275] hover:border-[#1F3FFF]'
-                        }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-[#1F3FFF]" />
-                        <span className="font-display font-bold text-sm text-[#0A0F1F]">
-                          Brand &amp; Growth Kit (Brand Identity Pro + Website + CRM Sync)
-                        </span>
-                      </div>
-                      <span className="text-xs font-bold text-[#1F3FFF]">
-                        {formatPrice(getLaunchKitPrice(currency).price, currency)}
-                      </span>
-                    </button>
-                  </div>
                 </div>
 
-                {/* STEP 02: ADD-ONS */}
-                <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
-                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
-                      02 Add-ons
-                    </h2>
-                    <span className="uppercase tracking-wider font-semibold text-[11px]">OPTIONAL BOOSTS</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2.5">
-                    {ADD_ONS_DATA.map((addon) => {
-                      const isSelected = selectedAddons.includes(addon.name);
-                      return (
-                        <button
-                          key={addon.id}
-                          type="button"
-                          onClick={() => toggleAddon(addon.name)}
-                          className={`text-xs px-4 py-2.5 rounded-full border transition-all cursor-pointer font-bold ${isSelected
-                              ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-sm'
-                              : 'bg-white border-[#E4E6EB] text-[#0A0F1F] hover:border-[#1F3FFF]'
-                            }`}
-                        >
-                          <span className="inline-flex items-center gap-1.5">
-                            {isSelected ? (
-                              <Check className="w-3.5 h-3.5 flex-shrink-0" />
-                            ) : (
-                              <span className="text-sm leading-none font-normal">+</span>
-                            )}
-                            <span>{addon.name}</span>
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* STEP 03: BUDGET */}
-                <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
-                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
-                      03 Budget ({currency})
-                    </h2>
-                    <span className="uppercase tracking-wider font-semibold text-[11px]">ESTIMATED RANGE</span>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-                    {BUDGET_OPTIONS[currency].map((b) => {
-                      const isSelected = selectedBudget === b.value;
-                      return (
-                        <button
-                          key={b.value}
-                          type="button"
-                          onClick={() => {
-                            setSelectedBudget(b.value);
-                            playClick();
-                          }}
-                          className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${isSelected
-                              ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-md'
-                              : 'border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF]'
-                            }`}
-                        >
-                          {b.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* STEP 04: TIMELINE */}
-                <div>
-                  <div className="flex items-center justify-between text-xs mb-3 text-[#5B6275]">
-                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
-                      04 Timeline
-                    </h2>
-                    <span className="uppercase tracking-wider font-semibold text-[11px]">TARGET LAUNCH</span>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-                    {TIMELINE_OPTIONS.map((t) => {
-                      const isSelected = selectedTimeline === t.value;
-                      return (
-                        <button
-                          key={t.value}
-                          type="button"
-                          onClick={() => {
-                            setSelectedTimeline(t.value);
-                            playClick();
-                          }}
-                          className={`text-xs p-3.5 rounded-2xl border text-center transition-all cursor-pointer font-bold ${isSelected
-                              ? 'bg-[#1F3FFF] text-white border-[#1F3FFF] shadow-md'
-                              : 'border-[#E4E6EB] bg-white text-[#0A0F1F] hover:border-[#1F3FFF]'
-                            }`}
-                        >
-                          {t.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* LIVE ESTIMATE SUMMARY CARD */}
-                <div className="p-6 rounded-3xl border-2 border-[#1F3FFF] bg-white shadow-lg space-y-3 text-xs">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#E4E6EB]">
-                    <span className="font-bold text-[#0A0F1F] uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-[#1F3FFF]" />
-                      <span>YOUR LIVE SCOPE ESTIMATE</span>
-                    </span>
-                    <span className="text-[11px] text-[#5B6275] uppercase tracking-wider font-semibold">Real-time Calculation</span>
-                  </div>
-
-                  {estimate ? (
-                    <div className="space-y-3">
-                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-                        <div>
-                          <span className="text-[#5B6275] block text-[11px] uppercase tracking-wider font-semibold">Selected Services:</span>
-                          <span className="font-bold text-[#0A0F1F] text-sm">
-                            {[...selectedServices, ...selectedAddons].join(' + ')}
-                          </span>
-                        </div>
-                        <div className="sm:text-right">
-                          <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#1F3FFF] block">
-                            {estimate.priceString}
-                          </span>
-                          <span className="text-[11px] text-[#5B6275] font-semibold">
-                            Est. Timeline: {estimate.timeline}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="p-3.5 rounded-2xl bg-[#F5F6F8] text-[#5B6275] text-xs flex items-center gap-2 border border-[#E4E6EB]">
-                        <span className="text-[#1F3FFF]">●</span>
-                        <span>Final quote is locked in writing after brief review. All scopes depend on custom deliverables.</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="py-2 text-[#5B6275] text-center font-medium">
-                      Select one or more services or add-ons above to see an instant starting price and delivery timeline.
-                    </div>
-                  )}
-                </div>
-
-                {/* STEP 05: YOUR DETAILS */}
+                {/* STEP 02: YOUR DETAILS & BRIEF */}
                 <div className="space-y-4 pt-6 border-t border-[#E4E6EB]">
                   <div className="flex items-center justify-between text-xs text-[#5B6275]">
                     <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
-                      05 Your details
+                      02 Your Details &amp; Project Summary
                     </h2>
                     <span className="text-[#EF5533] font-semibold uppercase tracking-wider text-[11px]">* REQUIRED FIELDS</span>
                   </div>
@@ -827,10 +649,11 @@ function ContactFormContent() {
                           setFormData({ ...formData, name: e.target.value });
                           if (errors.name) setErrors({ ...errors, name: '' });
                         }}
-                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${errors.name
+                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
+                          errors.name
                             ? 'border-[#EF5533] ring-1 ring-[#EF5533]'
                             : 'border-[#E4E6EB] focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20'
-                          }`}
+                        }`}
                         aria-invalid={errors.name ? 'true' : 'false'}
                         aria-describedby={errors.name ? 'name-error' : undefined}
                       />
@@ -857,10 +680,11 @@ function ContactFormContent() {
                           setFormData({ ...formData, email: e.target.value });
                           if (errors.email) setErrors({ ...errors, email: '' });
                         }}
-                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${errors.email
+                        className={`w-full h-12 bg-white border rounded-2xl px-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none shadow-sm ${
+                          errors.email
                             ? 'border-[#EF5533] ring-1 ring-[#EF5533]'
                             : 'border-[#E4E6EB] focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20'
-                          }`}
+                        }`}
                         aria-invalid={errors.email ? 'true' : 'false'}
                         aria-describedby={errors.email ? 'email-error' : undefined}
                       />
@@ -869,6 +693,72 @@ function ContactFormContent() {
                           {errors.email}
                         </p>
                       )}
+                    </div>
+                  </div>
+
+                  {/* Project Brief */}
+                  <div>
+                    <label className="block text-xs text-[#0A0F1F] mb-1.5 font-bold uppercase tracking-wider">
+                      Tell Us About Your Project &amp; Goals
+                    </label>
+                    <textarea
+                      ref={briefInputRef}
+                      name="brief"
+                      rows={4}
+                      placeholder="Share your goals, current bottlenecks, launch date, or reference links..."
+                      value={formData.brief}
+                      onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
+                      className="w-full bg-white border border-[#E4E6EB] rounded-2xl p-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20 shadow-sm"
+                    ></textarea>
+                  </div>
+                </div>
+
+                {/* STEP 03: OPTIONAL DETAILS */}
+                <div className="space-y-4 pt-6 border-t border-[#E4E6EB]">
+                  <div className="flex items-center justify-between text-xs text-[#5B6275]">
+                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
+                      03 Optional Scope Preferences
+                    </h2>
+                    <span className="uppercase tracking-wider font-semibold text-[11px]">OPTIONAL</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Budget Dropdown */}
+                    <div>
+                      <label className="block text-xs text-[#5B6275] mb-1.5 font-bold uppercase tracking-wider">
+                        Budget Range ({currency})
+                      </label>
+                      <select
+                        value={selectedBudget}
+                        onChange={(e) => setSelectedBudget(e.target.value)}
+                        className="w-full h-12 bg-white border border-[#E4E6EB] rounded-2xl px-4 text-xs font-semibold text-[#0A0F1F] focus:outline-none focus:border-[#1F3FFF] shadow-sm cursor-pointer"
+                      >
+                        <option value="">Flexible / Not decided yet</option>
+                        {BUDGET_OPTIONS[currency].map((b) => (
+                          <option key={b.value} value={b.value}>
+                            {b.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Timeline Selection */}
+                    <div>
+                      <label className="block text-xs text-[#5B6275] mb-1.5 font-bold uppercase tracking-wider">
+                        Target Timeline
+                      </label>
+                      <select
+                        value={selectedTimeline}
+                        onChange={(e) => setSelectedTimeline(e.target.value)}
+                        className="w-full h-12 bg-white border border-[#E4E6EB] rounded-2xl px-4 text-xs font-semibold text-[#0A0F1F] focus:outline-none focus:border-[#1F3FFF] shadow-sm cursor-pointer"
+                      >
+                        <option value="">Flexible / Ready to discuss</option>
+                        {TIMELINE_OPTIONS.map((t) => (
+                          <option key={t.value} value={t.value}>
+                            {t.label}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
@@ -891,7 +781,7 @@ function ContactFormContent() {
                     {/* Company URL */}
                     <div>
                       <label className="block text-xs text-[#5B6275] mb-1.5 font-bold uppercase tracking-wider">
-                        Company or Website URL (Optional)
+                        Company or Current Website (Optional)
                       </label>
                       <input
                         type="url"
@@ -903,33 +793,20 @@ function ContactFormContent() {
                       />
                     </div>
                   </div>
+
+                  {/* Pricing and Tax Policy Notice */}
+                  <div className="p-3.5 rounded-2xl bg-white border border-[#E4E6EB] text-xs text-[#5B6275] flex items-center justify-between gap-3 shadow-sm">
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#1F3FFF]" />
+                      <span>Prices exclude applicable GST for Indian businesses. Fixed proposal delivered within 24h.</span>
+                    </span>
+                    <span className="text-[11px] font-mono font-bold text-[#0A0F1F]">
+                      {currency === 'INR' ? '₹ INR (India)' : '$ USD (International)'}
+                    </span>
+                  </div>
                 </div>
 
-                {/* STEP 06: PROJECT NOTES */}
-                <div className="space-y-3 pt-6 border-t border-[#E4E6EB]">
-                  <div className="flex items-center justify-between text-xs text-[#5B6275]">
-                    <h2 className="font-bold text-[#0A0F1F] uppercase tracking-wider text-sm">
-                      06 Project notes
-                    </h2>
-                    <span className="uppercase tracking-wider font-semibold text-[11px]">SCOPE DETAILS</span>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs text-[#0A0F1F] mb-1.5 font-bold uppercase tracking-wider">
-                      Tell us about your project
-                    </label>
-                    <textarea
-                      ref={briefInputRef}
-                      name="brief"
-                      rows={4}
-                      placeholder="Share your goals, current challenges, launch date, or reference links..."
-                      value={formData.brief}
-                      onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
-                      className="w-full bg-white border border-[#E4E6EB] rounded-2xl p-4 text-sm text-[#0A0F1F] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1F3FFF] focus:ring-2 focus:ring-[#1F3FFF]/20 shadow-sm"
-                    ></textarea>
-                  </div>
-
-                  {/* Submission Error Alert */}
+                {/* Submission Error Alert */}
                   {submitError && (
                     <div className="p-4 rounded-2xl bg-[#FEE2E2] border border-[#FCA5A5] text-xs text-[#EF5533] flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
@@ -974,7 +851,6 @@ function ContactFormContent() {
                     </span>
                     <span className="uppercase tracking-wider text-[11px] font-bold">100% PRIVATE &amp; CONFIDENTIAL</span>
                   </div>
-                </div>
               </form>
             ) : (
               /* SUCCESS STATE */

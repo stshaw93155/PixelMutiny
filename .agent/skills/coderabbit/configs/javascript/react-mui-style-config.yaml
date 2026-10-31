@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+early_access: false
+reviews:
+  path_instructions:
+    - path: "*"
+      instructions: |
+        Review the JavaScript code against the following rules:
+        - No new libraries are added.
+        - Only functional components, no class components.
+        - No commented code.
+        - No Console.log.
+        - Pascalcase for components, routes and pages. Example, catalogueIndex.js -> WRONG, CatalogueIndex.js -> CORRECT 
+        - Follow Camelcase. Example, Is-Open -> WRONG, is_open -> WRONG, isOpen -> WRONG, saveProfileModalIsOpen -> CORRECT, openStateSaveProfileModal -> CORRECT, isSaveProfileModalOpen -> CORRECT
+        - State management, useState is preferred and redux is preferred. Example, const [isSaveProfileModalOpen, setIsSaveProfileModalOpen] = useState(false)\n const dispatch = useDispatch(); \nconst Button = useSelector((state) => state.nav.Button) \ndispatch(setButton(buttons[0]));
+        - MaterialUI is the preferred library.
+        - Avoid the container and item layout model, use display flex and flex properties within the sx part of a Grid tag. Example, WRONG -> <Grid container xs={6} md={12}> <Grid item> …, CORRECT -> <Grid sx={{display “flex”, flexDirection “row”, width isMobile ? “50%” “100%”> <Grid> …
+        - No secret, API key, ssh key or any sensitive information should be hard coded and pushed.

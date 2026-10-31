@@ -536,10 +536,10 @@ export default function StudioAiBot({ onOpenInquiry }) {
   return (
     <>
       {/* =========================================================================
-          FLOATING LAUNCHER — Bottom Left, compact, no tooltip
+          FLOATING LAUNCHER — Bottom Right, compact, no tooltip
           ========================================================================= */}
       <div
-        className="fixed bottom-6 left-6 z-[60] flex flex-col items-start pointer-events-auto"
+        className="fixed bottom-6 right-6 z-[60] flex flex-col items-end pointer-events-auto"
         style={{ zIndex: 60 }}
       >
         {/* Interactive Character Button — compact */}

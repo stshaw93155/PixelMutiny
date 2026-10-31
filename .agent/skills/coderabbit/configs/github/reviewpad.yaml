@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en"
+early_access: false
+reviews:
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  path_filters:
+    - "!**/.xml"
+  path_instructions:
+    - path: "**/*.cs"
+      instructions: "Focus on major issues impacting readability and maintainability. Avoid minor nitpicks."
+    - path: "tests/**/*.cs"
+      instructions: "Review NUnit tests for structure and coverage. Skip minor stylistic concerns."
+    - path: "**/*.py"
+      instructions: "Check for major PEP 8 violations and Python best practices. Ignore trivial formatting issues."
+    - path: "tests/**/*.py"
+      instructions: "Ensure PyTest tests are clear and comprehensive. Don't focus on minor details."
+    - path: "**/*.js"
+      instructions: "Review for significant deviations from Google JavaScript style guide. Minor style issues are not a priority."
+  auto_review:
+    enabled: true
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT MERGE"
+    drafts: false
+    base_branches:
+      - "develop"
+      - "feat/*"
+chat:
+  auto_reply: true

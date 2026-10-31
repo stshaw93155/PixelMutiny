@@ -115,11 +115,11 @@ function ShellInner({ children }) {
                 <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Portfolio
                 </span>
-                <Link href="/works" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Case Studies</Link>
-                <Link href="/works/avenor" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Avenor Design</Link>
-                <Link href="/works/veyra-legal" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Veyra Legal</Link>
+                <Link href="/works" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Case Studies (08)</Link>
+                <Link href="/works/avenor" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Avenor Logistics</Link>
                 <Link href="/works/flow-task" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">FlowTask App</Link>
-                <Link href="/works" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Motion Reel</Link>
+                <Link href="/works/veyra-legal" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Veyra Legal</Link>
+                <Link href="/works/morrow-house" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Morrow House</Link>
               </div>
 
               {/* Company */}
@@ -127,11 +127,11 @@ function ShellInner({ children }) {
                 <span className="text-[11px] font-bold uppercase tracking-widest text-white mb-1">
                   Company
                 </span>
-                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">About Us</Link>
-                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Manifesto</Link>
-                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Studio Awards</Link>
-                <Link href="/contact" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Contact Us</Link>
-                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Press & News</Link>
+                <Link href="/about" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Agency Overview</Link>
+                <Link href="/about#manifesto" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Studio Manifesto</Link>
+                <Link href="/about#ledger" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Benchmark Ledger</Link>
+                <Link href="/services" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Services &amp; Pricing</Link>
+                <Link href="/contact" className="text-[13px] text-[#8E95A5] hover:text-[#1F3FFF] transition-colors">Initiate Project</Link>
               </div>
 
               {/* Connect */}
@@ -167,8 +167,8 @@ function ShellInner({ children }) {
           {/* Bottom strip */}
           <div className="mt-10 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
             <div className="flex items-center gap-5">
-              <Link href="/contact" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="/contact" className="hover:text-white transition-colors">Terms of Use</Link>
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="/terms-of-use" className="hover:text-white transition-colors">Terms of Use</Link>
               <button
                 type="button"
                 onClick={handleBackToTop}

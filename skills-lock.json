@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "skills": {
+    "component-refactoring": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/component-refactoring/SKILL.md",
+      "computedHash": "0c393c6d9f1c4354d7a8f32ea9c71f63564f1832422d9084f99ded12d457f818"
+    },
+    "e2e-tester": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/e2e-tester/SKILL.md",
+      "computedHash": "c56e2e0916157e21fa83efbbf01577ff76c11400fa4a852f8e95b81b1299677f"
+    },
+    "frontend-code-review": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/frontend-code-review/SKILL.md",
+      "computedHash": "45d8f671ee21d663ffe612441aa0006ae45e9a4c269a8f9ffe377a04ce206938"
+    },
+    "frontend-testing": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/frontend-testing/SKILL.md",
+      "computedHash": "2968562da9a567752c56a5b4dcae9d8799b56eb432dd908cef057560e3e88bec"
+    },
+    "mysql": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/mysql/SKILL.md",
+      "computedHash": "342b22f96883af44aa595b868c222c1ad323b3aef8d8b1001e8924b08670903e"
+    },
+    "postgres": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/postgres/SKILL.md",
+      "computedHash": "70754a80b0bccf5a6c6fc332297eaf990dac2b5931d63aab60d16144f7779c2d"
+    },
+    "prd-creator": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/prd-creator/SKILL.md",
+      "computedHash": "7b168f6035f6dfa3be98dab99f15a9bfdaf27c79790066c2c07baf458577e4c0"
+    },
+    "skill-creator": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/skill-creator/SKILL.md",
+      "computedHash": "a824219f5ab82daf1812ef71682282c39e0758edf8f4f9ea6b40ded633cab461"
+    },
+    "vercel-react-best-practices": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/vercel-react-best-practices/SKILL.md",
+      "computedHash": "da5dd35a96e0ba9f9789488add4503409abb1ddce919340206e9b10dc6c87c54"
+    },
+    "vitest-best-practices": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/vitest-best-practices/SKILL.md",
+      "computedHash": "b0ffda7b905583f22d5cd8b21051dc310a7a48d08711a4b9be0908f3a95fd3b1"
+    },
+    "web-design-guidelines": {
+      "source": "pageai-pro/ralph-loop",
+      "sourceType": "github",
+      "skillPath": ".agent/skills/web-design-guidelines/SKILL.md",
+      "computedHash": "78a53d178bed2090b7133ee1fdccd85bf171f38342e3a5400c935694e0916f35"
+    }
+  }
+}

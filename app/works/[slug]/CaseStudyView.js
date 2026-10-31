@@ -337,15 +337,16 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold tracking-wider bg-black/5 border border-black/10 text-[#787884]">
               {project.year}
             </span>
-            {project.award && (
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider bg-[#1F3FFF] text-white border border-[#1F3FFF]">
-                {project.award}
+            {project.isConcept ? (
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-[#1F3FFF]/10 text-[#1F3FFF] border border-[#1F3FFF]/20">
+                Studio Concept Exploration
               </span>
-            )}
-            {project.isConcept && (
-              <span className="px-3 py-1 rounded-full text-xs font-mono text-[#787884] bg-white border border-black/10">
-                Concept Sample
-              </span>
+            ) : (
+              project.award && (
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-[#1F3FFF] text-white border border-[#1F3FFF]">
+                  {project.award}
+                </span>
+              )
             )}
           </div>
 
@@ -566,13 +567,13 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
           {/* Section Label */}
           <span className="font-mono text-xs uppercase tracking-wider text-[#1F3FFF] block mb-3">
-            02 / Results & Impact
+            {project.isConcept ? '02 / Technical Architecture & Specs' : '02 / Results & Impact'}
           </span>
           <h2
             className="font-display font-extrabold uppercase tracking-tight text-white mb-16 break-words"
             style={{ fontSize: 'clamp(32px, 4vw, 56px)', lineHeight: 1.15, textWrap: 'balance' }}
           >
-            Measurable Velocity &amp; Business Outcomes
+            {project.isConcept ? 'Design Specifications & Performance Benchmarks' : 'Measurable Velocity & Business Outcomes'}
           </h2>
 
           {/* 4-Col Grid on Desktop, 2x2 on Mobile */}
@@ -599,8 +600,8 @@ export default function CaseStudyView({ project, prevProject, nextProject }) {
             </div>
           )}
 
-          {/* Client Quote in Large Italic Serif */}
-          {project.testimonial && (
+          {/* Client Quote in Large Italic Serif (Verified client work only) */}
+          {!project.isConcept && project.testimonial && (
             <div className="mt-16 sm:mt-24 pt-8 border-t border-white/10 max-w-4xl">
               <blockquote className="font-serif italic text-2xl sm:text-3xl lg:text-4xl text-white/95 leading-relaxed mb-6">
                 “{project.testimonial.quote}”
